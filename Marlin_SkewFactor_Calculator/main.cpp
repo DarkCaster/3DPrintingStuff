@@ -4,9 +4,19 @@
 
 // ******* define measured values here
 // ******* for better accuracy all values should be measured multiple times
-const double AC_values[] = {141.155, 141.14, 141.15};
-const double BD_values[] = {141.35, 141.3, 141.325};
-const double AD_values[] = {99.855, 99.855, 99.825};
+
+//xy
+
+//const double AC_values[] = {141.155, 141.14, 141.15};
+//const double BD_values[] = {141.35, 141.3, 141.325};
+//const double AD_values[] = {99.855, 99.855, 99.825};
+
+//xz
+
+const double AC_values[] = {141.275, 141.35, 141.35, 141.275};
+const double BD_values[] = {140.875, 140.9, 140.865, 140.89};
+const double AD_values[] = {99.89, 99.88, 99.85, 99.875};
+
 // *******
 // *******
 
