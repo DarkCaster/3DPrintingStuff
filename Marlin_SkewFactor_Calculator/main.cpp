@@ -18,9 +18,9 @@
 //const double AD_values[] = {99.89, 99.88, 99.85, 99.875};
 
 //yz
-const double AC_values[] = {140.835, 140.949, 140.875, 140.87};
-const double BD_values[] = {141.29, 141.3, 141.29, 141.3};
-const double AD_values[] = {99.875, 99.925, 99.9, 99.89};
+const double AC_values[] = {140.85, 140.875, 140.85, 140.8};
+const double BD_values[] = {141.2, 141.17, 141.175, 141.185};
+const double AD_values[] = {99.79, 99.84, 99.8, 99.875};
 
 // *******
 // *******
