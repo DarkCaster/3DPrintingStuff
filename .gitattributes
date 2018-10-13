@@ -3,3 +3,4 @@
 *.txt   text=auto
 *.cfg   text=auto
 *.xml.fdm_material   text=auto
+/Configs/Cura/Profiles/*/* text eol=lf
