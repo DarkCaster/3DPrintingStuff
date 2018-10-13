@@ -3,4 +3,7 @@
 *.txt   text=auto
 *.cfg   text=auto
 *.xml.fdm_material   text=auto
-/Configs/Cura/Profiles/*/* text eol=lf
+/Configs/Cura/Profiles/*/*   text eol=lf
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf
