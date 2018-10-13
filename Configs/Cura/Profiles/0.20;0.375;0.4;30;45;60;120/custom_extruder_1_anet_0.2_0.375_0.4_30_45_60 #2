@@ -1,0 +1,71 @@
+[general]
+version = 4
+name = 0.20;0.375;0.4;30;45;60;120
+definition = fdmprinter
+
+[metadata]
+quality_type = normal
+type = quality_changes
+position = 0
+setting_version = 4
+
+[values]
+alternate_extra_perimeter = True
+bottom_layers = 3
+brim_line_count = 8
+cool_fan_speed_0 = 30
+cool_min_layer_time = 17
+cool_min_speed = 20
+fill_perimeter_gaps = nowhere
+filter_out_tiny_gaps = True
+infill_before_walls = False
+infill_enable_travel_optimization = True
+infill_pattern = zigzag
+infill_sparse_density = 15
+line_width = =machine_nozzle_size
+material_flow_layer_0 = =material_flow
+min_infill_area = 5
+optimize_wall_printing_order = True
+raft_airgap = 0.125
+raft_base_line_spacing = 0.8
+raft_base_line_width = 0.5
+raft_base_speed = 20
+raft_base_thickness = 0.25
+raft_interface_line_spacing = 0.8
+raft_interface_line_width = 0.4
+raft_interface_speed = 45
+raft_interface_thickness = 0.25
+raft_margin = 3
+raft_speed = 45
+raft_surface_layers = 2
+raft_surface_line_spacing = 0.4
+raft_surface_speed = =raft_speed
+raft_surface_thickness = 0.2
+retraction_combing_max_distance = 30
+retraction_count_max = 12
+retraction_extra_prime_amount = 0
+retraction_extrusion_window = 3
+roofing_layer_count = 1
+skin_line_width = 0.375
+skin_no_small_gaps_heuristic = False
+skirt_brim_speed = =speed_layer_0
+skirt_gap = 8
+skirt_line_count = 3
+speed_layer_0 = 20
+speed_print = 60
+speed_topbottom = 45.0
+speed_travel = =speed_print if magic_spiralize else 120
+speed_travel_layer_0 = 120
+speed_wall = 30
+speed_wall_x = 45
+support_angle = 68
+support_infill_rate = 16
+support_line_width = 0.375
+support_pattern = cross
+support_z_distance = 0.2
+top_layers = 3
+travel_avoid_other_parts = False
+wall_line_count = 3
+wall_line_width_0 = 0.375
+z_seam_type = sharpest_corner
+
