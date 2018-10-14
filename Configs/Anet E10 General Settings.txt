@@ -22,7 +22,7 @@ Material diameter: 1.75
 Offsets: X=0, Y=0
 
 Skew correction
-M852 I-0.00125085 J0.00770653 K0.00283084
+M852 I-0.00125085 J0.00103114 K0.00283084
 
 Start GCODE:
 
