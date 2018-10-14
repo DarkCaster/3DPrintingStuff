@@ -13,14 +13,14 @@
 
 //xz
 
-//const double AC_values[] = {113.175, 113.140, 113.19, 113.165};
-//const double BD_values[] = {112.275, 112.3, 112.32, 112.3};
-//const double AD_values[] = {79.975,79.975,79.970,79.995};
+const double AC_values[] = {112.8, 112.8, 112.79, 112.8};
+const double BD_values[] = {112.7, 112.68, 112.675, 112.67};
+const double AD_values[] = {79.83,79.85,79.85,79.9};
 
 //yz
-const double AC_values[] = {112.525, 112.55, 112.52, 112.525};
-const double BD_values[] = {112.85, 112.84, 112.85, 112.82, 112.885 };
-const double AD_values[] = {79.945, 79.925, 79.92, 79.915};
+//const double AC_values[] = {112.525, 112.55, 112.52, 112.525};
+//const double BD_values[] = {112.85, 112.84, 112.85, 112.82, 112.885 };
+//const double AD_values[] = {79.945, 79.925, 79.92, 79.915};
 
 // *******
 // *******
