@@ -30,11 +30,16 @@ if [[ ! -z $MSYSTEM ]]; then
   return 0
  }
 else
- compress ()
- {
-  log "TODO"
-  return 1
- }
+  compress ()
+  {
+   local base="$1"
+   local source="$2"
+   local target="$3"
+   1>/dev/null pushd "$base"
+   zip -0 -D -r "$target" "$source"
+   1>/dev/null popd
+   return 0
+  }
 fi
 
 folder_name="$1"
