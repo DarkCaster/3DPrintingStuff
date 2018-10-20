@@ -36,7 +36,7 @@ else
    local source="$2"
    local target="$3"
    1>/dev/null pushd "$base"
-   zip -0 -D -r "$target" "$source"
+   zip -0 -j -r "$target" "$source"
    1>/dev/null popd
    return 0
   }
