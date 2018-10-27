@@ -22,8 +22,10 @@ Nozzle: 0.4
 Material diameter: 1.75
 Offsets: X=0, Y=0
 
-//TODO: Skew correction
-//M852 I-0.00125085 J0.00770653 K0.00283084
+//I: Skew factor = 0.0052805446815000160049047295274249
+//J: Skew factor = -0.0032343558454622964824787256787886
+//K: Skew factor = -0.0028104139251266379434524012026486
+M852 I0.00528054 J-0.00323435 K-0.00281041
 
 Start GCODE:
 
@@ -47,3 +49,32 @@ G28 X Y ;home the X and y axes
 M84 ;steppers off
 M420 Z0 ;disable bed-leveling z fade
 M420 S0 ;disable bed-leveling
+
+UBL Mesh:
+echo:  G29 I999
+echo:  M421 I0 J0 Z0.00
+echo:  M421 I0 J1 Z-0.06
+echo:  M421 I0 J2 Z-0.09
+echo:  M421 I0 J3 Z-0.03
+echo:  M421 I0 J4 Z0.04
+echo:  M421 I1 J0 Z0.00
+echo:  M421 I1 J1 Z-0.01
+echo:  M421 I1 J2 Z-0.03
+echo:  M421 I1 J3 Z0.01
+echo:  M421 I1 J4 Z0.06
+echo:  M421 I2 J0 Z0.00
+echo:  M421 I2 J1 Z0.01
+echo:  M421 I2 J2 Z0.04
+echo:  M421 I2 J3 Z0.03
+echo:  M421 I2 J4 Z0.04
+echo:  M421 I3 J0 Z-0.03
+echo:  M421 I3 J1 Z0.03
+echo:  M421 I3 J2 Z0.08
+echo:  M421 I3 J3 Z0.04
+echo:  M421 I3 J4 Z0.01
+echo:  M421 I4 J0 Z-0.03
+echo:  M421 I4 J1 Z0.08
+echo:  M421 I4 J2 Z0.11
+echo:  M421 I4 J3 Z0.04
+echo:  M421 I4 J4 Z-0.01
+
