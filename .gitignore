@@ -1,3 +1,5 @@
 *.FCStd[1-9]
+*.fcstd[1-9]
 *.stl
 *.curaprofile
+
