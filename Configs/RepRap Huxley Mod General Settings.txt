@@ -27,54 +27,49 @@ Offsets: X=0, Y=0
 //K: Skew factor = -0.0028104139251266379434524012026486
 M852 I0.00528054 J-0.00323435 K-0.00281041
 
-Start GCODE:
+Start GCODE (MBL):
 
 G90 ;absolute positioning
-M420 S1 ;enable bed-leveling
-M420 Z0.5 ;enable and set z fade value
 G28 ;Home
+M420 S1 ;enable bed-leveling
+M420 Z0.75 ;enable and set z fade value
 G92 E0 ;zero the extruded length
-G1 F200 E8 ;extrude 8mm of feed stock
+G1 F200 E10 ;extrude 10mm of feed stock
 G92 E0 ;zero the extruded length again
 
-End GCODE:
+End GCODE (MBL):
 
 M104 S0 ;disable hotend heater
 M140 S0 ;disable bed heater
 G91 ;relative positioning
 G1 E-3 F300 ;retract the filament a bit
-G1 Z+5 E-5 X-20 Y-20 F6000 ;move Z up and retract filament even more
+G1 Z+5 E-3 X-20 Y-20 F6000 ;move Z up and retract filament even more
 G90 ;absolute positioning
 G28 X Y ;home the X and y axes
 M84 ;steppers off
 M420 Z0 ;disable bed-leveling z fade
 M420 S0 ;disable bed-leveling
 
-UBL Mesh:
-echo:  G29 I999
-echo:  M421 I0 J0 Z0.00
-echo:  M421 I0 J1 Z-0.06
-echo:  M421 I0 J2 Z-0.09
-echo:  M421 I0 J3 Z-0.03
-echo:  M421 I0 J4 Z0.04
-echo:  M421 I1 J0 Z0.00
-echo:  M421 I1 J1 Z-0.01
-echo:  M421 I1 J2 Z-0.03
-echo:  M421 I1 J3 Z0.01
-echo:  M421 I1 J4 Z0.06
-echo:  M421 I2 J0 Z0.00
-echo:  M421 I2 J1 Z0.01
-echo:  M421 I2 J2 Z0.04
-echo:  M421 I2 J3 Z0.03
-echo:  M421 I2 J4 Z0.04
-echo:  M421 I3 J0 Z-0.03
-echo:  M421 I3 J1 Z0.03
-echo:  M421 I3 J2 Z0.08
-echo:  M421 I3 J3 Z0.04
-echo:  M421 I3 J4 Z0.01
-echo:  M421 I4 J0 Z-0.03
-echo:  M421 I4 J1 Z0.08
-echo:  M421 I4 J2 Z0.11
-echo:  M421 I4 J3 Z0.04
-echo:  M421 I4 J4 Z-0.01
+Start GCODE (UBL):
+
+G90 ;absolute positioning
+G28 ;Home
+G29 A1 ;enable UBL
+G29 L1 ;load UBL mesh 1
+G29 F0.75 ;set UBL z fade value
+G92 E0 ;zero the extruded length
+G1 F200 E10 ;extrude 10mm of feed stock
+G92 E0 ;zero the extruded length again
+
+End GCODE (UBL):
+
+M104 S0 ;disable hotend heater
+M140 S0 ;disable bed heater
+G91 ;relative positioning
+G1 E-3 F300 ;retract the filament a bit
+G1 Z+5 E-3 X-20 Y-20 F6000 ;move Z up and retract filament even more
+G90 ;absolute positioning
+G28 ;home
+M84 ;steppers off
+G29 A0 ;disable UBL
 
