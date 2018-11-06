@@ -29,6 +29,13 @@ M852 I0.00528054 J-0.00323435 K-0.00281041
 
 Start GCODE (MBL):
 
+M300 P200
+M0 P300
+M300 P200
+M0 P300
+M300 P200
+M0 P300
+M0 Check clearance!
 G90 ;absolute positioning
 G28 ;Home
 M420 S1 ;enable bed-leveling
