@@ -22,17 +22,18 @@ Material diameter: 1.75
 Offsets: X=0, Y=0
 
 Skew correction
-M852 I-0.00125085 J0.00103114 K0.00283084
+//M852 I-0.00125085 J0.00103114 K0.00283084
+M852 I-0.00125085 J0.00210749 K0.00283084
 
 Start GCODE:
 
 G90 ;absolute positioning
-M420 S1 ;enable bed-leveling
-M420 Z0.5 ;enable and set z fade value
 G28 ;Home
+M420 S1 ;enable bed-leveling
+M420 Z0.75 ;enable and set z fade value
 G1 Z15.0 F6000 ;Move the platform down 15mm
 G92 E0 ;zero the extruded length
-G1 F200 E8 ;extrude 8mm of feed stock
+G1 F200 E10 ;extrude 10mm of feed stock
 G92 E0 ;zero the extruded length again
 
 End GCODE:
@@ -41,7 +42,7 @@ M104 S0 ;disable hotend heater
 M140 S0 ;disable bed heater
 G91 ;relative positioning
 G1 E-3 F300 ;retract the filament a bit
-G1 Z+5 E-5 X-20 Y-20 F6000 ;move Z up and retract filament even more
+G1 Z+5 E-3 X-20 Y-20 F6000 ;move Z up and retract filament even more
 G90 ;absolute positioning
 G28 X Y ;home the X and y axes
 M84 ;steppers off
