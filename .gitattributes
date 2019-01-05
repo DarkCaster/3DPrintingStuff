@@ -1,5 +1,6 @@
 *.FCStd binary
 *.sh    text eol=lf
+timestamps.txt    text eol=lf
 *.txt   text=auto
 *.cfg   text=auto
 *.xml.fdm_material   text=auto
