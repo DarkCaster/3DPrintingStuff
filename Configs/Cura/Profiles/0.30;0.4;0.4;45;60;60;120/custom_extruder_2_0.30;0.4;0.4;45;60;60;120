@@ -1,0 +1,13 @@
+[general]
+version = 4
+name = 0.30;0.4;0.4;45;60;60;120
+definition = fdmprinter
+
+[metadata]
+type = quality_changes
+quality_type = normal
+setting_version = 5
+position = 1
+
+[values]
+
