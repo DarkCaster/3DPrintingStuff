@@ -5,27 +5,28 @@
       <brand>Custom</brand>
       <material>PLA</material>
       <color>Generic</color>
-      <label>GREG PLA LOW</label>
+      <label>GREG PLA 225;50;6.5;65%</label>
     </name>
-    <version>2</version>
     <GUID>0ff92885-617b-4144-a03c-9989872454bc</GUID>
+    <color_code>#bd0052</color_code>
     <compatible>True</compatible>
-    <adhesion_info>Print on bare glass. Use tape for cold build plates.</adhesion_info>
     <definition>fdmprinter</definition>
-    <description>GREG PLA, low temperature</description>
-    <color_code>#48547f</color_code>
+    <description>GREG PLA</description>
+    <version>2</version>
+    <adhesion_info>Print on bare glass. Use tape for cold build plates.</adhesion_info>
   </metadata>
   <properties>
-    <density>1.24</density>
     <diameter>1.75</diameter>
+    <density>1.24</density>
   </properties>
   <settings>
+    <setting key="adhesion tendency">0</setting>
+    <setting key="retraction amount">6.5</setting>
+    <setting key="retraction speed">35.0</setting>
+    <setting key="print temperature">225.0</setting>
     <setting key="heated bed temperature">50.0</setting>
     <setting key="standby temperature">175.0</setting>
-    <setting key="retraction amount">6.0</setting>
-    <setting key="print temperature">205.0</setting>
     <setting key="surface energy">100</setting>
-    <setting key="adhesion tendency">0</setting>
-    <setting key="retraction speed">25.0</setting>
+    <setting key="print cooling">65.0</setting>
   </settings>
 </fdmmaterial>
