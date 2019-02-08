@@ -1,8 +1,8 @@
 2019-02-07 03:11:06.018645724 +0300|./DriveAssembly_Variant1.FCStd
 2018-10-20 20:16:58.086214017 +0300|./DriveBase/DriveBase.FCStd
-2018-11-24 22:28:44.527905930 +0300|./DriveBase/DriveBase_Fitting_Clamp.FCStd
+2019-02-08 21:58:19.579436963 +0300|./DriveBase/DriveBase_Fitting_Clamp.FCStd
 2018-10-31 16:17:50.066073451 +0300|./DriveBase/DriveBase_Tight.FCStd
-2018-11-24 19:07:45.717989807 +0300|./DriveBase/DriveBase_Tight_NoFitting.FCStd
+2019-02-08 17:42:45.417127888 +0300|./DriveBase/DriveBase_Tight_NoFitting.FCStd
 2018-10-20 20:16:58.086214017 +0300|./DriveIdler/DriveIdler_623zz.FCStd
 2018-10-31 15:48:26.581553383 +0300|./DriveIdler/DriveIdler_623zz_Tight.FCStd
 2018-10-20 20:16:58.086214017 +0300|./DriveIdler_Top/DriveIdlerClamp.FCStd
@@ -15,6 +15,8 @@
 2019-01-30 00:45:45.572765298 +0300|./Helpers/Nema17_Motor.FCStd
 2018-10-20 20:16:58.086214017 +0300|./LargeGearAssembly/IdlerPart_625zz.FCStd
 2018-10-20 20:16:58.086214017 +0300|./LargeGearAssembly/IdlerStand_H20.5mm.FCStd
+2019-02-08 02:01:26.158252726 +0300|./LargeGearAssembly/LargeGear_M5_ClipH5.6mm.FCStd
 2018-10-20 20:16:58.094213980 +0300|./LargeGearAssembly/LargeGear_M5.FCStd
+2019-02-08 02:11:14.430618536 +0300|./LargeGearAssembly/LargeGear_M5_H8mm_ClipH4.6mm.FCStd
 2018-10-20 20:16:58.098213962 +0300|./SmallGear/SmallGear_D5.4mm.FCStd
 2018-10-20 20:16:58.094213980 +0300|./SmallGear/SmallGear_D5.4mm+M2.5.FCStd
