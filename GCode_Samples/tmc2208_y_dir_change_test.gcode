@@ -7,9 +7,9 @@ M0 Click to start
 G28
 ;set max accel, jerk, and feedrate
 M203 Y250
-M201 Y10000
-M204 P10000 T10000
-M205 Y25
+M201 Y3000
+M204 P3000 T3000
+M205 Y40
 M0 S1;  wait for 1 sec
 ;try to set initial pos
 G1 Y10 F5000
