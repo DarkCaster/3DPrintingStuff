@@ -1,5 +1,4 @@
 ;GCODE for finding out maximum jerk\accel\speed params for current setup
-;DO NOT RUN WITH BELT PUT ON
 ;power on, wait for user-interaction
 M80
 M0 Click to start
