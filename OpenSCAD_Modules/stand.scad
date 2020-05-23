@@ -4,7 +4,7 @@ inner_diam=3,
 top_diam=5,
 bottom_diam=7,
 center_xy=false,
-attach=0.001,
+attach=0,
 quality=0, //0 and up, 0 - use $fn
 )
 {
@@ -29,4 +29,4 @@ quality=0, //0 and up, 0 - use $fn
 //stand(height=2,attach=0.05,$fn=4);
 //stand(height=2,attach=0.05,$fn=8);
 //stand(height=2,attach=0.05,quality=1);
-stand(height=2,attach=0.05,quality=2);
+stand(height=2,attach=0.1,quality=2,center_xy=true);
