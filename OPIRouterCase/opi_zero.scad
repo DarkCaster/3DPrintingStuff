@@ -1,9 +1,12 @@
 use <../OpenSCAD_Modules/headers.scad>
 use <../OpenSCAD_Modules/boards.scad>
 
-module orange_pi_zero(center=false)
+module orange_pi_zero(
+center_xy=false,
+center_z=false,
+)
 {
-	translate([center?0:48/2,center?0:46/2,center?0:1.5/2])
+	translate([center_xy?0:48/2,center_xy?0:46/2,center_z?0:1.5/2])
 	{
 		board(size_x=48,size_y=46,center_xy=true,center_z=true);
 		//connectors
@@ -34,5 +37,6 @@ module orange_pi_zero(center=false)
 	}
 }
 
-orange_pi_zero();
-//orange_pi_zero(center=true);
+//orange_pi_zero();
+orange_pi_zero(center_xy=true);
+//orange_pi_zero(center_xy=true,center_z=true);
