@@ -25,7 +25,7 @@ module cube_vround(
 	cube_szy=size[1]/2;
 	cube_mvx=cube_szx/2+wall_attach;
 	cube_mvy=cube_szy/2+wall_attach;
-	translate([center_xy?0:cx,center_xy?0:cy,center_z?-attach/2:(size[2]-attach)/2])
+	translate([center_xy?0:cube_szx,center_xy?0:cube_szy,center_z?-attach/2:(size[2]-attach)/2])
 		hull()
 		{
 			if(round_corners[0])
