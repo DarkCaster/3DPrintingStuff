@@ -1,28 +1,64 @@
 module cube_vround(
 	size=[10,10,10],
+	round_corners=[true,true,true,true],
 	rounding=3,
 	center_xy=false,
 	center_z=false,
 	attach=0,
+	wall_attach=0,
 	quality=2, //integer from 1 to infinity
 )
 {
 	assert(len(size)==3);
+	assert(len(round_corners)==4);
 	assert(rounding>0);
-	assert(rounding<size[0]/2);
-	assert(rounding<size[1]/2);
+	assert(rounding<=size[0]/2);
+	assert(rounding<=size[1]/2);
 	assert(quality>0);
 	assert(attach>=0);
-
-	translate([center_xy?-size[0]/2:0,center_xy?-size[1]/2:0,center_z?-size[2]/2:0])
-		translate([rounding,rounding,-attach])
-			resize([size[0],size[1],size[2]+attach])
-				minkowski()
-				{
-					cube([size[0]-rounding*2,size[1]-rounding*2,size[2]]);
-					cylinder(r=rounding,h=size[2],$fn=12*quality);
-				};
+	assert(wall_attach>=0);
+	height=size[2]+attach;
+	cyl_r=rounding+wall_attach;
+	cyl_mvx=size[0]/2-rounding;
+	cyl_mvy=size[1]/2-rounding;
+	cube_szx=size[0]/2;
+	cube_szy=size[1]/2;
+	cube_mvx=cube_szx/2+wall_attach;
+	cube_mvy=cube_szy/2+wall_attach;
+	translate([center_xy?0:cx,center_xy?0:cy,center_z?-attach/2:(size[2]-attach)/2])
+		hull()
+		{
+			if(round_corners[0])
+				translate([cyl_mvx,cyl_mvy])
+					cylinder(r=cyl_r,h=height,$fn=12*quality,center=true);
+			else
+				translate([cube_mvx,cube_mvy])
+					cube([cube_szx,cube_szy,height],center=true);
+			if(round_corners[1])
+				translate([cyl_mvx,-cyl_mvy])
+					cylinder(r=cyl_r,h=height,$fn=12*quality,center=true);
+			else
+				translate([cube_mvx,-cube_mvy])
+					cube([cube_szx,cube_szy,height],center=true);
+			if(round_corners[2])
+				translate([-cyl_mvx,-cyl_mvy])
+					cylinder(r=cyl_r,h=height,$fn=12*quality,center=true);
+			else
+				translate([-cube_mvx,-cube_mvy])
+					cube([cube_szx,cube_szy,height],center=true);
+			if(round_corners[3])
+				translate([-cyl_mvx,cyl_mvy])
+					cylinder(r=cyl_r,h=height,$fn=12*quality,center=true);
+			else
+				translate([-cube_mvx,cube_mvy])
+					cube([cube_szx,cube_szy,height],center=true);
+		};
 }
 
 //example
-cube_vround(size=[10,20,2],rounding=2,center_xy=true,center_z=true);
+cube_vround(round_corners=[true,false,true,false],
+size=[10,20,6],
+attach=0.1,
+wall_attach=0.1,
+rounding=3,
+center_xy=true,center_z=false);
