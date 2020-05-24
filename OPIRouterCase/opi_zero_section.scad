@@ -20,9 +20,11 @@ vent_period=[10,3],
 vent_angle=70,
 )
 {
+	attach_clearance=0.05;
 	opi_height=15;
 	opi_szx=48;
 	opi_szy=46;
+	opi_board_width=1.5;
 	assert(len(size)==3);
 	size_x=size[0];
 	size_y=size[1];
@@ -49,30 +51,41 @@ vent_angle=70,
 	opi_move_z=base_sz+stand_height;
 	ostand_mvx=opi_szx/2-3;
 	ostand_mvy=opi_szy/2-3;
-
-	//center_xy;center_z
-	translate([center_xy?0:0,center_xy?0:0,center_z?-height/2:0])
+	//front case cut
+	front_cut_height=15;
+	front_cut_width=26;
+	front_cut_shift=4.25;
+	translate([center_xy?0:size_x/2,center_xy?0:size_y/2,center_z?-height/2:0])
 	{
-		//case section
-		case_section(size=size,
-			screw_diam=screw_diam,
-			screw_clearance=screw_clearance,
-			wall_sz=wall_sz,
-			base_sz=base_sz,
-			attach=attach,
-			quality=quality,
-			vents=[true,false,true,true],
-			vent_size=vent_size,
-			vent_period=vent_period,
-			vent_angle=vent_angle,
-			center_xy=true);
-		//orange pi stands
-		for(i=[true,false],j=[true,false])
-			translate([opi_move_x+(i?1:-1)*ostand_mvx,(j?1:-1)*ostand_mvy,base_sz])
-				stand(height=stand_height,
-					inner_diam=screw_diam,
-					top_diam=screw_diam+2*stand_wall_sz,bottom_diam=screw_diam+3*stand_wall_sz,
-							attach=0.005,quality=quality,center_xy=true);
+		difference()
+		{
+			union()
+			{
+				//case section
+				case_section(size=size,
+					screw_diam=screw_diam,
+					screw_clearance=screw_clearance,
+					wall_sz=wall_sz,
+					base_sz=base_sz,
+					attach=attach,
+					quality=quality,
+					vents=[true,false,true,true],
+					vent_size=vent_size,
+					vent_period=vent_period,
+					vent_angle=vent_angle,
+					center_xy=true);
+				//orange pi stands
+				for(i=[true,false],j=[true,false])
+					translate([opi_move_x+(i?1:-1)*ostand_mvx,(j?1:-1)*ostand_mvy,base_sz])
+						stand(height=stand_height,
+							inner_diam=screw_diam,
+							top_diam=screw_diam+2*stand_wall_sz,bottom_diam=screw_diam+3*stand_wall_sz,
+									attach=attach_clearance,quality=quality,center_xy=true);
+			}
+			translate([(size_x-wall_sz)/2,front_cut_shift,front_cut_height/2+base_sz+opi_board_width-opi_clearance+stand_height])
+				cube(size=[wall_sz+0.2,front_cut_width,front_cut_height],
+					center=true);
+		}
 		//draw orange pi zero
 		if($preview)
 			translate([opi_move_x,0,opi_move_z])
@@ -80,4 +93,4 @@ vent_angle=70,
 	}
 }
 
-opi_zero_section();
+opi_zero_section(center_xy=true,center_z=true);
