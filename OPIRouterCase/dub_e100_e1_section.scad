@@ -41,6 +41,8 @@ opi_clearance=1,
 	dub_plug_cut_move=[(size[0]-2*dub_size[0]-dub_plug_size[0]+attach_clearance)/2,0,-attach_clearance];
 	gpio_cut_size=[opi_szx,(size[1]-2*wall_sz-dub_holder_cut2_size[1])/2];
 	gpio_cut_move=[(size[0]-gpio_cut_size[0])/2-(2*wall_sz+screw_diam)-opi_clearance,-(size[1]-gpio_cut_size[1])/2+wall_sz,-attach_clearance];
+	dub_holder_cut4_size=[dub_size[0]-dub_clip_shift-dub_clip_size[0]-dub_rounding,dub_size[1]-dub_rounding,base_sz+attach_clearance];
+	dub_holder_cut4_move=[(size[0]-dub_holder_cut4_size[0])/2-dub_rounding,0,0];
 	assert(screw_diam>1);
 	assert(screw_diam<=6);
 	assert(attach>=0);
@@ -114,6 +116,12 @@ opi_clearance=1,
 					cube_vround(size=[dub_clip2_size[0],dub_clip2_size[1],base_sz+2*attach_clearance],
 						rounding=min(dub_clip2_size[0],dub_clip2_size[1])/2,
 						round_corners=[true,true,true,true],
+						center_xy=true);
+				translate(dub_holder_cut4_move)
+					cube_vround(size=dub_holder_cut4_size,
+						rounding=min(dub_holder_cut4_size[0],dub_holder_cut4_size[1])/2,
+						round_corners=[true,true,true,true],
+						attach=attach_clearance,
 						center_xy=true);
 			}
 			//extra clip
