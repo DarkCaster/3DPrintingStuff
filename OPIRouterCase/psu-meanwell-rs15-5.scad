@@ -3,7 +3,7 @@ use <../OpenSCAD_Modules/cube_vround.scad>
 use <../OpenSCAD_Modules/stand.scad>
 
 module psu_rs15_section(
-size=[108,66],
+size=[110,66],
 screw_diam=3,
 screw_clearance=0.2,
 wall_sz=2,
@@ -19,7 +19,7 @@ psu_clearance=1,
 )
 {
 	attach_clearance=0.05;
-	plug_diam=33.3;
+	plug_diam=36.3;
 	stand_base_diam=12;
 	plug_shift=5+plug_diam/2;
 	plug_height_corr=-4+base_sz;
