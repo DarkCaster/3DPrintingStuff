@@ -34,7 +34,7 @@ vent_angle=45,
 	assert(screw_clearance<0.5);
 	assert(wall_sz>0);
 	assert(base_sz>0);
-	assert(height>base_sz);
+	assert(height>=base_sz);
 	assert(quality>0);
 	assert(attach>=0);
 	min_sz=4*wall_sz+2*screw_diam;
@@ -124,4 +124,11 @@ translate([0,-20,0])
 	base_sz=1,
 	vent_angle=25,vent_size=[1,1],vent_period=[1.5,1.5],
 	vents=[false,true,true,false],
+	center_z=true);
+
+translate([0,-40,0])
+	case_section(size=[15,15,1],
+	wall_sz=1,
+	screw_diam=3,
+	base_sz=1,
 	center_z=true);
