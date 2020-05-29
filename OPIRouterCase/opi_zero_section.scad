@@ -2,7 +2,7 @@ use <opi_zero.scad>
 use <../OpenSCAD_Modules/stand.scad>
 use <../OpenSCAD_Modules/case_section.scad>
 
-function opi_zero_section() = 24;
+function opi_zero_section_height() = 24;
 
 module opi_zero_section(
 size=[100,62],
@@ -30,7 +30,7 @@ vent_angle=70,
 	assert(len(size)==2);
 	size_x=size[0];
 	size_y=size[1];
-	height=opi_zero_section();
+	height=opi_zero_section_height();
 	assert(opi_height>0);
 	assert(opi_szx>=48);
 	assert(opi_szy>=46);
