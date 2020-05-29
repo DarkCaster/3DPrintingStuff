@@ -1,6 +1,8 @@
 use <../OpenSCAD_Modules/case_section.scad>
 use <../OpenSCAD_Modules/stand.scad>
 
+function top_section_height(base_sz=2) = base_sz;
+
 module top_section(
 size=[100,50],
 screw_diam=3,
@@ -24,7 +26,7 @@ quality=2,
 	assert(len(size)==2);
 	size_x=size[0];
 	size_y=size[1];
-	height=wall_sz;
+	height=top_section_height(base_sz);
 	assert(screw_diam>1);
 	assert(screw_diam<=6);
 	assert(attach>=0);
@@ -77,9 +79,8 @@ quality=2,
 				cube(size=[plug_diam,plug_cut2_sz,plug_height+attach_clearance],
 						center=true);
 		}
-		
-
 	}
 }
 
 top_section(center_xy=true,center_z=true);
+//echo(top_section_height(wall_sz=2));

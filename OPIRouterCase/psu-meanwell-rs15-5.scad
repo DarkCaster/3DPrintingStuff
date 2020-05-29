@@ -2,6 +2,10 @@ use <../OpenSCAD_Modules/case_section.scad>
 use <../OpenSCAD_Modules/cube_vround.scad>
 use <../OpenSCAD_Modules/stand.scad>
 
+psu_size=[76,51.5,28.5];
+
+function psu_rs15_section_height(base_sz=2,psu_clearance=1) = base_sz+psu_size[2]+psu_clearance*2;
+
 module psu_rs15_section(
 size=[110,66],
 screw_diam=3,
@@ -23,7 +27,6 @@ psu_clearance=1,
 	stand_base_diam=12;
 	plug_shift=5+plug_diam/2;
 	plug_height_corr=-4+base_sz;
-	psu_size=[76,51.5,28.5];
 	psu_clr_mode=psu_size[0]>psu_size[1];
 	psu_screw_dy=15;
 	psu_screw_diam=3;
@@ -33,7 +36,7 @@ psu_clearance=1,
 	assert(len(size)==2);
 	size_x=size[0];
 	size_y=size[1];
-	height=base_sz+psu_size[2]+psu_clearance*2;
+	height=psu_rs15_section_height(base_sz=base_sz,psu_clearance=psu_clearance);
 	assert(screw_diam>1);
 	assert(screw_diam<=6);
 	assert(attach>=0);

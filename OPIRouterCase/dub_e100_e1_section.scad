@@ -1,6 +1,10 @@
 use <../OpenSCAD_Modules/case_section.scad>
 use <../OpenSCAD_Modules/cube_vround.scad>
 
+dub_size=[72,27.4,16.4];
+
+function dub_e100_section_height(base_sz=2) = base_sz+dub_size[2];
+
 module dub_e100_section(
 size=[100,62],
 screw_diam=3,
@@ -18,7 +22,6 @@ opi_clearance=1,
 )
 {
 	attach_clearance=0.05;
-	dub_size=[72,27.4,16.4];
 	dub_clip_size=[6,8.5,7];
 	dub_clip_shift=7.5;
 	dub_clip2_size=[6,2];
@@ -29,7 +32,7 @@ opi_clearance=1,
 	assert(len(size)==2);
 	size_x=size[0];
 	size_y=size[1];
-	height=base_sz+dub_size[2];
+	height=dub_e100_section_height(base_sz=base_sz);
 	dub_holder_size=[dub_size[0]+dub_holder_wall_sz,dub_size[1]+2*dub_holder_wall_sz,dub_size[2]];
 	dub_holder_rounding=dub_rounding+dub_holder_wall_sz;
 	dub_holder_cut1_size=[dub_size[0]+attach_clearance,dub_size[1],dub_size[2]];
