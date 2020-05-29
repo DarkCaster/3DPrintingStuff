@@ -65,9 +65,10 @@ vent_angle=70,
 	antenna_cut_rise=wall_sz;
 	//sd cut
 	sdcut_width=12;
-	sdcut_height=5;
+	sdcut_height=4.5;
+	sdcut_length=size_x-opi_szx-opi_clearance*2-wall_sz;
+	sdcut_shield_length=sdcut_length+1.5;
 	sdcut_shift_y=-8;
-	sdcut_shift_x=-1.5;
 	sdcut_shield_height=stand_height-2.2;
 	assert(sdcut_shield_height>0);
 	translate([center_xy?0:size_x/2,center_xy?0:size_y/2,center_z?-height/2:0])
@@ -104,10 +105,10 @@ vent_angle=70,
 							h=wall_sz+antenna_cut_rise,
 							$fn=12*quality,center=true);
 				//sdcard hole
-				translate([(-size_x/2+sdcut_shift_x)/2,sdcut_shift_y,(sdcut_height+base_sz)/2])
-					cube(size=[size_x/2+sdcut_shift_x,sdcut_width+2*wall_sz,sdcut_height+base_sz],center=true);
-				translate([sdcut_shift_x+wall_sz/2,sdcut_shift_y,(sdcut_shield_height/2)+base_sz])
-					cube(size=[wall_sz,sdcut_width+2*wall_sz,sdcut_shield_height+attach_clearance],center=true);
+				translate([-(size_x-sdcut_length)/2,sdcut_shift_y,(sdcut_height+base_sz)/2])
+					cube(size=[sdcut_length,sdcut_width+2*wall_sz,sdcut_height+base_sz],center=true);
+				translate([-(size_x-sdcut_shield_length)/2,sdcut_shift_y,(sdcut_shield_height/2)+base_sz])
+					cube(size=[sdcut_shield_length,sdcut_width+2*wall_sz,sdcut_shield_height+attach_clearance],center=true);
 			}
 			translate([(size_x-wall_sz)/2,front_cut_shift,front_cut_height/2+base_sz+opi_board_width-opi_clearance+stand_height])
 				cube(size=[wall_sz+0.2,front_cut_width,front_cut_height],
@@ -120,8 +121,8 @@ vent_angle=70,
 						h=wall_sz+antenna_cut_rise+2*attach_clearance,
 						$fn=12*quality,center=true);
 			//sdcard hole
-			translate([(-size_x/2+sdcut_shift_x)/2,sdcut_shift_y,(sdcut_height-attach_clearance)/2])
-				cube(size=[size_x/2+sdcut_shift_x+2*attach_clearance,sdcut_width,sdcut_height+attach_clearance],
+			translate([-(size_x-sdcut_length)/2,sdcut_shift_y,(sdcut_height-attach_clearance)/2])
+				cube(size=[sdcut_length+2*attach_clearance,sdcut_width,sdcut_height+attach_clearance],
 					center=true);
 		}
 		//draw orange pi zero
