@@ -43,9 +43,11 @@ height2=opi_zero_section_height(base_sz=FinalBaseSz)+height1;
 height3=dub_e100_section_height(base_sz=FinalBaseSz)+height2;
 height4=psu_rs15_section_height(base_sz=FinalBaseSz)+height3;
 
+total_sz=top_section_height(base_sz=FinalBaseSz)+height4;
+echo("total_sz=",total_sz);
+
 if(Target==0 || Target==1)
 {
-	echo("opi_zero_section_height()=",opi_zero_section_height());
 	translate([0,0,Target==0?height1:0])
 		opi_zero_section(size=Size,
 			wall_sz=FinalWallSz,
@@ -57,7 +59,6 @@ if(Target==0 || Target==1)
 
 if(Target==0 || Target==2)
 {
-	echo("dub_e100_section_height()=",dub_e100_section_height());
 	translate([0,0,Target==0?height2:0])
 		dub_e100_section(size=Size,
 			wall_sz=FinalWallSz,
@@ -69,7 +70,6 @@ if(Target==0 || Target==2)
 
 if(Target==0 || Target==3)
 {
-	echo("psu_rs15_section_height()=",psu_rs15_section_height());
 	translate([0,0,Target==0?height3:0])
 		psu_rs15_section(size=Size,
 			wall_sz=FinalWallSz,
@@ -81,7 +81,6 @@ if(Target==0 || Target==3)
 
 if(Target==0 || Target==4)
 {
-	echo("top_section_height()=",top_section_height());
 	translate([0,0,Target==0?height4:0])
 		top_section(size=Size,
 			wall_sz=FinalWallSz,
