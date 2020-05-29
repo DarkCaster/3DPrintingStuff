@@ -2,14 +2,17 @@ use <opi_zero.scad>
 use <../OpenSCAD_Modules/stand.scad>
 use <../OpenSCAD_Modules/case_section.scad>
 
-function opi_zero_section_height() = 24;
+opi_height=15;
+
+function opi_zero_section_height(stand_height=2.5,base_sz=2)
+	= base_sz + stand_height + opi_height;
 
 module opi_zero_section(
-size=[100,62],
+size=[110,66],
 screw_diam=3,
 screw_clearance=0.2,
 stand_wall_sz=1.2,
-stand_height=3,
+stand_height=2.5,
 wall_sz=2,
 base_sz=2,
 center_xy=false,
@@ -23,14 +26,13 @@ vent_angle=70,
 )
 {
 	attach_clearance=0.05;
-	opi_height=15;
 	opi_szx=48;
 	opi_szy=46;
 	opi_board_width=1.5;
 	assert(len(size)==2);
 	size_x=size[0];
 	size_y=size[1];
-	height=opi_zero_section_height();
+	height=opi_zero_section_height(stand_height=stand_height,base_sz=base_sz);
 	assert(opi_height>0);
 	assert(opi_szx>=48);
 	assert(opi_szy>=46);
@@ -41,7 +43,6 @@ vent_angle=70,
 	assert(screw_diam>1);
 	assert(screw_diam<4);
 	assert(attach>=0);
-	assert(height>base_sz+stand_height+opi_height);
 	min_szx=opi_szx+2*(2*wall_sz+opi_clearance+screw_diam);
 	min_szy=opi_szy+2*(2*wall_sz+opi_clearance+screw_diam);
 	assert(size_x>=min_szx);
@@ -130,4 +131,4 @@ vent_angle=70,
 	}
 }
 
-opi_zero_section(center_xy=true,center_z=true);
+opi_zero_section(center_xy=true,center_z=false);

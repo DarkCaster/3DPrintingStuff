@@ -6,7 +6,7 @@ dub_size=[72,27.4,16.4];
 function dub_e100_section_height(base_sz=2) = base_sz+dub_size[2];
 
 module dub_e100_section(
-size=[100,62],
+size=[110,62],
 screw_diam=3,
 screw_clearance=0.2,
 wall_sz=2,

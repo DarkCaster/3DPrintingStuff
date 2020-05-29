@@ -39,7 +39,7 @@ echo("FinalBaseSz:",FinalBaseSz);
 /* [Hidden] */
 
 height1=0;
-height2=opi_zero_section_height()+height1;
+height2=opi_zero_section_height(base_sz=FinalBaseSz)+height1;
 height3=dub_e100_section_height(base_sz=FinalBaseSz)+height2;
 height4=psu_rs15_section_height(base_sz=FinalBaseSz)+height3;
 
