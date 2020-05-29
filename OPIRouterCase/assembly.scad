@@ -4,7 +4,7 @@ use <psu-meanwell-rs15-5_section.scad>
 use <top_section.scad>
 
 //Section size: X;Y
-Size=[110,65]; //[50:1:200]
+Size=[110,66]; //[50:1:200]
 
 //3D-pr. nozzle-size
 Nozzle=0.4; //[0.1:0.1:0.8]
@@ -16,10 +16,10 @@ Layer=0.2; //[0.05:0.05:0.5]
 Wall=1.6; //[0.1:0.1:4]
 
 //Target base size
-Base=1.6; //[0.1:0.1:4]
+Base=1; //[0.1:0.1:4]
 
 //Screw diameter
-Screw_Diam=3; //[1:0.1:5]
+Screw_Diam=4; //[1:0.1:5]
 
 //Screw clearance (will be added to screw diameter)
 Screw_Clearance=0.2; //[0.01:0.01:0.5]

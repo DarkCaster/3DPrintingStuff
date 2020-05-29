@@ -41,7 +41,7 @@ vent_angle=70,
 	assert(stand_wall_sz>0.399);
 	assert(screw_diam+stand_wall_sz*2<8);
 	assert(screw_diam>1);
-	assert(screw_diam<4);
+	assert(screw_diam<=6);
 	assert(attach>=0);
 	min_szx=opi_szx+2*(2*wall_sz+opi_clearance+screw_diam);
 	min_szy=opi_szy+2*(2*wall_sz+opi_clearance+screw_diam);
@@ -65,7 +65,7 @@ vent_angle=70,
 	antenna_cut_rise=wall_sz;
 	//sd cut
 	sdcut_width=12;
-	sdcut_height=4.5;
+	sdcut_height=stand_height+base_sz;
 	sdcut_length=size_x-opi_szx-opi_clearance*2-wall_sz;
 	sdcut_shield_length=sdcut_length+1.5;
 	sdcut_shift_y=-8;

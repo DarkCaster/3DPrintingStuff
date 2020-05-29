@@ -4,7 +4,7 @@ use <../OpenSCAD_Modules/stand.scad>
 
 psu_size=[76,51.5,28.5];
 
-function psu_rs15_section_height(base_sz=2,psu_clearance=1) = base_sz+psu_size[2]+psu_clearance*2;
+function psu_rs15_section_height(base_sz=2,psu_clearance=1) = base_sz+psu_size[2]+psu_clearance/2;
 
 module psu_rs15_section(
 size=[110,66],
