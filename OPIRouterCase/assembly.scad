@@ -4,7 +4,7 @@ use <psu-meanwell-rs15-5_section.scad>
 use <top_section.scad>
 
 //Section size: X;Y
-Size=[110,66]; //[50:1:200]
+Size=[110,64]; //[50:1:200]
 
 //3D-pr. nozzle-size
 Nozzle=0.4; //[0.1:0.1:0.8]

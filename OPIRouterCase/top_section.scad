@@ -4,7 +4,7 @@ use <../OpenSCAD_Modules/stand.scad>
 function top_section_height(base_sz=2) = base_sz;
 
 module top_section(
-size=[100,50],
+size=[110,64],
 screw_diam=3,
 screw_clearance=0.2,
 wall_sz=2,

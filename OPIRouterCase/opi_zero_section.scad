@@ -8,7 +8,7 @@ function opi_zero_section_height(stand_height=2.5,base_sz=2)
 	= base_sz + stand_height + opi_height;
 
 module opi_zero_section(
-size=[110,66],
+size=[110,64],
 screw_diam=3,
 screw_clearance=0.2,
 stand_wall_sz=1.2,
