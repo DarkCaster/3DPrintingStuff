@@ -138,4 +138,4 @@ opi_clearance=1,
 	}
 }
 
-dub_e100_section(center_xy=true,center_z=true);
+dub_e100_section(center_xy=true,center_z=false);
