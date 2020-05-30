@@ -71,7 +71,7 @@ psu_clearance=1,
 				translate([-size_x/2+plug_shift,0,base_sz])
 					stand(height=height-base_sz+plug_height_corr,
 						inner_diam=3,
-						top_diam=5,
+						top_diam=6,
 						bottom_diam=stand_base_diam,
 						attach=attach_clearance,
 						quality=2,center_xy=true);
