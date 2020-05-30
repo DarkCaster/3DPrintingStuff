@@ -94,7 +94,7 @@ vent_angle=70,
 				for(i=[true,false],j=[true,false])
 					translate([opi_move_x+(i?1:-1)*ostand_mvx,(j?1:-1)*ostand_mvy,base_sz])
 						stand(height=stand_height,
-							inner_diam=screw_diam,
+							inner_diam=3,
 							top_diam=screw_diam+2*stand_wall_sz,bottom_diam=screw_diam+3*stand_wall_sz,
 									attach=attach_clearance,quality=quality,center_xy=true);
 				//antenna hole
