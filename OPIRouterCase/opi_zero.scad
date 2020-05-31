@@ -1,38 +1,48 @@
 use <../OpenSCAD_Modules/headers.scad>
 use <../OpenSCAD_Modules/boards.scad>
 
+function opi_board_width() = 1.5;
+function opi_height() = 14.5+opi_board_width();
+function opi_szx() = 48;
+function opi_szy() = 46;
+function opi_size() = [opi_szx(),opi_szy(),opi_height()];
+
+
 module orange_pi_zero(
 center_xy=false,
 center_z=false,
 )
 {
-	translate([center_xy?0:48/2,center_xy?0:46/2,center_z?0:1.5/2])
+	translate([center_xy?0:opi_szx()/2,center_xy?0:opi_szy()/2,center_z?0:opi_board_width()/2])
 	{
-		board(size_x=48,size_y=46,center_xy=true,center_z=true);
+		board(size_x=opi_szx(),size_y=opi_szy(),width=opi_board_width(),center_xy=true,center_z=true);
 		//connectors
 		color([0.75,0.75,0.75])
 		{
-			translate([48/2-15.5/2+3,0,13/2+1.5/2])
+			translate([opi_szx()/2-15.5/2+3,0,13/2+opi_board_width()/2])
 				cube([15.5,16,13],center = true);
-			translate([48/2-14/2+4,46/2-9.5,13/2+1.5/2])
+			translate([opi_szx()/2-14/2+4,opi_szy()/2-9.5,13/2+opi_board_width()/2])
 				cube([14,6,13],center = true);
-			translate([-48/2+2.5,46/2-9.5,3/2+1.5/2])
+			translate([-opi_szx()/2+2.5,opi_szy()/2-9.5,3/2+opi_board_width()/2])
 				cube([5.5,7.5,3],center=true);
-			translate([-48/2+15/2,-46/2+16.5,-1-1.5/2])
+			translate([-opi_szx()/2+15/2,-opi_szy()/2+16.5,-1-opi_board_width()/2])
 				cube([15,14.6,2], center=true);
 		}
 		//sd card
 		color([0.25,0.25,0.25])
-			translate([-48/2+15/2-2.5,-46/2+15.1,-1.4-1.5/2])
+			translate([-opi_szx()/2+15/2-2.5,-opi_szy()/2+15.1,-1.4-opi_board_width()/2])
 				cube([15,11,1], center=true);
 		//headers
 		{
-			translate([-6*2.54,46/2-2.54/2])
-				headers(cols=13,board_center=true);
-			translate([-6*2.54,-46/2+2.54/2])
-				headers(cols=13,rows=2,board_center=true);
-			translate([48/2-2.54*2-2.54/2,-46/2+9.5])
-				headers(cols=3,board_center=true);
+			translate([-6*2.54,opi_szy()/2-2.54/2])
+				headers(cols=13,pin_depth=1.5+opi_board_width(),
+					board_width=opi_board_width(),board_center=true);
+			translate([-6*2.54,-opi_szy()/2+2.54/2])
+				headers(cols=13,pin_depth=1.5+opi_board_width(),rows=2,
+					board_width=opi_board_width(),board_center=true);
+			translate([opi_szx()/2-2.54*2-2.54/2,-opi_szy()/2+9.5])
+				headers(cols=3,pin_depth=1.5+opi_board_width(),
+					board_width=opi_board_width(),board_center=true);
 		}
 	}
 }
