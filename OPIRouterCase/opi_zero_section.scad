@@ -2,10 +2,8 @@ use <opi_zero.scad>
 use <../OpenSCAD_Modules/stand.scad>
 use <../OpenSCAD_Modules/case_section.scad>
 
-opi_height=15;
-
 function opi_zero_section_height(stand_height=2.5,base_sz=2)
-	= base_sz + stand_height + opi_height;
+	= base_sz + stand_height + opi_height();
 
 module opi_zero_section(
 size=[110,64],
@@ -26,14 +24,14 @@ vent_angle=70,
 )
 {
 	attach_clearance=0.05;
-	opi_szx=48;
-	opi_szy=46;
-	opi_board_width=1.5;
+	opi_szx=opi_szx();
+	opi_szy=opi_szy();
+	opi_board_width=opi_board_width();
 	assert(len(size)==2);
 	size_x=size[0];
 	size_y=size[1];
 	height=opi_zero_section_height(stand_height=stand_height,base_sz=base_sz);
-	assert(opi_height>0);
+	assert(opi_height()>0);
 	assert(opi_szx>=48);
 	assert(opi_szy>=46);
 	assert(opi_clearance>0);
@@ -55,7 +53,7 @@ vent_angle=70,
 	ostand_mvx=opi_szx/2-3;
 	ostand_mvy=opi_szy/2-3;
 	//front case cut
-	front_cut_height=15;
+	front_cut_height=opi_height();
 	front_cut_width=26;
 	front_cut_shift=4.25;
 	//antenna cut diam
@@ -68,7 +66,7 @@ vent_angle=70,
 	sdcut_height=stand_height+base_sz;
 	sdcut_length=size_x-opi_szx-opi_clearance*2-wall_sz;
 	sdcut_shield_length=sdcut_length+1.5;
-	sdcut_shift_y=-8;
+	sdcut_shift_y=-4.75;
 	sdcut_shield_height=stand_height-2.2;
 	assert(sdcut_shield_height>0);
 	translate([center_xy?0:size_x/2,center_xy?0:size_y/2,center_z?-height/2:0])
@@ -92,7 +90,7 @@ vent_angle=70,
 					center_xy=true);
 				//orange pi stands
 				for(i=[true,false],j=[true,false])
-					translate([opi_move_x+(i?1:-1)*ostand_mvx,(j?1:-1)*ostand_mvy,base_sz])
+					translate([opi_move_x+(i?1:-1.025)*ostand_mvx,(j?1:-1)*ostand_mvy,base_sz])
 						stand(height=stand_height,
 							inner_diam=3,
 							top_diam=screw_diam+2*stand_wall_sz,bottom_diam=screw_diam+3*stand_wall_sz,
