@@ -36,6 +36,9 @@ Vent_Angle=70; //[0:0.5:89]
 //Rendering quality of round surfaces
 Quality=2; //[1:1:10]
 
+//Ext USB adapter layout
+USB_Adapter_Layout=1; // [0:Forward, 1:Backward]
+
 //Render target
 Target=0; // [0:Assembly, 1:OrangePI Section, 2:DUB-E100 Section, 3:PSU Section, 4:Top cover]
 
@@ -80,6 +83,7 @@ if(Target==0 || Target==2)
 			vent_size=Vent_Size,
 			vent_period=Vent_Period,
 			vent_angle=Vent_Angle,
+			use_back_layout=USB_Adapter_Layout==1,
 			center_xy=true);
 }
 
