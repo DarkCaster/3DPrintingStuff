@@ -57,8 +57,8 @@ vent_angle=70,
 	front_cut_width=26;
 	front_cut_shift=4.25;
 	//antenna cut diam
-	antenna_cut_diam1=5;
-	antenna_cut_diam2=5.5;
+	antenna_cut_diam1=5.5;
+	antenna_cut_diam2=6;
 	antenna_cut_vshift=1;
 	antenna_cut_rise=wall_sz;
 	//sd cut
