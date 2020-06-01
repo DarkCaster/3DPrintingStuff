@@ -23,7 +23,7 @@ psu_clearance=1,
 )
 {
 	attach_clearance=0.05;
-	plug_diam=36.3;
+	plug_diam=37.3;
 	stand_base_diam=12;
 	plug_shift=5+plug_diam/2;
 	plug_height_corr=-4+base_sz;
