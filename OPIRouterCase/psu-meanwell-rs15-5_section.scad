@@ -20,6 +20,8 @@ vent_size=[5,2],
 vent_period=[10,3],
 vent_angle=70,
 psu_clearance=1,
+top_plug=true,
+cable_diam=6,
 )
 {
 	attach_clearance=0.05;
@@ -62,19 +64,20 @@ psu_clearance=1,
 					base_sz=base_sz,
 					attach=attach,
 					quality=quality,
-					vents=[true,true,true,true],
+					vents=[true,true,true,top_plug],
 					vent_size=vent_size,
 					vent_period=vent_period,
 					vent_angle=vent_angle,
 					center_xy=true);
 				//psu plug stand
-				translate([-size_x/2+plug_shift,0,base_sz])
-					stand(height=height-base_sz+plug_height_corr,
-						inner_diam=3,
-						top_diam=6,
-						bottom_diam=stand_base_diam,
-						attach=attach_clearance,
-						quality=2,center_xy=true);
+				if(top_plug)
+					translate([-size_x/2+plug_shift,0,base_sz])
+						stand(height=height-base_sz+plug_height_corr,
+							inner_diam=3,
+							top_diam=6,
+							bottom_diam=stand_base_diam,
+							attach=attach_clearance,
+							quality=2,center_xy=true);
 				//psu stands
 				translate([psu_mvx+psu_size[0]/2-psu_screw_dx1,(size_y-psu_stand_sz)/2-wall_sz,base_sz])
 					cube_vround(size=[psu_stand_sz,psu_stand_sz,height-base_sz],
@@ -124,6 +127,13 @@ psu_clearance=1,
 				cube_vround(size=[psu_mvx*2,size_y/2-(2*wall_sz+screw_diam)-stand_base_diam/2,base_sz+attach_clearance],
 					rounding=psu_stand_sz/2, quality=quality,
 					round_corners=[true,true,true,true],attach=attach_clearance,center_xy=true);
+			//cut for power wire
+			if(!top_plug)
+				translate([-size_x/2+wall_sz/2,size_y/4-wall_sz,height/2])
+					rotate(a=90,v=[0,1,0])
+						cylinder(d=cable_diam,
+							h=wall_sz+2*attach_clearance,
+							center=true,$fn=12*quality);
 		}
 		//draw psu box
 		if($preview)

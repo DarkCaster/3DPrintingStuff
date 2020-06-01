@@ -13,6 +13,7 @@ center_xy=false,
 center_z=false,
 attach=0,
 quality=2,
+top_plug=true,
 )
 {
 	attach_clearance=0.05;
@@ -51,6 +52,7 @@ quality=2,
 					attach=attach,
 					quality=quality,
 					center_xy=true);
+				if(top_plug)
 				translate([-size_x/2+plug_shift,0,(plug_height-attach_clearance)/2+base_sz])
 					intersection()
 					{
@@ -66,6 +68,8 @@ quality=2,
 						}
 					}
 			}
+			if(top_plug)
+			{
 			translate([-size_x/2+plug_shift,0,(plug_height+base_sz)/2])
 				intersection()
 				{
@@ -78,6 +82,7 @@ quality=2,
 			translate([-size_x/2+plug_shift,0,base_sz+(plug_height+attach_clearance)/2])
 				cube(size=[plug_diam,plug_cut2_sz,plug_height+attach_clearance],
 						center=true);
+			}
 		}
 	}
 }

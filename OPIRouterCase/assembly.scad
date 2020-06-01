@@ -39,6 +39,9 @@ Quality=2; //[1:1:10]
 //Ext USB adapter layout
 USB_Adapter_Layout=1; // [0:Forward, 1:Backward]
 
+//Power plug
+USE_Top_Plug=1; // [0:Side cable, 1:Top plug]
+
 //Render target
 Target=0; // [0:Assembly, 1:OrangePI Section, 2:DUB-E100 Section, 3:PSU Section, 4:Top cover]
 
@@ -98,6 +101,7 @@ if(Target==0 || Target==3)
 			vent_size=Vent_Size,
 			vent_period=Vent_Period,
 			vent_angle=Vent_Angle,
+			top_plug=USE_Top_Plug==1,
 			center_xy=true);
 }
 
@@ -109,5 +113,6 @@ if(Target==0 || Target==4)
 			base_sz=FinalBaseSz,
 			screw_diam=Screw_Diam,
 			screw_clearance=Screw_Clearance,
+			top_plug=USE_Top_Plug==1,
 			center_xy=true);
 }
