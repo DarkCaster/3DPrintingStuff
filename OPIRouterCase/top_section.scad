@@ -21,7 +21,7 @@ quality=2,
 	plug_height=19;
 	plug_wall_sz=2;
 	plug_cut1_sz=33.5;
-	plug_cut2_sz=10;
+	plug_cut2_sz=10.5;
 	plug_cut3_sz=4;
 	assert(len(size)==2);
 	size_x=size[0];
