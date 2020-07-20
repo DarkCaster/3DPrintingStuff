@@ -48,6 +48,10 @@ module front_stand(
 				cylinder(d=3.1,h=stand_base_width+0.02,$fn=6*quality);
 			translate([ext_screw_shift+ext_screw_distance,11,-stand_base_width-0.01])
 				cylinder(d=3.1,h=stand_base_width+0.02,$fn=6*quality);
+			if(!use_mirror)
+				translate([stand_shift+hdd_height*hdd_count,stand_len/2,(ext_width-hdd_width-stand_base_width*2)/(hdd_count-1)*(hdd_count-1)-15])
+					rotate([90,0,0])
+						cylinder(d=20,h=stand_len+0.1,center=true,$fn=12*quality);
 		}
 	}
 }
