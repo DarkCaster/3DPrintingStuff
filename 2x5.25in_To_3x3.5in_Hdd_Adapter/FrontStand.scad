@@ -26,28 +26,28 @@ module front_stand(
 				translate([0,0,-stand_base_width])
 					cube_vround(round_corners=[true,true,true,true],
 						size=[height,stand_len,stand_base_width],
-						attach=0, wall_attach=0, rounding=3,
+						attach=0, wall_attach=0.01, rounding=3,
 						center_xy=false,center_z=false);
 				for(x=[0:hdd_count-1])
 					translate([stand_shift+hdd_height*x,0,0])
-						cube_vround(round_corners=[true,true,true,true],
+						cube_vround(round_corners=[x==hdd_count-1,x==hdd_count-1,false,false],
 							size=[hdd_height,stand_len,(ext_width-hdd_width-stand_base_width*2)/(hdd_count-1)*(use_mirror?(hdd_count-1-x):x)],
-							attach=0.01, wall_attach=0, rounding=3,
+							attach=0.01, wall_attach=0.01, rounding=3,
 							center_xy=false,center_z=false);
 			}
 			for(x=[0:hdd_count-1])
 			{
 				translate([stand_shift+screw_shift+hdd_height*x,5,-stand_base_width-0.01])
-					cylinder(d=3.1,h=ext_width,$fn=6*quality);
+					cylinder(d=4,h=ext_width,$fn=6*quality);
 				translate([stand_shift+screw_shift+hdd_height*x,5,-stand_base_width-0.01])
-					cylinder(d=6,h=stand_base_width-screw_depth+(ext_width-hdd_width-stand_base_width*2)/(hdd_count-1)*(use_mirror?(hdd_count-1-x):x),$fn=6*quality);
-				translate([stand_shift+screw_shift+hdd_height*x-3,5-100,(ext_width-hdd_width-stand_base_width*2)/(hdd_count-1)*(use_mirror?(hdd_count-1-x):x)-7])
-					cube([6,100,5]);
+					cylinder(d=8,h=stand_base_width-screw_depth+(ext_width-hdd_width-stand_base_width*2)/(hdd_count-1)*(use_mirror?(hdd_count-1-x):x),$fn=6*quality);
+				translate([stand_shift+screw_shift+hdd_height*x-4,5-100,(ext_width-hdd_width-stand_base_width*2)/(hdd_count-1)*(use_mirror?(hdd_count-1-x):x)-7])
+					cube([8,100,5]);
 			}
-			translate([ext_screw_shift,11,-stand_base_width-0.01])
-				cylinder(d=3.1,h=stand_base_width+0.02,$fn=6*quality);
-			translate([ext_screw_shift+ext_screw_distance,11,-stand_base_width-0.01])
-				cylinder(d=3.1,h=stand_base_width+0.02,$fn=6*quality);
+			translate([ext_screw_shift,12,-stand_base_width-0.01])
+				cylinder(d=3,h=stand_base_width+0.02,$fn=6*quality);
+			translate([ext_screw_shift+ext_screw_distance,12,-stand_base_width-0.01])
+				cylinder(d=3,h=stand_base_width+0.02,$fn=6*quality);
 			if(!use_mirror)
 				translate([stand_shift+hdd_height*hdd_count,stand_len/2,(ext_width-hdd_width-stand_base_width*2)/(hdd_count-1)*(hdd_count-1)-15])
 					rotate([90,0,0])
