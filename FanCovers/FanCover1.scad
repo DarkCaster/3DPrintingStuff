@@ -2,11 +2,11 @@ use <../OpenSCAD_Modules/boards.scad>
 
 module fan_cover(
 	size=90,
-	fan_diam=88,
+	fan_diam=89,
 	hole_diam=4,
 	hole_shift=4,
 	base=1,
-	height=5,
+	height=6,
 	quality=2, //integer from 1 to infinity
 )
 {
@@ -20,7 +20,7 @@ module fan_cover(
 
 module fan_cut(
 	fan_diam=88,
-	height=5,
+	height=6,
 	quality=2, //integer from 1 to infinity
 )
 {
