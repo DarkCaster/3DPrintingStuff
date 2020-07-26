@@ -10,7 +10,7 @@ module hdd_clip1(
 	{
 		union()
 		{
-			cube_vround(size=[len+8,20,2],rounding=2,center_xy=true,quality=quality);
+			cube_vround(size=[len+8,20,1.6],rounding=2,center_xy=true,quality=quality);
 			translate([len/2+2,0,0])
 				cube_vround(size=[4,20,height],rounding=2,center_xy=true,quality=quality);
 			translate([-len/2-2,0,0])
