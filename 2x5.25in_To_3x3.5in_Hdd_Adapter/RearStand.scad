@@ -52,6 +52,27 @@ module rear_stand(
 				translate([stand_shift+hdd_height*hdd_count,stand_len/2,(ext_width-hdd_width-stand_base_width*2)/(hdd_count-1)*(hdd_count-1)-15])
 					rotate([90,0,0])
 						cylinder(d=20,h=stand_len+0.1,center=true,$fn=12*quality);
+			translate([height/2,stand_len/2,-stand_base_width+8/2])
+				rotate([90,0,0])
+					cube_vround(size=[8,8+0.01,stand_len+0.1],round_corners=[true,false,false,true],center_xy=true,center_z=true);
+			if(use_mirror)
+			{
+				translate([stand_shift+hdd_height/2-1,stand_len/2,13])
+					rotate([90,0,0])
+						cube_vround(size=[18,20,stand_len+0.1],center_xy=true,center_z=true);
+				for(x=[0:hdd_count-1])
+					translate([stand_shift+hdd_height*x+hdd_height-2,-0.1,(ext_width-hdd_width-stand_base_width*2)/(hdd_count-1)*(hdd_count-2-x)])
+						cube_vround(round_corners=[x==hdd_count-1,x==hdd_count-1,false,false],
+							size=[hdd_height,stand_len+0.2,(ext_width-hdd_width-stand_base_width*2)/(hdd_count-1)*(hdd_count-1-x)+1],
+							attach=0.01, wall_attach=0.01, rounding=3,
+							center_xy=false,center_z=false);
+			}
+			else
+			{
+				translate([stand_shift+hdd_height*2,stand_len/2,10])
+					rotate([90,0,0])
+						cube_vround(size=[30,10,stand_len+0.1],center_xy=true,center_z=true);
+			}
 		}
 	}
 }
