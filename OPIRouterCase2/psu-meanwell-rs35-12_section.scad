@@ -10,7 +10,7 @@ module psu_rs15_section(
 size=[112,98],
 screw_diam=3,
 screw_clearance=0.2,
-wall_sz=2,
+wall_sz=1.6,
 base_sz=2,
 center_xy=false,
 center_z=false,
