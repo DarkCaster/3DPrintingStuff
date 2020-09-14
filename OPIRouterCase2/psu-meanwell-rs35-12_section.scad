@@ -2,12 +2,12 @@ use <../OpenSCAD_Modules/case_section.scad>
 use <../OpenSCAD_Modules/cube_vround.scad>
 use <../OpenSCAD_Modules/stand.scad>
 
-rs35_12_psu_size=[99,81,35.5];
+rs35_12_psu_size=[99,81.5,35.5];
 
 function psu_rs35_section_height(base_sz=2,psu_clearance=1) = base_sz+rs35_12_psu_size[2]+psu_clearance/2;
 
 module psu_rs15_section(
-size=[120,95],
+size=[112,98],
 screw_diam=3,
 screw_clearance=0.2,
 wall_sz=2,
@@ -51,7 +51,7 @@ clip_width=3,
 	assert(size_x>=min_szx);
 	assert(size_y>=min_szy);
 	psu_mvx=size_x/2-rs35_12_psu_size[0]/2-(psu_clr_mode?psu_clearance:screw_diam+wall_sz)-wall_sz;
-	psu_cable_mvx=(size_x-rs35_12_psu_size[0])/2;
+	psu_cable_mvx=(size_x-rs35_12_psu_size[0])/2+4;
 	translate([center_xy?0:size_x/2,center_xy?0:size_y/2,center_z?-height/2:0])
 	{
 		difference()
