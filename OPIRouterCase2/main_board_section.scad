@@ -31,6 +31,12 @@ clip_width=3,
 clip_clearance=0.2,
 clip_cover_width=3+1.6,
 clip_cover_sz=12,
+rear_cut_z=20,
+rear_cut_x=100,
+rear_cut_depth=15,
+rear_cut_clip_x=2,
+rear_cut_clip_z=10,
+rear_cut_clip_shift=5,
 )
 {
 	attach_clearance=0.05;
@@ -96,9 +102,16 @@ clip_cover_sz=12,
 			translate([size_x/2-wall_sz/2,size_y/2-antenna_x,antenna_z+base_sz])
 				rotate(a=90,v=[0,1,0])
 					cylinder(d=antenna_diam,h=wall_sz+attach_clearance*2,center=true,$fn=12*quality);
+			//rear cut
+			translate([size_x/2-rear_cut_depth,-rear_cut_x/2,0-attach_clearance])
+				cube(size=[rear_cut_depth+attach_clearance,rear_cut_x,rear_cut_z+attach_clearance]);
+			translate([size_x/2-rear_cut_depth,-rear_cut_x/2-rear_cut_clip_x-rear_cut_clip_shift,rear_cut_clip_z])
+				cube(size=[rear_cut_depth+attach_clearance,rear_cut_clip_x,rear_cut_clip_z]);
+			translate([size_x/2-rear_cut_depth,rear_cut_x/2+rear_cut_clip_shift,rear_cut_clip_z])
+				cube(size=[rear_cut_depth+attach_clearance,rear_cut_clip_x,rear_cut_clip_z]);
 		}
 		//draw psu box
-		if(!$preview)
+		if($preview)
 			color([0.75,0.75,0.75])
 			translate([psu_mvx,0,mainboard_size[2]/2+base_sz])
 				cube(size=mainboard_size,center=true);
