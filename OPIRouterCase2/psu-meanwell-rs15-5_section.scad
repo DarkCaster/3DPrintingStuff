@@ -27,18 +27,17 @@ clip_z=10,
 clip_int_sz=3,
 clip_ext_sz=10,
 clip_width=3,
+psu_wires_dy=10,
 )
 {
 	attach_clearance=0.05;
 	psu_clr_mode=rs15_5_psu_size[0]>rs15_5_psu_size[1];
-	psu_wires_dy=10;
 	psu_screw_dy=15;
 	psu_screw_diam=3;
 	psu_screw_ext_diam=5;
 	psu_screw_dx1=11.5;
 	psu_screw_dx2=51;
 	psu_cable_ext_diam=cable_diam+2;
-	psu_cable_pos_y=psu_screw_dy;
 	assert(len(size)==2);
 	size_x=size[0];
 	size_y=size[1];
