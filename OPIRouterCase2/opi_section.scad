@@ -31,12 +31,14 @@ clip_int_sz=3,
 clip_ext_sz=10,
 clip_width=3,
 clip_clearance=0.4,
-clip_cover_width=3+1.6,
+clip_cover_width=3+2,
 clip_cover_sz=14,
+clip_shift=45,
 opi_shift_x=25,
 opi_shift_y=0,
 dub_shift_x=-29,
 psu_wires_dy=10,
+psu_wires_dx=16.55,
 )
 {
 	attach_clearance=0.05;
@@ -105,7 +107,7 @@ psu_wires_dy=10,
 					base_sz=base_sz,
 					attach=attach,
 					quality=quality,
-					vents=[true,false,false,true],
+					vents=[true,true,false,true],
 					vent_size=vent_size,
 					vent_period=vent_period,
 					vent_angle=vent_angle,
@@ -133,12 +135,12 @@ psu_wires_dy=10,
 					cube_vround(size=dub_holder_size,rounding=dub_rounding+dub_holder_wall_sz,round_corners=[true,false,false,true],
 						attach=attach_clearance,center_xy=true);
 			}
-			translate([size_x/2-psu_cable_mvx-wall_sz,-(size_y-wall_sz)/2,psu_wires_height])
+			translate([size_x/2-psu_wires_dx,-(size_y-wall_sz)/2,psu_wires_height])
 				rotate(a=90,v=[1,0,0])
 					cylinder(d=cable_diam,h=wall_sz+attach_clearance,center=true,$fn=12*quality);
-			translate([0,-size_y/2,height-clip_z])
+			translate([clip_shift,-size_y/2,height-clip_z])
 				rotate(a=90,v=[0,1,0])
-					linear_extrude(height=size_x*2, center = true)
+					linear_extrude(height=size_x, center = true)
 						polygon(points = [[-clip_int_sz/2-clip_clearance,-attach_clearance],[-clip_ext_sz/2-clip_clearance,clip_width+clip_clearance],[clip_ext_sz/2+clip_clearance,clip_width+clip_clearance],[clip_int_sz/2+clip_clearance,-attach_clearance]]);
 			//sdcard cut
 			translate([opi_shift_x-sdcut_shift_x,(-size_y+sdcut_length)/2,sdcut_height/2])
