@@ -147,4 +147,43 @@ psu_wires_dy=10,
 	}
 }
 
+
+module psu_rs15_cover(
+size=[98,66],
+screw_diam=3,
+wall_sz=1.6,
+base_sz=2,
+center_xy=false,
+center_z=false,
+attach=0,
+quality=2,
+psu_clearance=1,
+)
+{
+	attach_clearance=0.05;
+	psu_clr_mode=rs15_5_psu_size[0]>rs15_5_psu_size[1];
+	assert(len(size)==2);
+	size_x=size[0];
+	size_y=size[1];
+	height=psu_rs15_5_section_height(base_sz=base_sz,psu_clearance=psu_clearance);
+	assert(screw_diam>1);
+	assert(screw_diam<=6);
+	assert(attach>=0);
+	max_subsz=rs15_5_psu_size[1];
+	max_wallsz=wall_sz;
+	min_szx=max_wallsz+wall_sz+2*(psu_clr_mode?psu_clearance:screw_diam+wall_sz)+rs15_5_psu_size[0];
+	min_szy=2*(wall_sz+(psu_clr_mode?screw_diam+wall_sz:psu_clearance))+max_subsz;
+	assert(size_x>=min_szx);
+	assert(size_y>=min_szy);
+	screw_hole_shift=[wall_sz+screw_diam/2,wall_sz+screw_diam/2];
+	translate([center_xy?0:size_x/2,center_xy?0:size_y/2,center_z?-height/2:0])
+	{
+		translate([-size_x/2,-size_y/2,0])
+			board(size_x=size_x,size_y=size_y,width=base_sz,hole_diam=screw_diam,rounding=screw_diam,
+				hole1=screw_hole_shift,hole2=screw_hole_shift,hole3=screw_hole_shift,hole4=screw_hole_shift,
+				quality=quality,center_xy=false);
+	}
+}
+
+//psu_rs15_cover(center_xy=true,center_z=true);
 psu_rs15_section(center_xy=true,center_z=true);
