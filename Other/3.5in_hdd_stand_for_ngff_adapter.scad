@@ -5,6 +5,7 @@ module adapter()
 {
 	// http://support.wdc.com/images/kb/3_5_emount.jpg
 	adapter_szx=90;
+	adapter_szy=105;
 	holes_szx=44.45;
 	holes_szy=95.25;
 	adapter_holes_szx=79;
@@ -17,7 +18,7 @@ module adapter()
 			difference()
 			{
 				//base
-				cube_vround(size=[adapter_szx,105,3], round_corners=[true,true,true,true],
+				cube_vround(size=[adapter_szx,adapter_szy,3], round_corners=[true,true,true,true],
 				rounding=5, center_xy=true, center_z=false, attach=0, wall_attach=0, quality=2);
 				//hdd cliping holes
 				translate([holes_szx/2,holes_szy/2,0])
