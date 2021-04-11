@@ -1,0 +1,53 @@
+module ptfe_tube_clip
+(
+	ext_diam=15.8,
+	cut_diam=12,
+	full_len=30,
+	int_len=14,
+	cut1_len=3,
+	cut2_len=6,
+	clip_len=20,
+	clip_cut=3.5,
+	ptfe_ext_diam=4.4,
+	ptfe_clip_diam=5.2,
+	screw_diam=4.5,
+	screw_x=11,
+	quality=1,
+	attach=0.01,
+)
+{
+	difference()
+	{
+		union()
+		{
+			difference()
+			{
+				cylinder(d=ext_diam,h=full_len,$fn=24*quality);
+				translate([0,0,cut1_len])
+					difference()
+					{
+						cylinder(d=ext_diam+attach,h=cut2_len,$fn=24*quality);
+						translate([0,0,-attach])
+							cylinder(d=cut_diam,h=cut2_len+2*attach,$fn=24*quality);
+					}
+			}
+			//clip
+			translate([0,-ext_diam/2,int_len])
+				cube([clip_len,ext_diam,full_len-int_len]);
+		}
+		//ptfe
+		translate([0,0,-attach])
+			cylinder(d=ptfe_ext_diam,h=full_len+2*attach,$fn=24*quality);
+		//clip cut
+		translate([0,-clip_cut/2,int_len-attach])
+				cube([clip_len+attach,clip_cut,full_len-int_len+2*attach]);
+		//ptfe clip
+		translate([0,0,int_len-attach])
+			cylinder(d=ptfe_clip_diam,h=full_len-int_len+2*attach,$fn=24*quality);
+		translate([screw_x,0,int_len+(full_len-int_len)/2])
+			rotate(a=90,v=[1,0,0])
+				cylinder(d=screw_diam,h=ext_diam+2*attach,center=true,$fn=24*quality);
+	}
+}
+
+ptfe_tube_clip();
