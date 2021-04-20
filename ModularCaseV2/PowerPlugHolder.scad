@@ -30,9 +30,9 @@ module NylonTieCut
 
 module PowerPlugHolder
 (
-	height=70,
+	height=90,
 	width=35,
-	depth=50,
+	depth=30,
 	cornerCutL=18,
 	cornerCutH=14,
 	cornerCutD=14,
@@ -60,23 +60,30 @@ module PowerPlugHolder
 			rotate(a=90,v=[0,0,1])
 				rotate(a=90,v=[-1,0,0])
 					NylonTieCut();
+		
 		translate([0,0,5])
 			mirror([0,1,0])
 				rotate(a=90,v=[0,0,-1])
 					NylonTieCut(cutDepth=15);
-		translate([0,0,25])
-			mirror([0,1,0])
-				rotate(a=90,v=[0,0,-1])
-					NylonTieCut(cutDepth=15);
-		translate([0,21,depth])
+
+		translate([0,20,depth])
 			rotate(a=90,v=[-1,0,0])
 				NylonTieCut();
-		translate([0,57,depth])
+		translate([0,40,depth])
 			rotate(a=90,v=[-1,0,0])
 				NylonTieCut();
-		translate([0,39,depth])
+		translate([0,60,depth])
 			rotate(a=90,v=[-1,0,0])
 				NylonTieCut();
+		translate([0,80,depth])
+			rotate(a=90,v=[-1,0,0])
+				NylonTieCut();
+		//power-plug cut
+		translate([11,20,-cutClr])
+			cube([20,27.5,depth+2*cutClr]);
+		//switch cut
+		translate([10,53,-cutClr])
+			cube([22,31,depth+2*cutClr]);
 	}
 }
 
