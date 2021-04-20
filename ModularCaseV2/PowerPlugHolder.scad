@@ -30,8 +30,8 @@ module NylonTieCut
 
 module PowerPlugHolder
 (
-	height=90,
-	width=35,
+	height=105,
+	width=40,
 	depth=30,
 	cornerCutL=18,
 	cornerCutH=14,
@@ -56,33 +56,46 @@ module PowerPlugHolder
 		translate([0,0,-cutClr])
 			cylinder(h=depth+2*cutClr,r=cornerCutR,$fn=24*quality);
 		//holes for nylon ties
-		translate([width-6,0,depth])
+		translate([width-3,0,depth])
 			rotate(a=90,v=[0,0,1])
 				rotate(a=90,v=[-1,0,0])
 					NylonTieCut();
-		
+		translate([width-14,0,depth])
+			rotate(a=90,v=[0,0,1])
+				rotate(a=90,v=[-1,0,0])
+					NylonTieCut();
+
 		translate([0,0,5])
 			mirror([0,1,0])
 				rotate(a=90,v=[0,0,-1])
-					NylonTieCut(cutDepth=15);
+					NylonTieCut(cutDepth=13);
 
 		translate([0,20,depth])
 			rotate(a=90,v=[-1,0,0])
 				NylonTieCut();
-		translate([0,40,depth])
+		translate([0,35,depth])
 			rotate(a=90,v=[-1,0,0])
 				NylonTieCut();
-		translate([0,60,depth])
+		translate([0,50,depth])
+			rotate(a=90,v=[-1,0,0])
+				NylonTieCut();
+		translate([0,65,depth])
 			rotate(a=90,v=[-1,0,0])
 				NylonTieCut();
 		translate([0,80,depth])
 			rotate(a=90,v=[-1,0,0])
 				NylonTieCut();
+		translate([0,95,depth])
+			rotate(a=90,v=[-1,0,0])
+				NylonTieCut();
 		//power-plug cut
 		translate([11,20,-cutClr])
 			cube([20,27.5,depth+2*cutClr]);
+		//fuse box
+		translate([11,53,-cutClr])
+			cube([24.5,10,depth+2*cutClr]);
 		//switch cut
-		translate([10,53,-cutClr])
+		translate([10,68,-cutClr])
 			cube([22,31,depth+2*cutClr]);
 	}
 }
