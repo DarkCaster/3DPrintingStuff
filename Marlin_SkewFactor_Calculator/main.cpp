@@ -7,20 +7,20 @@
 
 //xy
 
-//const double AC_values[] = {141.155, 141.14, 141.15};
-//const double BD_values[] = {141.35, 141.3, 141.325};
-//const double AD_values[] = {99.855, 99.855, 99.825};
+//const double AC_values[] = {141.18, 141.18, 141.18, 141.18};
+//const double BD_values[] = {140.95, 140.96, 140.96, 140.96};
+//const double AD_values[] = {100.02, 100.02, 100.02, 100.02};
 
 //xz
 
-const double AC_values[] = {112.8, 112.8, 112.79, 112.8};
-const double BD_values[] = {112.7, 112.68, 112.675, 112.67};
-const double AD_values[] = {79.83,79.85,79.85,79.9};
+//const double AC_values[] = {112.95, 112.96, 112.96, 112.95};
+//const double BD_values[] = {112.92, 112.93, 112.93, 112.92};
+//const double AD_values[] = {79.82, 79.84, 79.85, 79.82};
 
 //yz
-//const double AC_values[] = {112.525, 112.55, 112.52, 112.525};
-//const double BD_values[] = {112.85, 112.84, 112.85, 112.82, 112.885 };
-//const double AD_values[] = {79.945, 79.925, 79.92, 79.915};
+const double AC_values[] = {112.72, 112.74, 112.72, 112.75};
+const double BD_values[] = {112.94, 112.94, 112.86, 112.88};
+const double AD_values[] = {79.92, 79.86, 79.88, 79.88};
 
 // *******
 // *******
