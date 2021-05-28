@@ -18,15 +18,27 @@ module DB9Cut
 (
 	extra_width=2,
 	width=3.2,
+	extra_width=2,
 	screw_diam=3.25,
 	conn_width=19,
-	conn_height=13,
+	conn_length=13,
 	screw_diff=25,
+	quality=1,
 )
 {
 	cutClr=0.1;
-	
+	union()
+	{
+		translate([0,0,-width-cutClr])
+			cube_vround(size=[conn_width,conn_length,width+extra_width+2*cutClr],rounding=2,center_xy=true);
+		translate([-screw_diff/2,0,-width-cutClr])
+			cylinder(d=screw_diam,h=width+extra_width+2*cutClr,$fn=quality*12);
+		translate([screw_diff/2,0,-width-cutClr])
+			cylinder(d=screw_diam,h=width+extra_width+2*cutClr,$fn=quality*12);
+	}
 }
+
+//DB9Cut();
 
 module PowerPlugHolder
 (
@@ -84,6 +96,18 @@ module PowerPlugHolder
 		translate([0,50,depth-cutShift])
 			rotate(a=-90,v=[1,0,0])
 				NylonTieCut();
+		translate([0,30,68])
+			rotate(a=-90,v=[0,1,0])
+				DB9Cut();
+		translate([0,44.2,68])
+			rotate(a=-90,v=[0,1,0])
+				DB9Cut();
+		translate([0,30,35])
+			rotate(a=-90,v=[0,1,0])
+				DB9Cut();
+		translate([0,44.2,35])
+			rotate(a=-90,v=[0,1,0])
+				DB9Cut();
 	}
 }
 
