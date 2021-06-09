@@ -19,7 +19,7 @@ module DB9Cut
 	extra_width=2,
 	width=3.2,
 	screw_diam=3.25,
-	conn_width=19,
+	conn_width=20,
 	conn_length=13,
 	screw_diff=25,
 	quality=1,
@@ -45,7 +45,7 @@ module PowerPlugHolder
 	width=2,
 	bottom_clip_width=2.1,
 	extra_width=5,
-	depth=125-30,
+	depth=125-40,
 	extra_height=2,
 	cornerCutL=18,
 	cornerCutH=14,
@@ -83,8 +83,6 @@ module PowerPlugHolder
 			NylonTieCut(extra_width=extra_width);
 		translate([0,cutShift,50])
 			NylonTieCut(extra_width=extra_width);
-		translate([0,cutShift,70])
-			NylonTieCut(extra_width=extra_width);
 
 		translate([0,30,depth-cutShift])
 			rotate(a=-90,v=[1,0,0])
@@ -95,28 +93,34 @@ module PowerPlugHolder
 		translate([0,70,depth-cutShift])
 			rotate(a=-90,v=[1,0,0])
 				NylonTieCut(extra_width=extra_width);
-		translate([0,90,depth-cutShift])
+		translate([0,95,depth-cutShift])
 			rotate(a=-90,v=[1,0,0])
 				NylonTieCut(extra_width=extra_width);
 
-		translate([0,20,68])
+		translate([0,22,58])
 			rotate(a=-90,v=[0,1,0])
 				DB9Cut(extra_width=extra_width);
-		translate([0,40,68])
+		translate([0,40,58])
 			rotate(a=-90,v=[0,1,0])
 				DB9Cut(extra_width=extra_width);
-		translate([0,20,35])
+		translate([0,22,25])
 			rotate(a=-90,v=[0,1,0])
 				DB9Cut(extra_width=extra_width);
-		translate([0,40,35])
+		translate([0,40,25])
 			rotate(a=-90,v=[0,1,0])
 				DB9Cut(extra_width=extra_width);
+
 		//rear cut
 		translate([0,0,bottom_clip_width])
 			cube(size=[width+cutClr,height+cutClr,depth+cutClr]);
 		//corner cut
-		translate([-extra_width-cutClr,80,depth-8])
+		translate([-extra_width-cutClr,82,depth-8])
 			cube(size=[extra_width+width+cutClr*2,8,depth]);
+			
+		translate([-extra_width/2,31,25])
+			cube(size=[extra_width+cutClr*2,13,20],center=true);
+		translate([-extra_width/2,31,58])
+			cube(size=[extra_width+cutClr*2,13,20],center=true);
 	}
 }
 
