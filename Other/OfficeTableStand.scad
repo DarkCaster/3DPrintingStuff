@@ -1,0 +1,30 @@
+module Stand
+(
+	height1=25.4,
+	height2=10,
+	diam1=25.25,
+	diam2=8,
+	height2i=16,
+	diam3=32,
+	height3=1,
+	quality=2,
+)
+{
+	clr=0.1;
+	difference()
+	{
+		union()
+		{
+			translate([0,0,-clr])
+				cylinder(h=height1+clr,d=diam1,$fn=6);
+			translate([0,0,-clr])
+				cylinder(h=height2+clr,d=diam1,$fn=12*quality);
+			translate([0,0,-height3])
+				cylinder(h=height3,d=diam3,$fn=12*quality);
+		}
+		translate([0,0,-clr-height3])
+			cylinder(h=height2i+height3+clr,d=diam2,$fn=12*quality);
+	}
+}
+
+Stand();
