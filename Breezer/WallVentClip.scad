@@ -21,8 +21,8 @@ module ClipHole
 
 module NutPocket
 (
-	nutDiam=6,
-	nutHeight=2.5,
+	nutDiam=6.5,
+	nutHeight=2.6,
 	pocketLen=10,
 )
 {
@@ -40,9 +40,9 @@ module NutPocket
 module ExtClip
 (
 	size=[20,10,10],
-	holeDiam=3.5,
-	nutDiam=6,
-	nutHeight=2.5,
+	holeDiam=3.75,
+	nutDiam=6.5,
+	nutHeight=2.6,
 	quality=2,
 	cutClr=0.1,
 )
@@ -64,15 +64,15 @@ module WallVentClip
 	size=[160,160,2],
 	holesDiff=[150,150],
 	wallHolesLen=10,
-	wallHolesDiam=3.5,
-	intHolesDiam=3.5,
+	wallHolesDiam=4,
+	intHolesDiam=3.75,
 	height=10,
 	centralHoleDiam=125,
 	centralWallDiams=[135,145],
 	extClipSize=[20,10],
-	extClipDiff=[100,100],
-	nutDiam=6,
-	nutHeight=2.5,
+	extClipDiff=[100,100,2],
+	nutDiam=6.5,
+	nutHeight=2.6,
 	quality=2,
 )
 {
@@ -105,7 +105,7 @@ module WallVentClip
 		for(d=[0:1])
 			rotate(a=90,v=[0,0,d])
 				for (j=[-1:2:1])
-					translate([0,j*size[1-d]/2-j*extClipSize[1]/2,0])
+					translate([0,j*size[1-d]/2-j*(extClipSize[1]/2+extClipDiff[2]),0])
 						for (i=[-1:2:1])
 							translate([i*extClipDiff[d]/2,0,0])
 								ExtClip(size=[extClipSize[0],extClipSize[1],height],holeDiam=intHolesDiam,nutDiam=nutDiam,nutHeight=nutHeight,quality=quality);
