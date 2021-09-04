@@ -62,17 +62,17 @@ module ExtClip
 module WallVentClip
 (
 	size=[160,160,2],
-	holesDiff=[150,150],
+	holesDiff=[149.5,146],
 	wallHolesLen=10,
 	wallHolesDiam=4,
 	intHolesDiam=3.75,
 	height=10,
 	centralHoleDiam=125,
-	centralWallDiams=[135,145],
+	centralWallDiams=[136,146],
 	extClipSize=[20,10],
 	extClipDiff=[100,100,2],
-	nutDiam=6.5,
-	nutHeight=2.6,
+	nutDiam=6.75,
+	nutHeight=3,
 	quality=2,
 )
 {
