@@ -47,13 +47,14 @@ module ValvePart
 	valveShrink=1,
 	valveGap=10,
 	shaftExtDiam=8,
-	shaftIntDiam=4,
+	shaftIntDiam=5,
 	bigGearToothCnt=60,
 	smallGearToothCnt=10,
 	pressureAngle=20,
 	gearSectorArc=130,
 	gearSectorRotate=54,
 	gearsClr=0.2,
+	edgeClr=0.1,
 	quality=2,
 )
 {
@@ -104,7 +105,7 @@ module ValvePart
 			//valve cover
 			difference()
 			{
-				cylinder(d1=intDiam, d2=intDiam-2*valveShrink, h=shaftExtDiam/2, $fn=quality*24);
+				cylinder(d1=intDiam-2*edgeClr, d2=intDiam-2*valveShrink-2*edgeClr, h=shaftExtDiam/2, $fn=quality*24);
 
 				translate([-intDiam/2-cutClr,0,0])
 				rotate(a=90,v=[0,0,1])
@@ -112,10 +113,10 @@ module ValvePart
 				linear_extrude(height = intDiam/2+2*cutClr)
 				polygon(points=[
 					[-intDiam/2-cutClr,shaftExtDiam/2+cutClr],
-					[-valveGap,shaftExtDiam/2+cutClr],
-					[-valveGap,shaftExtDiam/2],
-					[-valveGap+valveShrink,0],
-					[-valveGap+valveShrink,-cutClr],
+					[-valveGap+edgeClr,shaftExtDiam/2+cutClr],
+					[-valveGap+edgeClr,shaftExtDiam/2],
+					[-valveGap+valveShrink+edgeClr,0],
+					[-valveGap+valveShrink+edgeClr,-cutClr],
 					[-intDiam/2-cutClr,-cutClr]]);
 
 				rotate(a=90,v=[0,0,1])
@@ -123,10 +124,10 @@ module ValvePart
 				linear_extrude(height = intDiam/2+cutClr)
 				polygon(points=[
 					[-intDiam/2-cutClr,shaftExtDiam/2+cutClr],
-					[valveGap,shaftExtDiam/2+cutClr],
-					[valveGap,shaftExtDiam/2],
-					[valveGap-valveShrink,0],
-					[valveGap-valveShrink,-cutClr],
+					[valveGap+edgeClr,shaftExtDiam/2+cutClr],
+					[valveGap+edgeClr,shaftExtDiam/2],
+					[valveGap-valveShrink+edgeClr,0],
+					[valveGap-valveShrink+edgeClr,-cutClr],
 					[-intDiam/2-cutClr,-cutClr]]);
 			}
 		}
