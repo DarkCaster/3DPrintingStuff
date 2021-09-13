@@ -142,8 +142,6 @@ module ValvePart
 	}
 }
 
-//ValvePart();
-
 module HNutPocket
 (
 	nutDiam=6.75,
@@ -285,3 +283,6 @@ module GateBase
 }
 
 GateBase();
+translate([0,0,12])
+rotate(a=3,v=[0,0,1])
+ValvePart();
