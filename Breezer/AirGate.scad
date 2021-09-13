@@ -1,4 +1,5 @@
 use <../OpenSCAD_Modules/MCAD/involute_gears.scad>
+use <../OpenSCAD_Modules/cube_vround.scad>
 
 //based on bevel_gear_pair example
 function GearRadius(toothCnt,pitch) = toothCnt * pitch / 360;
@@ -141,7 +142,23 @@ module ValvePart
 	}
 }
 
-ValvePart();
+//ValvePart();
+
+module HNutPocket
+(
+	nutDiam=6.75,
+	nutHeight=3,
+	pocketLen=10,
+)
+{
+	m=(nutDiam/2)*sqrt(3)/2;
+	union()
+	{
+		cylinder(d=nutDiam,h=nutHeight,center=true,$fn=6);
+		translate([pocketLen/2,0,0])
+		cube(size=[pocketLen,m*2,nutHeight],center=true);
+	}
+}
 
 module GateBase
 (
@@ -152,7 +169,14 @@ module GateBase
 	smallGearToothCnt=10,
 	pressureAngle=20,
 	baseHeight=4,
-	gearSectorAngle=54,
+	intHolesDepth=3,
+	intHolesDiam=3.75,
+	intHolesExtDiam=8,
+	intClipAngle=45,
+	intClipHeight=10,
+	nutDiam=6.75,
+	nutHeight=3,
+	gearSectorAngle=30,
 	gearsClr=0.2,
 	quality=2,
 )
@@ -175,32 +199,89 @@ module GateBase
 	//calculations taken from bevel_gear module
 	faceConeDescentExt = (1 / ( bigGearToothCnt / bigGearDiam ) + gearsClr) * (bigGearRadius/coneDistance);
 
-	render() //preview is too slow!
-	difference()
+	clipHoleDiff=sqrt(extDiam*extDiam/2)+2*intHolesExtDiam;
+	union()
 	{
-		union()
+		//main part
+		render() //preview is too slow!
+		difference()
 		{
-			translate([0,0,faceConeDescentExt])
-				bevel_gear(
-					number_of_teeth=bigGearToothCnt,
-					cone_distance=coneDistance,
-					outside_circular_pitch=pitch,
-					pressure_angle=pressureAngle,
-					bore_diameter=0,
-					gear_thickness=cutClr,
-					face_width=face,
-					clearance=gearsClr
-				);
-			translate([0,0,-baseHeight])
-				cylinder(d=extDiam, h=baseHeight, $fn=12*quality);
+			union()
+			{
+				translate([0,0,faceConeDescentExt])
+					bevel_gear(
+						number_of_teeth=bigGearToothCnt,
+						cone_distance=coneDistance,
+						outside_circular_pitch=pitch,
+						pressure_angle=pressureAngle,
+						bore_diameter=0,
+						gear_thickness=cutClr,
+						face_width=face,
+						clearance=gearsClr
+					);
+				translate([0,0,-baseHeight])
+					cylinder(d=extDiam, h=baseHeight, $fn=12*quality);
+
+				translate([0,0,-baseHeight])
+				cube_vround(size=[clipHoleDiff,clipHoleDiff,baseHeight],center_xy=true,rounding=intHolesExtDiam,quality=quality);
+			}
+			translate([0,0,-baseHeight-cutClr])
+				cylinder(d=intDiam, h=baseHeight+2*cutClr, $fn=12*quality);
+
+			for(i=[-1:2:1])
+				rotate(a=i*90,v=[0,0,1])
+				Sector(height=extDiam,diam=extDiam+cutClr*2,angle=gearCutAngle,negative=false,quality=quality);
+
+			for (i=[0:3])
+				rotate(a=90*i+45,v=[0,0,1])
+					translate([extDiam/2,0,-baseHeight/2])
+						cylinder(d=intHolesDiam,h=baseHeight+cutClr*2,center=true,$fn=12*quality);
+
+			for (i=[0:3])
+				rotate(a=90*i+45,v=[0,0,1])
+					translate([extDiam/2,0,-intHolesDepth])
+						cylinder(d=intHolesExtDiam,h=intHolesDepth+cutClr,$fn=12*quality);
+			//trim gear edges
+			cylinder(d=intDiam+2*wallWidth,h=intClipHeight+cutClr,$fn=48*quality);
+			difference()
+			{
+				cylinder(d=extDiam,h=intClipHeight,$fn=48*quality);
+				translate([0,0,-cutClr])
+					cylinder(d=extDiam-2*wallWidth,h=intClipHeight+2*cutClr,$fn=48*quality);
+			}
 		}
-		translate([0,0,-baseHeight-cutClr])
-			cylinder(d=intDiam, h=baseHeight+2*cutClr, $fn=12*quality);
-			
-		for(i=[-1:2:1])
-			rotate(a=i*90,v=[0,0,1])
-			Sector(height=extDiam,diam=extDiam+cutClr*2,angle=gearCutAngle,negative=false,quality=quality);
+		//top clip part
+		difference()
+		{
+			union()
+			{
+				difference()
+				{
+					translate([0,0,-cutClr])
+						cylinder(d=extDiam-2*wallWidth,h=intClipHeight+cutClr,$fn=48*quality);
+					translate([0,0,-2*cutClr])
+						cylinder(d=intDiam+2*wallWidth,h=intClipHeight+3*cutClr,$fn=48*quality);
+					for(i=[-1:2:1])
+						rotate(a=90+i*90,v=[0,0,1])
+						translate([0,0,-3*cutClr])
+						Sector(height=extDiam,diam=extDiam+cutClr*4,angle=180-intClipAngle,negative=false,quality=quality);
+				}
+				for(a=[-intClipAngle/2:intClipAngle:intClipAngle/2],i=[0:1])
+					rotate(a=a-i*180,v=[0,0,1])
+						translate([0,intDiam/2+(extDiam-intDiam)/4,-cutClr])
+							cylinder(d=border,h=intClipHeight+cutClr,$fn=48*quality);
+			}
+			for(i=[0:1],a=[-intClipAngle/2:intClipAngle:intClipAngle/2])
+				rotate(a=a-i*180,v=[0,0,1])
+				{
+					translate([0,intDiam/2+(extDiam-intDiam)/4,intClipHeight/2])
+						rotate(a=a>0?180:0,v=[0,0,1])
+							HNutPocket(nutDiam=nutDiam,nutHeight=nutHeight);
+					translate([0,intDiam/2+(extDiam-intDiam)/4,0])
+						cylinder(d=intHolesDiam,h=intClipHeight+cutClr,$fn=12*quality);
+				}
+		}
 	}
 }
 
-//GateBase();
+GateBase();
