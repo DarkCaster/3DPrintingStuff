@@ -405,9 +405,14 @@ module GateClip1
 		rotate(a=-90,v=[0,1,0])
 		cylinder(d=shaftIntDiam,h=lockSize[0]+2*cutClr,center=true,$fn=quality*24);
 
+		//shaft outer shell
+		translate([0,0,shaftClipPos[2]])
+		rotate(a=-90,v=[0,1,0])
+		cylinder(d=shaftExtDiam,h=intDiam+2*wallWidth+2*cutClr,center=true,$fn=quality*24);
+
 		//top cut for main shaft
 		translate([0,0,shaftClipPos[2]+(clipHeight-shaftClipPos[2]+cutClr)/2])
-		cube(size=[intDiam+2*wallWidth+2*cutClr,shaftIntDiam,clipHeight-shaftClipPos[2]+cutClr],center=true);
+		cube(size=[intDiam+2*wallWidth+2*cutClr,shaftExtDiam,clipHeight-shaftClipPos[2]+cutClr],center=true);
 	}
 }
 
