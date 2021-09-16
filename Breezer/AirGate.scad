@@ -397,7 +397,7 @@ module GateClip1
 		//shaft clip holes
 		for(i=[-1:2:1])
 		translate([i*shaftClipPos[0],0,shaftClipPos[2]])
-		rotate(a=-90,v=[1,0,0])
+		rotate(a=i*90,v=[1,0,0])
 		cylinder(d=intHolesDiam,h=lockSize[1]/2+cutClr,center=false,$fn=quality*24);
 
 		//main shaft hole
