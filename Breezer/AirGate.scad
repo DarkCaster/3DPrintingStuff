@@ -318,6 +318,8 @@ module GateClip1
 	guideAngle=70,
 	gearSectorAngle=28,
 	gearSectorHeight=6,
+	valveShrink=1,
+	valveEdgeClr=0.1,
 	gearsClr=0.2,
 	guideClr=0.2,
 	quality=2,
@@ -334,8 +336,19 @@ module GateClip1
 			cylinder(d=extDiam,h=clipHeight,$fn=12*quality);
 			cube_vround(size=[lockSize[0],lockSize[1],clipHeight],center_xy=true,rounding=lockRounding);
 		}
+		//ring internal cuts
 		translate([0,0,-cutClr])
-				cylinder(d=intDiam,h=clipHeight+2*cutClr,$fn=quality*24);
+			cylinder(d=intDiam-2*valveShrink+2*valveEdgeClr,h=clipHeight+2*cutClr,$fn=quality*24);
+		translate([0,0,-cutClr])
+			cylinder(d=intDiam+2*valveEdgeClr,h=shaftClipPos[2]+2*cutClr,$fn=quality*24);
+		translate([0,0,shaftClipPos[2]])
+			cylinder(d1=intDiam+2*valveEdgeClr,d2=intDiam-2*valveShrink+2*valveEdgeClr,h=shaftExtDiam/2,$fn=quality*24);
+		translate([0,0,clipHeight/2])
+		intersection()
+		{
+			cube(size=[intDiam+2*valveEdgeClr,lockCutSize[1],clipHeight+2*cutClr],center=true);
+			cylinder(d=intDiam+2*valveEdgeClr,h=clipHeight+2*cutClr,center=true,$fn=quality*24);
+		}
 
 		//cuts for gears
 		difference()
@@ -396,15 +409,14 @@ module GateClip1
 		translate([0,0,shaftClipPos[2]+(clipHeight-shaftClipPos[2]+cutClr)/2])
 		cube(size=[intDiam+2*wallWidth+2*cutClr,shaftIntDiam,clipHeight-shaftClipPos[2]+cutClr],center=true);
 	}
-
 }
 
-//GateBase();
+GateBase();
 
 //color([1,1,1,0.25])
-//rotate(a=12,v=[0,0,1])
+rotate(a=12,v=[0,0,1])
 GateClip1();
 
-//translate([0,0,12])
-//rotate(a=12,v=[0,0,1])
-//ValvePart();
+translate([0,0,12])
+rotate(a=12,v=[0,0,1])
+ValvePart();
