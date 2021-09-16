@@ -158,6 +158,24 @@ module HNutPocket
 	}
 }
 
+module VNutPocket
+(
+	nutDiam=6.75,
+	nutHeight=2.8,
+	pocketLen=10,
+)
+{
+	m=(nutDiam/2)*sqrt(3)/2;
+	rotate(a=90,v=[0,0,1])
+		rotate(a=90,v=[0,-1,0])
+			union()
+			{
+				cylinder(d=nutDiam,h=nutHeight,center=true,$fn=6);
+				translate([pocketLen/2,0,0])
+				cube(size=[pocketLen,m*2,nutHeight],center=true);
+			}
+}
+
 module GateBase
 (
 	intDiam=93,
@@ -282,7 +300,106 @@ module GateBase
 	}
 }
 
+module GateClip1
+(
+	intDiam=93,
+	extDiam=120,
+	wallWidth=2,
+	clipHeight=16,
+	shaftClipPos=[67,-7,12],
+	shaftIntDiam=5,
+	shaftExtDiam=8,
+	lockSize=[150,30],
+	lockRounding=3,
+	lockCutSize=[12,25],
+	nutDiam=6.75,
+	nutHeight=3,
+	intHolesDiam=3.75,
+	guideAngle=70,
+	gearSectorAngle=28,
+	gearSectorHeight=6,
+	gearsClr=0.2,
+	guideClr=0.2,
+	quality=2,
+)
+{
+	cutClr=0.1;
+	border=(extDiam-intDiam)/2-2*wallWidth;
+
+	difference()
+	{
+		//ring base
+		union()
+		{
+			cylinder(d=extDiam,h=clipHeight,$fn=12*quality);
+			cube_vround(size=[lockSize[0],lockSize[1],clipHeight],center_xy=true,rounding=lockRounding);
+		}
+		translate([0,0,-cutClr])
+				cylinder(d=intDiam,h=clipHeight+2*cutClr,$fn=quality*24);
+
+		//cuts for gears
+		difference()
+		{
+			translate([0,0,-cutClr])
+				cylinder(d=gearsClr+extDiam-2*wallWidth,h=gearSectorHeight+cutClr,$fn=48*quality);
+			translate([0,0,-2*cutClr])
+				cylinder(d=intDiam+2*wallWidth-gearsClr,h=gearSectorHeight+3*cutClr,$fn=48*quality);
+			for(i=[-1:2:1])
+				rotate(a=i*90,v=[0,0,1])
+				translate([0,0,-3*cutClr])
+				Sector(height=extDiam,diam=extDiam,angle=180-2*gearSectorAngle,negative=false,quality=quality);
+		}
+		for(a=[-gearSectorAngle:2*gearSectorAngle:gearSectorAngle],i=[0:1])
+			rotate(a=a-i*180+90,v=[0,0,1])
+				translate([0,intDiam/2+(extDiam-intDiam)/4,-cutClr])
+					cylinder(d=border+gearsClr,h=gearSectorHeight+cutClr,$fn=48*quality);
+
+		//cuts for guides
+		difference()
+		{
+			translate([0,0,-cutClr])
+				cylinder(d=guideClr+extDiam-2*wallWidth,h=clipHeight+2+cutClr,$fn=48*quality);
+			translate([0,0,-2*cutClr])
+				cylinder(d=intDiam+2*wallWidth-guideClr,h=clipHeight+4*cutClr,$fn=48*quality);
+			for(i=[-1:2:1])
+				rotate(a=i*90+90,v=[0,0,1])
+				translate([0,0,-3*cutClr])
+				Sector(height=extDiam,diam=extDiam,angle=180-guideAngle,negative=false,quality=quality);
+		}
+		for(a=[-guideAngle/2:guideAngle:guideAngle/2],i=[0:1])
+			rotate(a=a-i*180,v=[0,0,1])
+				translate([0,intDiam/2+(extDiam-intDiam)/4,-cutClr])
+					cylinder(d=border+guideClr,h=clipHeight+2*cutClr,$fn=48*quality);
+
+		//cuts for valves' gears
+		for(i=[-1:2:1])
+		translate([i*(intDiam/2+wallWidth-gearsClr/2+lockCutSize[0]/2),0,-cutClr])
+			cube_vround(size=[lockCutSize[0],lockCutSize[1],clipHeight+2*cutClr],center_xy=true,rounding=lockRounding,round_corners=[i>0,i>0,i<0,i<0]);
+
+		//nut holes
+		for(i=[-1:2:1])
+		translate([i*shaftClipPos[0],i*shaftClipPos[1],shaftClipPos[2]])
+			VNutPocket(nutDiam=nutDiam,nutHeight=nutHeight);
+
+		//shaft clip holes
+		for(i=[-1:2:1])
+		translate([i*shaftClipPos[0],0,shaftClipPos[2]])
+		rotate(a=-90,v=[1,0,0])
+		cylinder(d=intHolesDiam,h=lockSize[1]/2+cutClr,center=false,$fn=quality*24);
+
+		//main shaft hole
+		translate([0,0,shaftClipPos[2]])
+		rotate(a=-90,v=[0,1,0])
+		cylinder(d=shaftIntDiam,h=lockSize[0]+2*cutClr,center=true,$fn=quality*24);
+	}
+}
+
 GateBase();
-translate([0,0,12])
-rotate(a=3,v=[0,0,1])
-ValvePart();
+
+//color([1,1,1,0.25])
+rotate(a=12,v=[0,0,1])
+GateClip1();
+
+//translate([0,0,12])
+//rotate(a=12,v=[0,0,1])
+//ValvePart();
