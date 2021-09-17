@@ -471,7 +471,7 @@ intHolesDepth=3,
 		}
 		for(i=[0:1],a=[-intClipAngle/2:intClipAngle:intClipAngle/2])
 			rotate(a=a-i*180,v=[0,0,1])
-				translate([0,intDiam/2+(extDiam-intDiam)/4,-clipHeight-cutClr])
+				translate([0,intDiam/2+(extDiam-intDiam)/4,-baseHeight-cutClr])
 					cylinder(d=intHolesDiam,h=clipHeight+baseHeight+2*cutClr,$fn=12*quality);
 	}
 }
