@@ -416,6 +416,66 @@ module GateClip1
 	}
 }
 
+module GateClip2
+(
+	intDiam=93,
+	extDiam=120,
+	wallWidth=2,
+	baseHeight=4,
+	clipHeight=6,
+
+intHolesDepth=3,
+	intHolesDiam=3.75,
+	intHolesExtDiam=8,
+	intClipAngle=45,
+	intClipHeight=10,
+
+	nutDiam=6.75,
+	nutHeight=3,
+
+
+	quality=2,
+)
+{
+	cutClr=0.1;
+	border=(extDiam-intDiam)/2-2*wallWidth;
+
+	difference()
+	{
+		union()
+		{
+			translate([0,0,-baseHeight])
+			difference()
+			{
+				//ring base
+				cylinder(d=extDiam,h=baseHeight,$fn=12*quality);
+				//ring internal cuts
+				translate([0,0,-cutClr])
+					cylinder(d=intDiam,h=baseHeight+2*cutClr,$fn=quality*24);
+			}
+			difference()
+			{
+				translate([0,0,-cutClr])
+					cylinder(d=extDiam-2*wallWidth,h=clipHeight+cutClr,$fn=48*quality);
+				translate([0,0,-2*cutClr])
+					cylinder(d=intDiam+2*wallWidth,h=clipHeight+3*cutClr,$fn=48*quality);
+				for(i=[-1:2:1])
+					rotate(a=90+i*90,v=[0,0,1])
+					translate([0,0,-3*cutClr])
+					Sector(height=extDiam,diam=extDiam+cutClr*4,angle=180-intClipAngle,negative=false,quality=quality);
+			}
+			for(a=[-intClipAngle/2:intClipAngle:intClipAngle/2],i=[0:1])
+				rotate(a=a-i*180,v=[0,0,1])
+					translate([0,intDiam/2+(extDiam-intDiam)/4,-cutClr])
+						cylinder(d=border,h=clipHeight+cutClr,$fn=48*quality);
+		}
+		for(i=[0:1],a=[-intClipAngle/2:intClipAngle:intClipAngle/2])
+			rotate(a=a-i*180,v=[0,0,1])
+				translate([0,intDiam/2+(extDiam-intDiam)/4,-clipHeight-cutClr])
+					cylinder(d=intHolesDiam,h=clipHeight+baseHeight+2*cutClr,$fn=12*quality);
+	}
+}
+
 GateBase();
 
 //color([1,1,1,0.25])
@@ -425,3 +485,8 @@ GateClip1();
 translate([0,0,12])
 rotate(a=12,v=[0,0,1])
 ValvePart();
+
+rotate(a=12,v=[0,0,1])
+translate([0,0,16])
+rotate(a=180,v=[1,0,0])
+GateClip2();
