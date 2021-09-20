@@ -423,17 +423,8 @@ module GateClip2
 	wallWidth=2,
 	baseHeight=4,
 	clipHeight=6,
-
-intHolesDepth=3,
 	intHolesDiam=3.75,
-	intHolesExtDiam=8,
 	intClipAngle=45,
-	intClipHeight=10,
-
-	nutDiam=6.75,
-	nutHeight=3,
-
-
 	quality=2,
 )
 {
