@@ -11,6 +11,8 @@ module bottom_section
 	fan_screw_extsize=[5,6],
 	fan_cut_size=[79,79,20],
 	fan_shift=-14,
+	eth_adapter_size=[15,23.5,1],
+	eth_adapter_dy=10,
 	mainboard_size=[105,105,2],
 	mainboard_shift=-28,
 	mainboard_stands=[97,75,10,10,6,4],
@@ -84,6 +86,13 @@ module bottom_section
 		translate([fan_shift,-size[1]/2+wall_sz,fan_size[2]/2])
 			rotate(a=90,v=[1,0,0])
 				cube_vround(size=[fan_cut_size[0],fan_cut_size[1],wall_sz+2*cutClr], rounding=fan_cut_size[2], quality=quality,attach=wall_sz+screw_diam+cutClr,center_xy=true);
+		//eth adapter holes
+		translate([size[0]/2-wall_sz-eth_adapter_size[0],-size[1]/2+wall_sz,height-base_sz-eth_adapter_size[1]-eth_adapter_dy])
+		{
+			cube(size=[eth_adapter_size[0],screw_diam+wall_sz+cutClr,eth_adapter_size[1]]);
+			translate([eth_adapter_size[2],-wall_sz-cutClr,eth_adapter_size[2]])
+			cube(size=[eth_adapter_size[0]-eth_adapter_size[2]*2,screw_diam+wall_sz+cutClr,eth_adapter_size[1]-eth_adapter_size[2]*2]);
+		}
 	}
 
 	//draw PSU on preview
