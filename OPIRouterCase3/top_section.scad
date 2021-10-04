@@ -20,7 +20,9 @@ module bottom_section
 	opi_sdcut_shift_x=-13.5,
 	antennas_cuts=[100,6],
 	antennas_shift=[20,25],
-	cord_cut=[6,-103],
+	cord_cut=[6,5,-103],
+	psu_vent_sz=[8,1.2,0.8,0.8],
+	psu_vents_pos=[9,17,-40,-85],
 	wall_sz=1.6,
 	base_sz=2,
 	inner_base_sz=2,
@@ -138,12 +140,16 @@ module bottom_section
 			translate([0,i*antennas_cuts[0]/2,-inner_base_sz-cutClr])
 				cylinder(d=antennas_cuts[1],h=base_sz+inner_base_sz+2*cutClr,$fn=quality*12);
 		//power cord cut
-		translate([-size[0]/2+cord_cut[0]/2+wall_sz+inner_base_clr, cord_cut[1]/2,-inner_base_sz-cutClr])
+		translate([-size[0]/2+cord_cut[0]/2+wall_sz+inner_base_clr+cord_cut[1], cord_cut[2]/2,-inner_base_sz-cutClr])
 			cylinder(d=cord_cut[0],h=base_sz+inner_base_sz+2*cutClr,$fn=quality*12);
-		translate([-size[0]/2-cord_cut[0]/2+wall_sz+inner_base_clr, cord_cut[1]/2-cord_cut[0]/2,-inner_base_sz-cutClr])
-		cube([cord_cut[0],cord_cut[0],base_sz+inner_base_sz+2*cutClr]);
+		translate([-size[0]/2-cord_cut[0]/2+wall_sz+inner_base_clr, cord_cut[2]/2-cord_cut[0]/2,-inner_base_sz-cutClr])
+			cube([cord_cut[0]+cord_cut[1],cord_cut[0],base_sz+inner_base_sz+2*cutClr]);
 		//psu vent cuts
-
+		for(x=[0:psu_vents_pos[0]],y=[0:psu_vents_pos[1]])
+		{
+			translate([psu_vents_pos[2]+x*(psu_vent_sz[0]+psu_vent_sz[2]),psu_vents_pos[3]+y*(psu_vent_sz[1]+psu_vent_sz[3]),-base_sz-cutClr])
+			cube([psu_vent_sz[0],psu_vent_sz[1],base_sz+inner_base_sz+2*cutClr]);
+		}
 	}
 	//draw orange pi zero
 	if($preview)
