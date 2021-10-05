@@ -3,14 +3,14 @@ use <../OpenSCAD_Modules/cube_vround.scad>
 use <../OpenSCAD_Modules/stand.scad>
 use <../OPIRouterCase1/opi_zero.scad>
 
-module bottom_section
+module top_section
 (
 	size=[110,175],
 	eth_adapter_size=[15,23.5,80],
 	eth_adapter_dy=10,
 	eth_clip_sz=[10,5,55,20,10],
 	eth_clip_clr=[0.25,0.4],
-	psu_clearance=41,
+	psu_clearance=42,
 	psu_block_sz=[10,10],
 	psu_block_shift=3,
 	opi_shift_x=-25,
@@ -158,4 +158,4 @@ module bottom_section
 				orange_pi_zero(center_xy=true);
 }
 
-bottom_section();
+top_section();
