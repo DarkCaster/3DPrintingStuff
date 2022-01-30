@@ -39,13 +39,15 @@ module bottle_cutter_base
 (
 	ext_size=2,
 	ext_cut=[10,25],
-	ext_ledge=[8,40,35],
-	size=[50,20,48],
+	ext_ledge=[8,30,35],
+	ext_ledge2=[8,20,35],
+	support_screw_cuts=[20,6],
+	size=[48,22,48],
 	screw_diam=3.5,
-	case_shift=20,
-	base_sz=10,
-	band_sz=5,
-	band_wd=1.25,
+	case_shift=19,
+	base_sz=8,
+	band_sz=10,
+	band_wd=1.5,
 	quality=2,
 )
 {
@@ -63,6 +65,8 @@ module bottle_cutter_base
 						cube_vround(size=size);
 					translate([band_wd/2,-ext_ledge[1],-ext_size])
 						cube_vround(size=[ext_ledge[0],ext_ledge[1],ext_ledge[2]],round_corners=[false,true,true,false]);
+					translate([-band_wd/2-ext_ledge2[0],-ext_ledge2[1],-ext_size])
+						cube_vround(size=[ext_ledge2[0],ext_ledge2[1],ext_ledge2[2]],round_corners=[false,true,true,false]);
 				}
 				knife();
 			}
@@ -77,6 +81,13 @@ module bottle_cutter_base
 			linear_extrude(height=size[1]+ext_ledge[1])
 			polygon(points=[[0,0],[0,ext_cut[1]],[0,ext_cut[1]+cutClt],[ext_cut[0],ext_cut[1]+cutClt],[ext_cut[0],ext_cut[1]]]);		
 		}
+		translate([0,screw_diam/2+band_sz,support_screw_cuts[0]])
+		rotate(v=[0,1,0],a=90)
+		cylinder(d=screw_diam,h=size[0]*2,center=true,$fn=12*quality);
+
+		translate([0,screw_diam/2+band_sz,support_screw_cuts[1]])
+		rotate(v=[0,1,0],a=90)
+		cylinder(d=screw_diam,h=size[0]*2,center=true,$fn=12*quality);
 	}
 }
 
