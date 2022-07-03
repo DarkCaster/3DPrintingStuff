@@ -44,7 +44,7 @@ module CaseCover1
 	extClipDiff=[100,100],
 	corner_bottom_cuts_diam=20,
 	corner_bottom_cuts_shift_z=-5,
-	corner_hubs_size=[10,23,16],
+	corner_hubs_size=[10,20,16],
 	corner_clip_shift=[5,6],
 	vent_lever_cut_shift=11,
 	vent_lever_cut_size=[35,5.5],
@@ -80,7 +80,7 @@ module CaseCover1
 			//corner hubs
 			for (i=[-1:2:1],j=[-1:2:1])
 			translate([i*(ext_size[0]/2-corner_hubs_size[0]/2),j*(ext_size[1]/2-corner_hubs_size[1]/2),ext_size[2]-corner_hubs_size[2]])
-			cube_vround(size=corner_hubs_size,center_xy=true,rounding=rounding,quality=quality,round_corners=[i*j>0, i*j<0, i*j>0, i*j<0]);
+			cube_vround(size=corner_hubs_size,center_xy=true,rounding=rounding,quality=quality,round_corners=[i*j>0&&j>0, i*j<0&&j<0, i*j>0, i*j<0]);
 
 			//center hubs
 			for (j=[-1:2:1])
