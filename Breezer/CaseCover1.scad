@@ -47,7 +47,7 @@ module CaseCover1
 	corner_hubs_size=[10,20,16],
 	corner_clip_shift=[5,6],
 	vent_lever_cut_shift=11,
-	vent_lever_cut_size=[35,5.5],
+	vent_lever_cut_size=[35,7],
 	vent_lever_clip_diff=130,
 	center_hubs_size=[15,10,8.4],
 	center_clip_shift=[5,6],
