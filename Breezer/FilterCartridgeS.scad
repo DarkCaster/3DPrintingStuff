@@ -17,7 +17,7 @@ module HNut
 
 module HHead
 (
-	headDiam=6.75,
+	headDiam=6.5,
 	headHeight=3,
 	topClr=0.1,
 	quality=2,
@@ -50,14 +50,14 @@ module VNutPocket
 
 module CartridgeCaseHalf
 (
-	ext_size=[160,134,8],
-	int_size=[150,118,4],
-	handle_size=[8,150],
+	ext_size=[160,134,5],
+	int_size=[150,118,3],
+	handle_size=[8.8,150],
 	handle_shift=-4.9,
 	xshift=5,
 	vscrew_diam=3.25,
 	hscrew_diam=3.75,
-	vscrew_diff=[140,134-(134-118)/2],
+	vscrew_diff=[140,134-(134-118)/2-0.4],
 	hscrew_diff=142,
 	vhscrew_diff=50,
 	vents_size=[33,10,3],
