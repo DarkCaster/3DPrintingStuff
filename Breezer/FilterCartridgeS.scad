@@ -126,6 +126,59 @@ module CartridgeCaseHalf
 	}
 }
 
+
+module CartridgeCarrier
+(
+	ext_size=[160,160,12],
+	int_size=[160,134,10],
+	int_clr=0.8,
+	base_clr=0.4,
+	int_clip_size=2,
+	xshift=5,
+	screw_hole_diam=3.75,
+	corner_clip_shift=5,
+	hscrew_diff=142,
+	hscrew_size=[30,12],
+	quality=2
+)
+{
+	cutClr=1;
+	rounding=5;
+	difference()
+	{
+		//base
+		cube_vround(size=ext_size,center_xy=true,quality=quality,rounding=rounding);
+		//main cut
+		translate([xshift,0,-cutClr])
+		cube_vround(size=[int_size[0]+int_clr,int_size[1]+int_clr,int_size[2]+base_clr+cutClr],center_xy=true,quality=quality,rounding=rounding,round_corners=[false,false,true,true]);
+		//corner clip cuts
+		for (i=[-1:2:1],j=[-1:2:1])
+		translate([i*(ext_size[0]/2-corner_clip_shift),j*(ext_size[1]/2-corner_clip_shift),-cutClr])
+		cylinder(d=screw_hole_diam,h=ext_size[2]+2*cutClr,$fn=quality*12,center=false);
+		//clip
+		translate([xshift,0,-cutClr])
+		cube_vround(size=[int_size[0]-2*int_clip_size,int_size[1]-2*int_clip_size,ext_size[2]+2*cutClr],center_xy=true,quality=quality,rounding=rounding,round_corners=[false,false,true,true]);
+		//horizontal screw holes
+		for (j=[-1:2:1])
+		{
+			translate([ext_size[0]/2,j*hscrew_diff/2,int_size[2]/2])
+			{
+				rotate(a=90,v=[0,1,0])
+				cylinder(d=screw_hole_diam, h=hscrew_size[0]*2, center=true, $fn=12*quality);
+				translate([-hscrew_size[1],0,0])
+				rotate(a=180,v=[1,0,0])
+				rotate(a=90,v=[0,0,1])
+				VNutPocket(pocketLen=int_size[2]);
+			}
+		}
+	}
+
+}
+
 CartridgeCaseHalf();
 
+translate([0,0,10])
+rotate(a=180,v=[1,0,0])
+CartridgeCaseHalf();
 
+CartridgeCarrier();
