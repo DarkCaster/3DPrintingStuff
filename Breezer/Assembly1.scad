@@ -44,6 +44,15 @@ use <FilterCartridgeS.scad>
 
 	color([0.1,0.2,0.3])
 	translate([0,0,37])
-	CartridgeCaseHalf();
+	{
+		CartridgeCaseHalf();
+		translate([0,0,10])
+		rotate(a=180,v=[1,0,0])
+		CartridgeCaseHalf();
+	}
+
+	color([0.2,0.3,0.3])
+	translate([0,0,37])
+	CartridgeCarrier();
 }
 
