@@ -60,6 +60,10 @@ module CartridgeCaseHalf
 	vscrew_diff=[140,134-(134-118)/2],
 	hscrew_diff=142,
 	vhscrew_diff=50,
+	vents_size=[33,10,3],
+	vents_period=[35,12],
+	vents_count=[4,9],
+	vents_pos=[-70,-53],
 	nutHeight=3,
 	quality=2
 )
@@ -112,6 +116,12 @@ module CartridgeCaseHalf
 				HNut(topClr=cutClr,nutHeight=nutHeight);
 			else
 				HHead(topClr=cutClr,headHeight=nutHeight);
+		}
+		//vents
+		for (vx=[0:vents_count[0]-1],vy=[0:vents_count[1]-1])
+		{
+			translate([vents_pos[0]+vx*vents_period[0],vents_pos[1]+vy*vents_period[1],0])
+			cube_vround(size=[vents_size[0],vents_size[1],ext_size[2]*2],center_z=true,quality=quality,rounding=vents_size[2]);
 		}
 	}
 }
