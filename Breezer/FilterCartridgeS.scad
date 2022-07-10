@@ -137,6 +137,7 @@ module CartridgeCarrier
 	xshift=5,
 	screw_hole_diam=3.75,
 	corner_clip_shift=5,
+	center_clip_shift=5,
 	hscrew_diff=142,
 	hscrew_size=[30,12],
 	quality=2
@@ -156,8 +157,12 @@ module CartridgeCarrier
 		translate([i*(ext_size[0]/2-corner_clip_shift),j*(ext_size[1]/2-corner_clip_shift),-cutClr])
 		cylinder(d=screw_hole_diam,h=ext_size[2]+2*cutClr,$fn=quality*12,center=false);
 		//clip
-		translate([xshift,0,-cutClr])
-		cube_vround(size=[int_size[0]-2*int_clip_size,int_size[1]-2*int_clip_size,ext_size[2]+2*cutClr],center_xy=true,quality=quality,rounding=rounding,round_corners=[false,false,true,true]);
+		translate([0,0,-cutClr])
+		cube_vround(size=[int_size[0]-2*int_clip_size-2*xshift,int_size[1]-2*int_clip_size,ext_size[2]+2*cutClr],center_xy=true,quality=quality,rounding=rounding,round_corners=[true,true,true,true]);
+		//center clips
+		for (j=[-1:2:1])
+		translate([0,j*(ext_size[1]/2-center_clip_shift),-cutClr])
+		cylinder(d=screw_hole_diam,h=ext_size[2]+2*cutClr,$fn=quality*12,center=false);
 		//horizontal screw holes
 		for (j=[-1:2:1])
 		{
