@@ -4,7 +4,7 @@ module FanMount
 (
 	ext_size=[160,160,10],
 	fan_ext_clip_size=[130,130,14],
-	fan_int_size=[120,120],
+	fan_int_size=[120,120,1],
 	screw_hole_diam=3.75,
 	corner_clip_shift=5,
 	center_clip_shift=5,
@@ -32,9 +32,12 @@ module FanMount
 					//fan
 					cube_vround(size=fan_ext_clip_size,center_xy=true,quality=quality,rounding=rounding);
 				}
-				//fan cut
+				//fan cut (bottom)
 				translate([0,0,-cutClr])
-				cube_vround(size=[fan_int_size[0],fan_int_size[1],fan_ext_clip_size[2]+2*cutClr],center_xy=true,quality=quality,rounding=int_rounding);
+				cube_vround(size=[fan_int_size[0]-2*fan_int_size[2],fan_int_size[1]-2*fan_int_size[2],fan_ext_clip_size[2]+2*cutClr],center_xy=true,quality=quality,rounding=int_rounding);
+				//fan cut (bottom)
+				translate([0,0,ext_size[2]])
+				cube_vround(size=[fan_int_size[0],fan_int_size[1],fan_ext_clip_size[2]],center_xy=true,quality=quality,rounding=int_rounding);
 			}
 			//fan int clips
 			for (i=[-1:2:1],j=[-1:2:1])
