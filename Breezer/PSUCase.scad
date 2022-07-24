@@ -4,7 +4,7 @@ module HNutPocket
 (
 	nutDiam=6.75,
 	nutHeight=3,
-	pocketLen=10,
+	pocketLen=100,
 )
 {
 	m=(nutDiam/2)*sqrt(3)/2;
@@ -20,7 +20,7 @@ module VNutPocket
 (
 	nutDiam=6.75,
 	nutHeight=3,
-	pocketLen=10,
+	pocketLen=100,
 )
 {
 	m=(nutDiam/2)*sqrt(3)/2;
@@ -32,6 +32,18 @@ module VNutPocket
 				translate([pocketLen/2,0,0])
 				cube(size=[pocketLen,m*2,nutHeight],center=true);
 			} 
+}
+
+module VNutSidePocket
+(
+	nutDiam=6.75,
+	pocketLen=100,
+)
+{
+	m=(nutDiam/2)*sqrt(3)/2;
+	rotate(a=90,v=[1,0,0])
+	rotate(a=90,v=[0,-1,0])
+	cylinder(d=nutDiam,h=pocketLen,center=false,$fn=6);
 }
 
 module PSUCaseBottom
@@ -47,7 +59,7 @@ module PSUCaseBottom
 	screw_hole_depth=[20,10],
 	plug_clip_cut=[55,39],
 	plug_clip_cut_clr=0.4,
-	plug_clip_screw_diff=[38,40],
+	plug_clip_screw_diff=[38,37],
 	plug_clip_screw_depth=[55,48],
 	right_cut_screw_diff=[55,40.5+2.4],
 	right_output_cut_size=5.5,
@@ -119,4 +131,55 @@ module PSUCaseBottom
 	}
 }
 
+module PSUPlugHolder
+(
+	size=[55,39,53],
+	adj_clip_diff=[38,11],
+	plug_diam=34.2,
+	plug_clip_diff=[37,5],
+	plug_clip_ext_diam=7,
+	screw_hole_size=3.5,
+	quality=2,
+)
+{
+	cutClr=1;
+	rounding=5;
+	difference()
+	{
+		//base
+		cube_vround(size=size, center_xy=true, quality=quality, rounding=rounding);
+		//adjustable clip-holes
+		for(i=[-1:2:1])
+		{
+			hull()
+			for(j=[-1:2:1])
+			{
+				translate([i*adj_clip_diff[0]/2,0,size[2]/2+j*(size[2]/2-adj_clip_diff[1])])
+				rotate(a=90,v=[1,0,0])
+				cylinder(d=screw_hole_size,h=size[0]+2*cutClr,center=true,$fn=12*quality);
+			}
+		}
+		//plug hole
+		translate([0,0,-cutClr])
+		cylinder(d=plug_diam,h=size[2]+2*cutClr,center=false,$fn=48*quality);
+		//plug clip
+		translate([0,0,plug_clip_diff[1]])
+		{
+			translate([plug_clip_diff[0]/2,0,0])
+			rotate(a=90,v=[0,1,0])
+			cylinder(d=plug_clip_ext_diam,h=size[1],center=false,$fn=12*quality);
+
+			translate([-plug_clip_diff[0]/2,0,0])
+			VNutSidePocket();
+
+			rotate(a=90,v=[0,1,0])
+			cylinder(d=screw_hole_size,h=size[1],center=true,$fn=12*quality);
+		}
+	}
+}
+
+
 PSUCaseBottom();
+
+translate([0,-55+39/2+2.4+0.4,29])
+PSUPlugHolder();
