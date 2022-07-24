@@ -36,19 +36,20 @@ module VNutPocket
 
 module PSUCaseBottom
 (
-	ext_size=[170,110,60],
-	socket_cut=[60,30,5,20],
+	ext_size=[170,110,85],
+	socket_cut=[76.5,50,5,24.6],
 	wall_size=2.4,
 	left_cut=36,
 	right_cut=35,
-	top_cut=5,
+	top_cut=10,
 	screw_hole_size=3.5,
 	screw_hole_corner_shift=5,
 	screw_hole_depth=[20,10],
 	plug_clip_cut=[55,39],
 	plug_clip_cut_clr=0.4,
-	plug_clip_screw_diff=[38,20],
+	plug_clip_screw_diff=[38,40],
 	plug_clip_screw_depth=[55,48],
+	right_cut_screw_diff=[55,40.5+2.4],
 	quality=2,
 )
 {
@@ -103,7 +104,15 @@ module PSUCaseBottom
 			translate([i*plug_clip_screw_diff[0]/2,-(ext_size[1]/2-plug_clip_screw_depth[1]),ext_size[2]-plug_clip_screw_diff[1]])
 			VNutPocket(pocketLen=ext_size[2]);
 		}
+		//right side screw holes
+		for(i=[-1:2:1])
+		{
+			translate([ext_size[0]/2-(screw_hole_corner_shift+screw_hole_size/2+wall_size)-cutClr,i*right_cut_screw_diff[0]/2,right_cut_screw_diff[1]])
+			rotate(a=90,v=[0,1,0])
+			cylinder(d=screw_hole_size,h=screw_hole_corner_shift+screw_hole_size/2+wall_size+2*cutClr,center=false,$fn=12*quality);
+		}
 	}
+
 }
 
 PSUCaseBottom();
