@@ -50,6 +50,7 @@ module PSUCaseBottom
 	plug_clip_screw_diff=[38,40],
 	plug_clip_screw_depth=[55,48],
 	right_cut_screw_diff=[55,40.5+2.4],
+	right_output_cut_size=5.5,
 	quality=2,
 )
 {
@@ -111,8 +112,11 @@ module PSUCaseBottom
 			rotate(a=90,v=[0,1,0])
 			cylinder(d=screw_hole_size,h=screw_hole_corner_shift+screw_hole_size/2+wall_size+2*cutClr,center=false,$fn=12*quality);
 		}
+		//right side cut
+		translate([ext_size[0]/2-right_cut-screw_hole_corner_shift-screw_hole_size/2-wall_size+right_output_cut_size/2,0,wall_size+right_output_cut_size/2])
+		rotate(a=-90,v=[1,0,0])
+		cylinder(d=right_output_cut_size,h=ext_size[1]/2+cutClr,center=false,$fn=12*quality);
 	}
-
 }
 
 PSUCaseBottom();
