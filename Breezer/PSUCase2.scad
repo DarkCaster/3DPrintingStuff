@@ -187,7 +187,86 @@ module PSUPlugHolder
 	}
 }
 
+module PSUCase
+(
+	size=[150,86,50],
+	psu_size=[99,82],
+	psu_shift=10,
+	psu_holes_diff=[74,15,10],
+	internal_cut=[130,82],
+	wall_size=2,
+	screw_hole_size=3.5,
+	screw_hole_corner_shift=5,
+	screw_hole_depth=[20,10],
+	side_holes_diff=[50,15],
+	wires_hole_size=10,
+	wires_hole_pos=[22,43],
+	right_output_cut_size=5.5,
+	quality=2,
+)
+{
+	cutClr=1;
+	rounding=5;
+	int_cut_rounding=2;
+
+	difference()
+	{
+		//base
+		cube_vround(size=size, center_xy=true, quality=quality, rounding=rounding);
+		//screw holes
+		for(i=[-1:2:1],j=[-1:2:1])
+		{
+			translate([i*(size[0]/2-screw_hole_corner_shift),j*(size[1]/2-screw_hole_corner_shift),size[2]-screw_hole_depth[0]])
+			cylinder(d=screw_hole_size, h=screw_hole_depth[0]+cutClr, center=false, $fn=12*quality);
+			translate([i*(size[0]/2-screw_hole_corner_shift),j*(size[1]/2-screw_hole_corner_shift),size[2]-screw_hole_depth[1]])
+			rotate(a=i>0?45*j:135*j,v=[0,0,1])
+			HNutPocket();
+		}
+		//side holes
+		for(i=[-1:2:1])
+		{
+			translate([-size[0]/2-cutClr,i*side_holes_diff[0]/2,side_holes_diff[1]])
+			rotate(a=90,v=[0,1,0])
+			cylinder(d=screw_hole_size,h=size[0]/2,center=false,$fn=12*quality);
+		}
+
+		//psu screw holes
+		translate([psu_shift,0,0])
+		for(i=[0:1])
+		{
+			translate([psu_size[0]/2-i*psu_holes_diff[0]-psu_holes_diff[2],0,psu_holes_diff[1]])
+			rotate(a=-90,v=[1,0,0])
+			cylinder(d=screw_hole_size,h=size[1]/2+cutClr,center=false,$fn=12*quality);
+		}
+
+		//internal cut
+		translate([0,0,wall_size])
+		cube_vround(size=[internal_cut[0],internal_cut[1],size[2]], center_xy=true, quality=quality, rounding=int_cut_rounding);
+
+		//wires cut
+		translate([0,-size[1]/2+wires_hole_pos[0],wires_hole_pos[1]])
+		rotate(a=-90,v=[0,1,0])
+		cylinder(d=wires_hole_size, h=size[1], center=false, $fn=12*quality);
+
+		//output cut
+		translate([internal_cut[0]/2-right_output_cut_size/2,0,wall_size+right_output_cut_size/2])
+		rotate(a=-90,v=[1,0,0])
+		cylinder(d=right_output_cut_size, h=size[1], center=false, $fn=12*quality);
+	}
+
+	//psu box
+	if($preview)
+	{
+		color([0.2,0.2,0.2,0.5])
+		translate([psu_shift,0,wall_size])
+		cube_vround(size=[psu_size[0],psu_size[1],size[2]], center_xy=true, quality=quality, rounding=int_cut_rounding);
+	}
+}
+
 WallSocketClip();
 
 translate([0,-86/2+39/2+2+0.4,29])
 PSUPlugHolder();
+
+translate([150/2+88/2,0,0])
+PSUCase();
