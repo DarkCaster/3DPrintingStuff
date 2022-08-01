@@ -193,7 +193,7 @@ module PSUCase
 	psu_size=[99,82],
 	psu_shift=9,
 	psu_holes_diff=[74,15,10],
-	internal_cut=[130,82.5],
+	internal_cut=[130,82.8],
 	wall_size=2,
 	screw_hole_size=3.5,
 	screw_hole_corner_shift=5,
