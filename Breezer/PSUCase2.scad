@@ -189,11 +189,11 @@ module PSUPlugHolder
 
 module PSUCase
 (
-	size=[147,86,50],
+	size=[148,86,50],
 	psu_size=[99,82],
 	psu_shift=9,
 	psu_holes_diff=[74,15,10],
-	internal_cut=[130,82.8],
+	internal_cut=[130,83],
 	wall_size=2,
 	screw_hole_size=3.5,
 	screw_hole_corner_shift=5,
