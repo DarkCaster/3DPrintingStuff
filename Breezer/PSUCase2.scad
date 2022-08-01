@@ -189,11 +189,11 @@ module PSUPlugHolder
 
 module PSUCase
 (
-	size=[150,86,50],
+	size=[147,86,50],
 	psu_size=[99,82],
-	psu_shift=10,
+	psu_shift=9,
 	psu_holes_diff=[74,15,10],
-	internal_cut=[130,82],
+	internal_cut=[130,82.5],
 	wall_size=2,
 	screw_hole_size=3.5,
 	screw_hole_corner_shift=5,
@@ -234,7 +234,7 @@ module PSUCase
 		translate([psu_shift,0,0])
 		for(i=[0:1])
 		{
-			translate([psu_size[0]/2-i*psu_holes_diff[0]-psu_holes_diff[2],0,psu_holes_diff[1]])
+			translate([psu_size[0]/2-i*psu_holes_diff[0]-psu_holes_diff[2],0,psu_holes_diff[1]+wall_size])
 			rotate(a=-90,v=[1,0,0])
 			cylinder(d=screw_hole_size,h=size[1]/2+cutClr,center=false,$fn=12*quality);
 		}
