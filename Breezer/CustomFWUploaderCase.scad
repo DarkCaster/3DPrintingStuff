@@ -91,7 +91,7 @@ module Case
 				translate([0,0,nut_shift])
 				rotate(a=180,v=[0,0,1])
 				HNutPocket();
-				cylinder(d=screw_size,h=ext_size[1],$fn=12*quality);
+				cylinder(d=screw_size,h=2*ext_size[1],$fn=12*quality,center=true);
 			}
 		}
 		//eth back cut for ease of insertion of main pcb
