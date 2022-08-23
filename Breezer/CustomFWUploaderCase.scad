@@ -18,10 +18,10 @@ module HNutPocket
 
 module Case
 (
-	ext_size=[122,17],
+	ext_size=[122,16.6],
 	front_clip_size=[10,60,10,3.5,1,2],
 	wall_size=1.6,
-	base_size=2,
+	base_size=1.6,
 	pcb_size=[99.2,34],
 	pcb_cut=[2,80,23,10,1.6,10],
 	eth_cut=[18,13.6,0.6],
