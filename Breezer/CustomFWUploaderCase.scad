@@ -18,8 +18,9 @@ module HNutPocket
 
 module Case
 (
-	ext_size=[122,20],
-	wall_size=2,
+	ext_size=[122,17],
+	front_clip_size=[10,60,10,3.5,1,2],
+	wall_size=1.6,
 	base_size=2,
 	pcb_size=[99.2,34],
 	pcb_cut=[2,80,23,10,1.6,10],
@@ -34,14 +35,33 @@ module Case
 )
 {
 	cutClr=5;
+	cutSmall=0.01;
 	rounding=5;
 	int_rounding=rounding-wall_size;
 
 	difference()
 	{
-		//base
-		cube_vround(size=[ext_size[0],pcb_size[1]+2*wall_size,ext_size[1]],
-			center_xy=true,quality=quality,rounding=rounding);
+		union()
+		{
+			//base
+			cube_vround(size=[ext_size[0],pcb_size[1]+2*wall_size,ext_size[1]],
+				center_xy=true,quality=quality,rounding=rounding);
+			translate([ext_size[0]/2-front_clip_size[0]/2,0,0])
+			cube_vround(size=[front_clip_size[0],front_clip_size[1],front_clip_size[2]],
+				center_xy=true,quality=quality,rounding=front_clip_size[5]);
+		}
+		//front clip scew cuts
+		for(i=[-1:2:1])
+		{
+			holeCenter=(front_clip_size[1]/2-pcb_size[1]/2-wall_size)/2+pcb_size[1]/2+wall_size;
+			hull()
+			for(s=[-1:2:1])
+			{
+				translate([ext_size[0]/2-front_clip_size[0]/2,i*holeCenter+s*front_clip_size[4],front_clip_size[2]/2])
+				rotate(a=90,v=[0,1,0])
+				cylinder(d=front_clip_size[3],h=front_clip_size[0]+2*cutClr,center=true,$fn=12*quality);
+			}
+		}
 		//main pcb cut
 		translate([ext_size[0]/2-pcb_size[0]/2-wall_size/2,0,base_size+pcb_cut[0]])
 		cube_vround(size=[pcb_size[0]-wall_size,pcb_size[1],ext_size[1]+cutClr],round_corners=[true,true,false,false],
@@ -80,8 +100,8 @@ module Case
 		polygon(points=[
 			[0,base_size+pcb_cut[0]+pcb_cut[4]],
 			[-ext_size[0]/2+ethBackCut,base_size+pcb_cut[0]+pcb_cut[4]],
-			[-ext_size[0]/2+ethBackCut-pcb_cut[5],ext_size[1]],
-			[0,ext_size[1]],
+			[-ext_size[0]/2+ethBackCut-pcb_cut[5],ext_size[1]+cutSmall],
+			[0,ext_size[1]+cutSmall],
 		]);
 		//eth side clip screw hole
 		translate([side_screw_shift[0],0,ext_size[1]-side_screw_shift[1]])
