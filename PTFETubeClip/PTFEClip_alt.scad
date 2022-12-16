@@ -1,6 +1,6 @@
 module ptfe_tube_clip
 (
-	side_clip_sz=[15,6],
+	side_clip_sz=[15,6.3],
 	size_clip_hole=[7,7,5,3,5],
 	ext_diam=10,
 	cut_diam=7.7,
