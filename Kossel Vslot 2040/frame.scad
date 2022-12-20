@@ -216,7 +216,7 @@ module motor_cutout ()
     for (x = [1, -1] * screw_spacing / 2)
     for (y = [1, -1] * screw_spacing / 2)
     translate ([x, y, -epsilon])
-    polyhole (d = 3.3, h = min_wall_thickness + epsilon * 2);
+    polyhole (d = 3.24, h = min_wall_thickness + epsilon * 2);
 
     translate ([0, 0, -epsilon])
     polyhole (d = lookup (NemaRoundExtrusionDiameter, motor) + 0.3,
@@ -227,7 +227,7 @@ module extrusion_cap_screw ()
 {
     // screw hole
     translate ([0, 0, -epsilon])
-    polyhole (d = 5.3,
+    polyhole (d = 4.2,
         h = min_wall_thickness + tslot_thickness / 2);
 
     // cap screw head
