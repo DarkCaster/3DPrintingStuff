@@ -5,3 +5,4 @@ Changes:
 - ported to newer MCAD version used in my repo
 - fixed minor errors
 - vslot screw-holes changed to M4, minor fix for motor screws
+- top-corner updated to use M3 bolt with short thread for pulley axis

@@ -297,14 +297,20 @@ module top_corner ()
         // screwhole
         place_motor () {
             translate ([0, 0, -epsilon])
-            polyhole (d = 3.3, h = motor_distance + epsilon * 2);
+            rotate (90, Z)
+            polyhole (d = 3.24, h = motor_distance + epsilon * 2);
 
             rotate (90, Z)
             translate ([0, 0,
-                    min_wall_thickness - METRIC_NUT_THICKNESS[3] + epsilon])
+                    motor_distance - METRIC_NUT_THICKNESS[3] + epsilon])
             nutHole (3);
+
+            translate ([0, 0, min_wall_thickness/2])
+            boltHole(size=3);
         }
     }
+
+
 }
 
 module extrusions ()
