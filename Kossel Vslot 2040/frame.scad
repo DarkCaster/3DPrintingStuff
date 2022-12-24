@@ -302,8 +302,8 @@ module top_corner ()
 
             rotate (90, Z)
             translate ([0, 0,
-                    motor_distance - METRIC_NUT_THICKNESS[3] + epsilon])
-            nutHole (3);
+                    motor_distance - METRIC_NUT_THICKNESS[3] - 0.05 + epsilon])
+            nutHole (size=3, tolerance = +0.05);
 
             translate ([0, 0, min_wall_thickness/2])
             boltHole(size=3);
