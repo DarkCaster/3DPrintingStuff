@@ -306,7 +306,7 @@ module top_corner ()
             nutHole (size=3, tolerance = +0.05);
 
             translate ([0, 0, min_wall_thickness/2])
-            boltHole(size=3);
+            boltHole(size=3, tolerance = +0.1);
         }
     }
 
