@@ -21,18 +21,24 @@ module InnerJoint
 
 	difference()
 	{
-		hull()
+		union()
 		{
-			//main working body
-			cylinder(d=joint_diam,h=height,center=true,$fn=quality*12);
-			//support
-			translate([-joint_support_len/2,0,0])
-				cube(size=[joint_support_len,joint_support_diam,height],center=true);
-			//facer part of main working body
-			cylinder(d=joint_diam-joint_facet[1]*2,h=joint_height,center=true,$fn=quality*12);
-			//support
-			translate([-joint_support_len/2,0,0])
-				cube(size=[joint_support_len,joint_support_diam-joint_facet[1]*2,joint_height],center=true);
+			hull()
+			{
+				//main working body
+				cylinder(d=joint_diam,h=height,center=true,$fn=quality*12);
+				//facet part of main working body
+				cylinder(d=joint_diam-joint_facet[1]*2,h=joint_height,center=true,$fn=quality*12);
+			}
+			hull()
+			{
+				//support
+				translate([-joint_support_len/2,0,0])
+					cube(size=[joint_support_len,joint_support_diam,height],center=true);
+				//support of the facet
+				translate([-joint_support_len/2,0,0])
+					cube(size=[joint_support_len,joint_support_diam-joint_facet[1]*2,joint_height],center=true);
+			}
 		}
 		shaft_length=joint_diam/2+joint_support_len;
 		//shaft
@@ -96,6 +102,6 @@ module OuterJointHalf
 
 }
 
-//InnerJoint();
-color([0.75,1,1])
-OuterJointHalf();
+InnerJoint();
+//color([0.75,1,1])
+//OuterJointHalf();
