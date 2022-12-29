@@ -8,7 +8,7 @@ module InnerJoint
 	shaft_end_depth=4,
 	shaft_droplet_cut=0.4,
 	joint_diam=18,
-	joint_heignt=12,
+	joint_height=12,
 	joint_facet=[0.6,0.5],
 	joint_support_diam=6,
 	joint_support_len=12,
@@ -16,7 +16,7 @@ module InnerJoint
 )
 {
 	cutClr=0.1;
-	height=joint_heignt-joint_facet[0]*2;
+	height=joint_height-joint_facet[0]*2;
 	length=joint_support_len+joint_diam/2;
 
 	difference()
@@ -29,10 +29,10 @@ module InnerJoint
 			translate([-joint_support_len/2,0,0])
 				cube(size=[joint_support_len,joint_support_diam,height],center=true);
 			//facer part of main working body
-			cylinder(d=joint_diam-joint_facet[1]*2,h=joint_heignt,center=true,$fn=quality*12);
+			cylinder(d=joint_diam-joint_facet[1]*2,h=joint_height,center=true,$fn=quality*12);
 			//support
 			translate([-joint_support_len/2,0,0])
-				cube(size=[joint_support_len,joint_support_diam-joint_facet[1]*2,joint_heignt],center=true);
+				cube(size=[joint_support_len,joint_support_diam-joint_facet[1]*2,joint_height],center=true);
 		}
 		shaft_length=joint_diam/2+joint_support_len;
 		//shaft
@@ -60,4 +60,42 @@ module InnerJoint
 	}
 }
 
-InnerJoint();
+module OuterJointHalf
+(
+	joint_diam=[18.2,22],
+	joint_height=[12,14],
+	joint_groove=[6,5,19],
+	joint_angle=[93,-93],
+	screw_hole_diam=3.5,
+	top_part=false,
+	quality=10,
+)
+{
+	cutClr=0.1;
+	//difference()
+	{
+		//main working body
+		difference()
+		{
+			cylinder(d=joint_diam[1],h=joint_height[1],center=true,$fn=quality*12);
+
+		}
+		
+		//side cut
+		ext_rad_x2=joint_diam[1];
+		linear_extrude(height=joint_height[1]+2*cutClr,center=true)
+		polygon(points=[
+			[0,0],
+			[cos(joint_angle[0])*ext_rad_x2,sin(joint_angle[0])*ext_rad_x2],
+			[cos(135)*ext_rad_x2,sin(135)*ext_rad_x2],
+			[cos(135)*ext_rad_x2,-sin(135)*ext_rad_x2],
+			[cos(joint_angle[1])*ext_rad_x2,sin(joint_angle[1])*ext_rad_x2],
+		]);
+	}
+
+
+}
+
+//InnerJoint();
+color([0.75,1,1])
+OuterJointHalf();
