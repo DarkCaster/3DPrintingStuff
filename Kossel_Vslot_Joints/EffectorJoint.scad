@@ -5,7 +5,7 @@ module InnerJoint
 (
 	shaft_diam=3.1,
 	shaft_end_diam=6,
-	shaft_end_depth=4,
+	shaft_end_depth=6,
 	shaft_droplet_cut=0.4,
 	joint_diam=18,
 	joint_height=12,
