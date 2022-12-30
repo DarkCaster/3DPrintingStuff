@@ -9,7 +9,7 @@ module InnerJoint
 	shaft_droplet_cut=0.4,
 	joint_diam=18,
 	joint_height=12,
-	joint_facet=[0.6,0.5],
+	joint_facet=[1,0.5],
 	joint_support_diam=6,
 	joint_support_len=12,
 	quality=10,
