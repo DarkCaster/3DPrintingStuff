@@ -1,5 +1,5 @@
 //Simple do-(sh)it-yourself joints
-
+use <../OpenSCAD_Modules/cube_vround.scad>
 
 module InnerJoint
 (
@@ -69,22 +69,53 @@ module InnerJoint
 module OuterJointHalf
 (
 	joint_diam=[18.2,22],
-	joint_height=[12,14],
+	joint_height=[12.4,14],
 	joint_groove=[6,5,19],
-	joint_angle=[93,-93],
-	screw_hole_diam=3.5,
+	joint_angle=[90,-93],
+	handle_size=[8,40],
+	front_clip_size=[6,15],
+	front_hole_pos=[3,-12],
+	back_hole_pos=[4,12,36],
+	screw_hole_diam=3.25,
 	top_part=false,
 	quality=10,
 )
 {
 	cutClr=0.1;
-	//difference()
+	difference()
 	{
-		//main working body
 		difference()
 		{
-			cylinder(d=joint_diam[1],h=joint_height[1],center=true,$fn=quality*12);
-
+			union()
+			{
+				//outer shell
+				hull()
+				{
+					cylinder(d=joint_diam[1],h=joint_height[1],center=true,$fn=quality*12);
+					//front clip
+					translate([0,-front_clip_size[1],0])
+					cube_vround(size=[front_clip_size[0],front_clip_size[1],joint_height[1]],rounding=front_clip_size[0]/2, center_xy=false,center_z=true,quality=quality);
+				}
+				//handle
+				cube_vround(size=[handle_size[0],handle_size[1],joint_height[1]],rounding=handle_size[0]/2, center_xy=false,center_z=true,quality=quality);
+			}
+			//front hole
+			translate([front_hole_pos[0],front_hole_pos[1],0])
+			cylinder(d=screw_hole_diam,h=joint_height[1]+2*cutClr,center=true,$fn=quality*12);
+			//back hole1
+			translate([back_hole_pos[0],back_hole_pos[1],0])
+			cylinder(d=screw_hole_diam,h=joint_height[1]+2*cutClr,center=true,$fn=quality*12);
+			//back hole2
+			translate([back_hole_pos[0],back_hole_pos[2],0])
+			cylinder(d=screw_hole_diam,h=joint_height[1]+2*cutClr,center=true,$fn=quality*12);
+			//inner shell - main working surface
+			cylinder(d=joint_diam[0],h=joint_height[0],center=true,$fn=quality*12);
+			//groove
+			hull()
+			{
+				cylinder(d=joint_diam[0],h=joint_groove[0],center=true,$fn=quality*12);
+				cylinder(d=joint_groove[2],h=joint_groove[1],center=true,$fn=quality*12);
+			}
 		}
 		
 		//side cut
@@ -97,11 +128,25 @@ module OuterJointHalf
 			[cos(135)*ext_rad_x2,-sin(135)*ext_rad_x2],
 			[cos(joint_angle[1])*ext_rad_x2,sin(joint_angle[1])*ext_rad_x2],
 		]);
+
+		//top or bottom half cut
+		if(top_part)
+		{
+			cube_vround(size=[joint_diam[1]+2*cutClr,(handle_size[1]+cutClr)*2,joint_height[1]/2+cutClr],round_corners=[false,false,false,false], center_xy=true,center_z=false,quality=quality);
+		}
+		else
+		{
+			translate([0,0,-joint_height[1]/2-cutClr])
+			cube_vround(size=[joint_diam[1]+2*cutClr,(handle_size[1]+cutClr)*2,joint_height[1]/2+cutClr],round_corners=[false,false,false,false], center_xy=true,center_z=false,quality=quality);
+		}
 	}
 
 
 }
 
 InnerJoint();
-//color([0.75,1,1])
-//OuterJointHalf();
+color([0.75,0.75,1])
+{
+	OuterJointHalf(top_part=true);
+	OuterJointHalf(top_part=false);
+}
