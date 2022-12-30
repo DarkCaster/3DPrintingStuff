@@ -68,15 +68,16 @@ module InnerJoint
 
 module OuterJointHalf
 (
-	joint_diam=[18.2,22],
-	joint_height=[12.4,14],
+	joint_diam=[18.1,22],
+	joint_height=[12,14],
 	joint_groove=[6,5,19],
-	joint_angle=[90,-93],
+	joint_angle=[90,-100],
 	handle_size=[8,40],
 	front_clip_size=[6,15],
 	front_hole_pos=[3,-12],
 	back_hole_pos=[4,12,36],
 	screw_hole_diam=3.25,
+	central_hole_diam=10,
 	top_part=false,
 	quality=10,
 )
@@ -116,6 +117,8 @@ module OuterJointHalf
 				cylinder(d=joint_diam[0],h=joint_groove[0],center=true,$fn=quality*12);
 				cylinder(d=joint_groove[2],h=joint_groove[1],center=true,$fn=quality*12);
 			}
+			//central hole
+			cylinder(d=central_hole_diam,h=joint_height[1]+2*cutClr,center=true,$fn=quality*12);
 		}
 		
 		//side cut
@@ -140,8 +143,6 @@ module OuterJointHalf
 			cube_vround(size=[joint_diam[1]+2*cutClr,(handle_size[1]+cutClr)*2,joint_height[1]/2+cutClr],round_corners=[false,false,false,false], center_xy=true,center_z=false,quality=quality);
 		}
 	}
-
-
 }
 
 InnerJoint();
