@@ -68,10 +68,10 @@ module InnerJoint
 
 module OuterJointHalf
 (
-	joint_diam=[18.1,22],
+	joint_diam=[18.05,22],
 	joint_height=[12,14],
 	joint_groove=[6,5,19],
-	joint_angle=[90,-100],
+	joint_angle=[90,-110],
 	handle_size=[8,40],
 	front_clip_size=[6,15],
 	front_hole_pos=[3,-12],
