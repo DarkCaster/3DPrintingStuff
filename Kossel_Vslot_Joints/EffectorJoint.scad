@@ -90,7 +90,7 @@ module OuterJointHalf
 			union()
 			{
 				//outer shell
-				hull()
+				//hull()
 				{
 					cylinder(d=joint_diam[1],h=joint_height[1],center=true,$fn=quality*12);
 					//front clip
