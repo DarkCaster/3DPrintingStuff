@@ -24,7 +24,7 @@ module InnerJoint
 			cube(size=[clip_length,face_size-joint_facet[1]*2,face_size],center=true);
 			//y dimention
 			cube(size=[face_size,clip_width,face_size-joint_facet[0]*2],center=true);
-			cube(size=[face_size-joint_facet[1]*2,clip_width,face_size],center=true);
+			cube(size=[face_size,clip_width-joint_facet[1]*2,face_size],center=true);
 		}
 		//center cut
 		cylinder(d=center_cut_diam,h=face_size+cutClr*2,$fn=quality*10,center=true);
