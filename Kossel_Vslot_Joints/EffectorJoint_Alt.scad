@@ -111,9 +111,4 @@ module OuterJoint
 InnerJoint();
 
 //half of the joint handle
-difference()
-{
-	OuterJoint();
-	translate([0,-50,0])
-		cube(size=[100,100,100], center=true);
-}
+difference() { OuterJoint(); translate([0,-50,0]) cube(size=[100,100,100], center=true); }
