@@ -65,22 +65,23 @@ module InnerJoint
 
 module OuterJoint
 (
-	shaft_diam=3.035,
+	shaft_diam=3.075,
 	screw_hole_diam=3.2,
-	handle_height=40,
+	handle_height=45,
 	clip_width_int=10+1,
 	clip_width=10+1+2+2,
 	clip_height=15,//face_size/2
 	clip_cut_size=11, //1 for 2x0.5mm washers
 	droplet_cut=0.4,
 	face_size=9,
-	handle_cuts_pos1=20,
-	handle_cuts_pos2=40-9/2,//face_size
+	handle_cuts_pos1=25,
+	handle_cuts_pos2=45-9/2,//face_size
+	holes_facet=[0.5,0.6],
 	quality=10,
 )
 {
 	face_shift=face_size/2;
-	cutClr=0.1;
+	cutClr=0.01;
 
 	difference()
 	{
@@ -93,18 +94,46 @@ module OuterJoint
 		//hinge clip
 		translate([0,0,clip_height/2-face_shift])
 		cube(size=[face_size+2*cutClr,clip_width_int,clip_height],center=true);
-		rotate(a=90,v=[1,0,0])
-		cylinder(d=shaft_diam,h=clip_width+2*cutClr,center=true,$fn=quality*12);
+
+		union()
+		{
+			rotate(a=90,v=[1,0,0])
+			cylinder(d=shaft_diam,h=clip_width+2*cutClr,center=true,$fn=quality*12);
+
+			for(i=[-1:2:1])
+			rotate(a=i*90,v=[1,0,0])
+			translate([0,0,-clip_width/2+holes_facet[1]/2])
+			cylinder(d1=shaft_diam+holes_facet[0]*2,d2=shaft_diam,h=holes_facet[1]+2*cutClr,center=true,$fn=quality*12);
+		}
 
 		//handle cuts
-		translate([0,0,handle_cuts_pos1-face_shift])
-		rotate(a=90,v=[1,0,0])
-		cylinder(d=screw_hole_diam,h=clip_width+2*cutClr,center=true,$fn=quality*12);
+		union()
+		{
+			translate([0,0,handle_cuts_pos1-face_shift])
+			rotate(a=90,v=[1,0,0])
+			cylinder(d=screw_hole_diam,h=clip_width+2*cutClr,center=true,$fn=quality*12);
 
-		translate([0,0,handle_cuts_pos2-face_shift])
-		rotate(a=90,v=[1,0,0])
-		cylinder(d=screw_hole_diam,h=clip_width+2*cutClr,center=true,$fn=quality*12);
+			translate([0,0,handle_cuts_pos1-face_shift])
+			for(i=[-1:2:1])
+			rotate(a=i*90,v=[1,0,0])
+			translate([0,0,-clip_width/2+holes_facet[1]/2])
+			cylinder(d1=screw_hole_diam+holes_facet[0]*2,d2=screw_hole_diam,h=holes_facet[1]+2*cutClr,center=true,$fn=quality*12);
+		}
+
+		union()
+		{
+			translate([0,0,handle_cuts_pos2-face_shift])
+			rotate(a=90,v=[1,0,0])
+			cylinder(d=screw_hole_diam,h=clip_width+2*cutClr,center=true,$fn=quality*12);
+
+			translate([0,0,handle_cuts_pos2-face_shift])
+			for(i=[-1:2:1])
+			rotate(a=i*90,v=[1,0,0])
+			translate([0,0,-clip_width/2+holes_facet[1]/2])
+			cylinder(d1=screw_hole_diam+holes_facet[0]*2,d2=screw_hole_diam,h=holes_facet[1]+2*cutClr,center=true,$fn=quality*12);
+		}
 	}
+
 }
 
 
