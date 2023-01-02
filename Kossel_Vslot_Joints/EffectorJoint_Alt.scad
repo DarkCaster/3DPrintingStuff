@@ -67,15 +67,15 @@ module OuterJoint
 (
 	shaft_diam=3.075,
 	screw_hole_diam=3.2,
-	handle_height=45,
+	handle_height=40,
 	clip_width_int=10+1,
 	clip_width=10+1+2+2,
-	clip_height=15,//face_size/2
+	clip_height=16,
 	clip_cut_size=11, //1 for 2x0.5mm washers
 	droplet_cut=0.4,
 	face_size=9,
-	handle_cuts_pos1=25,
-	handle_cuts_pos2=45-9/2,//face_size
+	handle_cuts_pos1=16+9/2,
+	handle_cuts_pos2=40-9/2,//face_size
 	holes_facet=[0.5,0.6],
 	quality=10,
 )
@@ -85,15 +85,29 @@ module OuterJoint
 
 	difference()
 	{
-		//handle
-		translate([0,0,handle_height/2-face_shift])
-		rotate(a=90,v=[0,1,0])
-		rotate(a=90,v=[1,0,0])
-		cube_vround(size=[handle_height,face_size,clip_width],center_xy=true,center_z=true,rounding=face_size/2,quality=quality);
+		union()
+		{
+			difference()
+			{
+				//handle
+				translate([0,0,handle_height/2-face_shift])
+				rotate(a=90,v=[0,1,0])
+				rotate(a=90,v=[1,0,0])
+				cube_vround(size=[handle_height,face_size,clip_width],center_xy=true,center_z=true,rounding=face_size/2,quality=quality);
 
-		//hinge clip
-		translate([0,0,clip_height/2-face_shift])
-		cube(size=[face_size+2*cutClr,clip_width_int,clip_height],center=true);
+				//hinge clip
+				//translate([0,0,clip_height/2-face_shift])
+				//cube(size=[face_size+2*cutClr,clip_width_int,clip_height],center=true);
+
+				translate([0,0,handle_height/2-face_shift])
+				cube(size=[face_size+2*cutClr,clip_width_int,handle_height+2*cutClr],center=true);
+			}
+
+			translate([0,0,handle_height/2+clip_height/2-face_shift])
+			rotate(a=90,v=[0,1,0])
+			rotate(a=90,v=[1,0,0])
+			cube_vround(size=[handle_height-clip_height,face_size,clip_width],center_xy=true,center_z=true,rounding=face_size/2,quality=quality);
+		}
 
 		union()
 		{
@@ -140,4 +154,5 @@ module OuterJoint
 InnerJoint();
 
 //half of the joint handle
+//OuterJoint();
 difference() { OuterJoint(); translate([0,-50,0]) cube(size=[100,100,100], center=true); }
