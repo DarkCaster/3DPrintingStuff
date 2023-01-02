@@ -3,7 +3,7 @@ use <../OpenSCAD_Modules/cube_vround.scad>
 
 module InnerJoint
 (
-	shaft_diam=3,
+	shaft_diam=2.95,
 	clip_length=29, //1 extra mm kept for 2x0.5mm washers
 	clip_width=10, //1 extra mm kept for 2x0.5mm washers
 	screw_hole_diam=2.95,
