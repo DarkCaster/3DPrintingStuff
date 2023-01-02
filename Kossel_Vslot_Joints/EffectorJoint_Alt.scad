@@ -3,13 +3,13 @@ use <../OpenSCAD_Modules/cube_vround.scad>
 
 module InnerJoint
 (
-	shaft_diam=3.035,
+	shaft_diam=3,
 	clip_length=29, //1 extra mm kept for 2x0.5mm washers
 	clip_width=10, //1 extra mm kept for 2x0.5mm washers
 	screw_hole_diam=2.95,
 	droplet_cut=0.4,
 	face_size=9,
-	joint_facet=[0.5,0.5],
+	hull_facet=[1,0.5],
 	center_cut_diam=5,
 	quality=10,
 )
@@ -20,11 +20,11 @@ module InnerJoint
 		hull()
 		{
 			//x dimension
-			cube(size=[clip_length,face_size,face_size-joint_facet[0]*2],center=true);
-			cube(size=[clip_length,face_size-joint_facet[1]*2,face_size],center=true);
+			cube(size=[clip_length,face_size,face_size-hull_facet[0]*2],center=true);
+			cube(size=[clip_length,face_size-hull_facet[1]*2,face_size],center=true);
 			//y dimention
-			cube(size=[face_size,clip_width,face_size-joint_facet[0]*2],center=true);
-			cube(size=[face_size,clip_width-joint_facet[1]*2,face_size],center=true);
+			cube(size=[face_size,clip_width,face_size-hull_facet[0]*2],center=true);
+			cube(size=[face_size,clip_width-hull_facet[1]*2,face_size],center=true);
 		}
 		//center cut
 		cylinder(d=center_cut_diam,h=face_size+cutClr*2,$fn=quality*10,center=true);
