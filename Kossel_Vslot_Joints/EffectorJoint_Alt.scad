@@ -10,7 +10,7 @@ module InnerJoint
 	droplet_cut=0.4,
 	face_size=9,
 	hull_facet=[1,0.5],
-	center_cut_diam=5,
+	center_cut_diam=4,
 	quality=10,
 )
 {
