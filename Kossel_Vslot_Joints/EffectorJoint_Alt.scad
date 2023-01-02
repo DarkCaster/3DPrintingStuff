@@ -21,7 +21,7 @@ module InnerJoint
 		{
 			//x dimension
 			cube(size=[clip_length,face_size,face_size-hull_facet[0]*2],center=true);
-			cube(size=[clip_length,face_size-hull_facet[1]*2,face_size],center=true);
+			cube(size=[clip_length-hull_facet[1]*2,face_size-hull_facet[1]*2,face_size],center=true);
 			//y dimention
 			cube(size=[face_size,clip_width,face_size-hull_facet[0]*2],center=true);
 			cube(size=[face_size,clip_width-hull_facet[1]*2,face_size],center=true);
