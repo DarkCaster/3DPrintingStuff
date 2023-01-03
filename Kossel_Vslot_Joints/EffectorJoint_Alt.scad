@@ -65,7 +65,7 @@ module InnerJoint
 
 module OuterJoint
 (
-	shaft_diam=3.075,
+	shaft_diam=3.15,
 	screw_hole_diam=3.2,
 	handle_height=40,
 	clip_width_int=10+1,
