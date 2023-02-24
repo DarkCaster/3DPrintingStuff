@@ -150,6 +150,16 @@ module OuterJoint
 
 }
 
+module NutPocket
+(
+	nut_diam=6.75,
+	pocket_len=100,
+)
+{
+	m=(nut_diam/2)*sqrt(3)/2;
+	cylinder(d=nut_diam,h=pocket_len,center=false,$fn=6);
+}
+
 module EffectorJoint
 (
 	shaft_diam=2.95,
@@ -159,16 +169,15 @@ module EffectorJoint
 	clip_length_ext=41,
 	clip_base_height=2,
 	clip_base_length=10,
-
 	clip_base_cut_size=[16,8.5],
 	clip_base_cut2_size=[7,12],
 	clip_base_screw_pos=[35,5],
 	clip_base_screw_diam=3,
 	clip_base_corner=5,
-
 	screw_hole_diam=2.95,
 	droplet_cut=0.4,
-
+	nut_diam=6.75,
+	nut_depth=1,
 	quality=10,
 )
 {
@@ -266,6 +275,10 @@ module EffectorJoint
 				//external mount holes
 				translate([clip_base_screw_pos[0],clip_base_screw_pos[1],-joint_face_size/2-cutClr])
 				cylinder(d=clip_base_screw_diam, h=clip_base_height+2*cutClr, center=false, $fn=quality*12);
+				//nuts' holes for external mount holes
+				translate([clip_base_screw_pos[0],clip_base_screw_pos[1],-joint_face_size/2+nut_depth])
+				rotate(a=180,v=[1,0,0])
+				NutPocket(nut_diam=nut_diam,pocket_len=joint_face_size);
 			}
 
 		}
