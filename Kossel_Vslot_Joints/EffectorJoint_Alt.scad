@@ -150,6 +150,129 @@ module OuterJoint
 
 }
 
+module EffectorJoint
+(
+	shaft_diam=2.95,
+	joint_face_size=9,
+	clip_y_shift=1.5,
+	clip_length_int=30, //1 extra mm kept for 2x0.5mm washers
+	clip_length_ext=41,
+	clip_base_height=2,
+	clip_base_length=10,
+
+	clip_base_cut_size=[16,8.5],
+	clip_base_cut2_size=[7,12],
+	clip_base_screw_pos=[35,5],
+	clip_base_screw_diam=3,
+	clip_base_corner=5,
+
+	screw_hole_diam=2.95,
+	droplet_cut=0.4,
+
+	quality=10,
+)
+{
+	cutClr=0.01;
+	//cutClr=1;
+
+	base_screw_support_sz=[clip_length_ext/2,clip_base_screw_pos[1]+clip_base_corner];
+	base_screw_support_r=clip_base_corner;
+
+	clip_center_shift=(clip_length_ext-clip_length_int)/2;
+	clip_cut_center_shift=(clip_length_ext-clip_base_cut_size[0])/2;
+	clip_cut2_center_shift=clip_length_ext/2;
+
+	translate([-clip_length_ext/2,clip_y_shift+joint_face_size/2,0])
+	difference()
+	{
+		union()
+		{
+			//clip
+			for(i=[-1:2:1])
+			{
+				//top edge
+				rotate(a=i<0?0:60,v=[0,0,1])
+				mirror([0,i<0?0:1,0])
+				{
+					//clip base
+					translate([0,-joint_face_size/2-clip_y_shift,0])
+					rotate(a=90,v=[0,1,0])
+					cube_vround(size=[joint_face_size,joint_face_size+cutClr,clip_length_ext],center_xy=true,center_z=false,rounding=joint_face_size/2,round_corners=[false,true,true,true],quality=quality);
+					//clip shift
+					translate([0,-clip_y_shift,-joint_face_size/2])
+					cube([clip_length_ext,clip_y_shift+cutClr,clip_base_height]);
+				}
+			}
+
+			//base screws supports
+			translate([0,0,-joint_face_size/2])
+			hull()
+			for(i=[-1:2:1])
+			{
+				//top edge
+				rotate(a=i<0?0:60,v=[0,0,1])
+				mirror([0,i<0?0:1,0])
+				{
+					translate([base_screw_support_sz[0],0,0])
+					cube_vround(size=[base_screw_support_sz[0],base_screw_support_sz[1],clip_base_height],center_xy=false,center_z=false,rounding=base_screw_support_r,round_corners=[true,false,false,false],quality=quality);
+				}
+			}
+
+			//middle
+			translate([0,0,-joint_face_size/2])
+			linear_extrude(height=clip_base_height)
+			polygon(points=[
+				[0,0],
+				[clip_length_ext*cos(60),clip_length_ext*sin(60)],
+				[clip_length_ext,0],
+			]);
+		}
+
+		for(i=[-1:2:1])
+		{
+			//top edge
+			rotate(a=i<0?0:60,v=[0,0,1])
+			mirror([0,i<0?0:1,0])
+			{
+				//clip cut
+				translate([clip_center_shift,-joint_face_size-clip_y_shift-cutClr,-joint_face_size/2-cutClr])
+				cube([clip_length_int,joint_face_size+cutClr+clip_y_shift,joint_face_size+2*cutClr]);
+
+				//clip base cut
+				translate([clip_cut_center_shift,-clip_y_shift-joint_face_size/2,-joint_face_size/2-cutClr])
+				cube([clip_base_cut_size[0],clip_base_cut_size[1],joint_face_size+2*cutClr]);
+
+				//clip base cut
+				translate([clip_cut2_center_shift,-clip_y_shift-joint_face_size/2,0])
+				rotate(a=-90,v=[1,0,0])
+				cylinder(d=clip_base_cut2_size[0], h=clip_base_cut2_size[1], center=false, $fn=quality*12);
+				//cube([clip_base_cut2_size[0],clip_base_cut2_size[1],joint_face_size+2*cutClr]);
+
+				//inner clip mount cut (droplet shaped)
+				translate([clip_length_ext+cutClr,-clip_y_shift-joint_face_size/2,0])
+				rotate(a=-90,v=[0,1,0])
+				{
+					hull()
+					{
+						cylinder(d=screw_hole_diam,h=clip_length_ext+2*cutClr,center=false,$fn=quality*12);
+						linear_extrude(height=clip_length_ext+2*cutClr,center=false)
+							polygon(points=[
+								[0,-screw_hole_diam/2],
+								[screw_hole_diam/2+droplet_cut,0],
+								[0,screw_hole_diam/2],
+							]);
+					}
+				}
+				//external mount holes
+				translate([clip_base_screw_pos[0],clip_base_screw_pos[1],-joint_face_size/2-cutClr])
+				cylinder(d=clip_base_screw_diam, h=clip_base_height+2*cutClr, center=false, $fn=quality*12);
+			}
+
+		}
+	}
+}
+
+EffectorJoint();
 
 InnerJoint();
 
