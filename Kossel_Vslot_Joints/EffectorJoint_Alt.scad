@@ -162,7 +162,7 @@ module NutPocket
 
 module EffectorJoint
 (
-	shaft_diam=2.95,
+	shaft_diam=3.1,
 	joint_face_size=9,
 	clip_y_shift=1.5,
 	clip_length_int=30, //1 extra mm kept for 2x0.5mm washers
@@ -174,7 +174,6 @@ module EffectorJoint
 	clip_base_corner_pos=[35,5],
 	clip_base_corner_rounding=5,
 	clip_base_screw_diam=3.5,
-	screw_hole_diam=2.95,
 	droplet_cut=0.4,
 	nut_diam=6.75,
 	nut_depth=1,
@@ -263,12 +262,12 @@ module EffectorJoint
 				{
 					hull()
 					{
-						cylinder(d=screw_hole_diam,h=clip_length_ext+2*cutClr,center=false,$fn=quality*12);
+						cylinder(d=shaft_diam,h=clip_length_ext+2*cutClr,center=false,$fn=quality*12);
 						linear_extrude(height=clip_length_ext+2*cutClr,center=false)
 							polygon(points=[
-								[0,-screw_hole_diam/2],
-								[screw_hole_diam/2+droplet_cut,0],
-								[0,screw_hole_diam/2],
+								[0,-shaft_diam/2],
+								[shaft_diam/2+droplet_cut,0],
+								[0,shaft_diam/2],
 							]);
 					}
 				}
