@@ -168,11 +168,11 @@ module EffectorJoint
 	clip_length_int=30, //1 extra mm kept for 2x0.5mm washers
 	clip_length_ext=41,
 	clip_base_height=2,
-	clip_base_length=10,
 	clip_base_cut_size=[12,8.5],
 	clip_base_cut2_size=[7,12],
-	clip_base_corner_pos=[35,5],
-	clip_base_corner_rounding=5,
+	clip_base_corner_pos=[35,7],
+	clip_base_corner_rounding=7,
+	clip_base_screw_pos=[22,35],
 	clip_base_screw_diam=3.5,
 	droplet_cut=0.4,
 	nut_diam=6.75,
@@ -271,15 +271,30 @@ module EffectorJoint
 							]);
 					}
 				}
-				//external mount holes
-				translate([clip_base_corner_pos[0],clip_base_corner_pos[1],-joint_face_size/2-cutClr])
-				cylinder(d=clip_base_screw_diam, h=clip_base_height+2*cutClr, center=false, $fn=quality*12);
-				//nuts' holes for external mount holes
-				translate([clip_base_corner_pos[0],clip_base_corner_pos[1],-joint_face_size/2+nut_depth])
-				rotate(a=180,v=[1,0,0])
-				NutPocket(nut_diam=nut_diam,pocket_len=joint_face_size);
 			}
+		}
 
+
+		rotate(a=30,v=[0,0,1])
+		{
+			//screw hole 1
+			translate([clip_base_screw_pos[0],0,-joint_face_size/2-cutClr])
+			cylinder(d=clip_base_screw_diam, h=clip_base_height+2*cutClr, center=false, $fn=quality*12);
+
+			//screw hole 2
+			translate([clip_base_screw_pos[1],0,-joint_face_size/2-cutClr])
+			cylinder(d=clip_base_screw_diam, h=clip_base_height+2*cutClr, center=false, $fn=quality*12);
+
+			//nut hole 1
+			translate([clip_base_screw_pos[0],0,-joint_face_size/2+nut_depth])
+			rotate(a=180,v=[1,0,0])
+			NutPocket(nut_diam=nut_diam,pocket_len=joint_face_size);
+
+			//nut hole 2
+			translate([clip_base_screw_pos[1],0,-joint_face_size/2+nut_depth])
+			rotate(a=360/12,v=[0,0,1])
+			rotate(a=180,v=[1,0,0])
+			NutPocket(nut_diam=nut_diam,pocket_len=joint_face_size);
 		}
 	}
 }
