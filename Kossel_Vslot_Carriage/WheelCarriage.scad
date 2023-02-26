@@ -27,6 +27,7 @@ module CarriageBackSide
 	wheel_clip_diam=[5,8],
 	wheel_clip_height=10,
 	eccentric_hole_diam=8,
+	eccentric_hole_chamfer=0.5,
 	central_cut_mult=0.75,
 	quality=10,
 )
@@ -80,7 +81,20 @@ module CarriageBackSide
 		cylinder(d=wheel_clip_diam[0],h=wheel_clip_height+carriage_thickness+2*cutClr,$fn=quality*12);
 		//hole for eccentic spacer
 		translate([wheel_dist[0]/2, 0, -carriage_thickness-cutClr])
-		cylinder(d=eccentric_hole_diam,h=carriage_thickness+2*cutClr,,$fn=quality*12);
+		cylinder(d=eccentric_hole_diam,h=carriage_thickness+2*cutClr,$fn=quality*12);
+		//eccentric hole chamfer
+		for(i=[-1:2:1])
+		translate([0,0,i>0?-carriage_thickness:0])
+		mirror([0,0,i>0?1:0])
+		hull()
+		{
+			translate([wheel_dist[0]/2, 0, 0])
+			cylinder(d=eccentric_hole_diam+2*eccentric_hole_chamfer,h=cutClr,$fn=quality*12);
+			translate([wheel_dist[0]/2, 0, -eccentric_hole_chamfer])
+			cylinder(d=eccentric_hole_diam,h=eccentric_hole_chamfer+cutClr,$fn=quality*12);
+		}
+	}
+}
 	}
 }
 
