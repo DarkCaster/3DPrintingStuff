@@ -297,6 +297,16 @@ module EffectorJoint
 			NutPocket(nut_diam=nut_diam,pocket_len=joint_face_size);
 		}
 	}
+
+	//calculate effector properties
+	echo("Effector properties (see https://reprap.org/wiki/Delta_geometry for more info)");
+	//b distance
+	y_shift_distance=clip_y_shift+joint_face_size/2;
+	h_shift_distance=y_shift_distance/tan(30);
+	b_distance=h_shift_distance+clip_length_ext/2;
+	echo("B distance:",b_distance);
+	//TODO: arm space
+	//TODO: effector offset
 }
 
 EffectorJoint();
