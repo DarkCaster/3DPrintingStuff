@@ -1,3 +1,4 @@
+use <../OpenSCAD_Modules/cube_vround.scad>
 
 module CarriageBackHull
 (
@@ -95,7 +96,52 @@ module CarriageBackSide
 		}
 	}
 }
+
+module EssentricHalf
+(
+	eccentric_clip_height=4,
+	eccentric_clip_diam=7.8,
+	eccentric_ext_diam=8,
+	eccentric_int_diam=5,
+	eccentric_shift=0.5,
+	eccentric_height=10,
+	handle_diam=12,
+	handle_width=20,
+	handle_height=9,
+	handle_rounding=2,
+	handle_screw_size=3,
+	handle_screw_pos=[15,3],
+	quality=10,
+)
+{
+	cutClr=0.1;
+
+	difference()
+	{
+		union()
+		{
+			//clip
+			translate([0,0,-eccentric_clip_height])
+			cylinder(d=eccentric_clip_diam, h=eccentric_clip_height+cutClr, $fn=quality*12);
+			//handle
+			cylinder(d=handle_diam, h=handle_height, $fn=quality*12);
+			translate([0,-handle_diam/2,0])
+			cube_vround(size=[handle_width,handle_diam,handle_height],rounding=handle_rounding,round_corners=[true,true,false,false],center_z=false,quality=quality);
+			//external clip
+			cylinder(d=eccentric_ext_diam, h=eccentric_height, $fn=quality*12);
+		}
+		//eccentric hole
+		translate([0,eccentric_shift,-cutClr-eccentric_clip_height])
+		cylinder(d=eccentric_int_diam, h=eccentric_height+eccentric_clip_height+2*cutClr, $fn=quality*12);
+		//screw holes
+		translate([handle_screw_pos[0],handle_screw_pos[1],-cutClr])
+		cylinder(d=handle_screw_size, h=eccentric_height+2*cutClr, $fn=quality*12);
+		translate([handle_screw_pos[0],-handle_screw_pos[1],-cutClr])
+		cylinder(d=handle_screw_size, h=eccentric_height+2*cutClr, $fn=quality*12);
 	}
 }
 
 CarriageBackSide();
+
+translate([59.6/2,0,0])
+EssentricHalf();
