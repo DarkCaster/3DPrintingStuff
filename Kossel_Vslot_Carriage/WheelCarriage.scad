@@ -22,10 +22,10 @@ module CarriageBackHull
 
 module CarriageBackSide
 (
-	wheel_dist=[59.6,50],
+	wheel_dist=[60.75,50],
 	carriage_thickness=4,
 	carriage_rounding_diam=12,
-	wheel_clip_diam=[5,8],
+	wheel_clip_diam=[5.2,8],
 	wheel_clip_height=10,
 	eccentric_hole_diam=8,
 	eccentric_hole_chamfer=0.5,
@@ -143,5 +143,5 @@ module EssentricHalf
 
 CarriageBackSide();
 
-translate([59.6/2,0,0])
+translate([60.75/2,0,0])
 EssentricHalf();
