@@ -111,11 +111,13 @@ module EssentricHalf
 	handle_rounding=2,
 	handle_screw_size=3.2,
 	handle_screw_pos=[15,3],
+	mirror=false,
 	quality=10,
 )
 {
 	cutClr=0.1;
 
+	mirror([0,0,mirror?1:0])
 	difference()
 	{
 		union()
