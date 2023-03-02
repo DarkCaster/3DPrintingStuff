@@ -149,7 +149,7 @@ module CarriageFrontSide
 	payload_mount_size=[40,30],
 	payload_mount_diam=10,
 	payload_screw_diam=3.25,
-	nut_diam=6.75,
+	nut_diam=6.5,
 	nut_pocket_depth=2,
 	quality=10,
 )
