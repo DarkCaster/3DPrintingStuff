@@ -383,7 +383,17 @@ module EffectorArmsMount
 				[i*clip_triangle_side,clip_triangle_bottom-cutClr],
 				[i*clip_triangle_side,clip_triangle_bottom],
 			]);
-			//cuts extra stiffness triangles
+			//center X frame
+			for(i=[-1:2:1])
+			{
+				hull()
+				{
+					translate([-payload_mount_size[0]/2,i*payload_mount_size[1]/2,-mount_thickness/2])
+					cylinder(d=payload_handles_width,h=mount_thickness,center=true,$fn=quality*10);
+					translate([payload_mount_size[0]/2,-i*payload_mount_size[1]/2,-mount_thickness/2])
+					cylinder(d=payload_handles_width,h=mount_thickness,center=true,$fn=quality*10);
+				}
+			}
 		}
 		//cuts extra stiffness triangles
 		for(i=[-1:2:1])
@@ -409,7 +419,6 @@ module EffectorArmsMount
 			rotate(a=90,v=[0,1,0])
 			cylinder(d=clip_pos[6],h=clip_pos[5],center=true,$fn=quality*10);
 		}
-
 		//inner clip mount cut (droplet shaped)
 		translate([0,clip_pos[1]-payload_mount_size[1]/2+clip_pos[3],clip_pos[2]])
 		rotate(a=-90,v=[0,1,0])
@@ -425,6 +434,10 @@ module EffectorArmsMount
 					]);
 			}
 		}
+		//payload screws
+		for(i=[-1:2:1],j=[-1:2:1])
+		translate([i*payload_mount_size[0]/2,j*payload_mount_size[1]/2,-mount_thickness/2])
+		cylinder(d=payload_screw_diam,h=mount_thickness+2*cutClr,center=true,$fn=quality*10);
 	}
 }
 
