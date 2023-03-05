@@ -313,6 +313,116 @@ module EssentricHalf
 	}
 }
 
+module EffectorArmsMount
+(
+	mount_thickness=4,
+	payload_handles_width=4,
+	payload_mount_size=[40,30],
+	payload_mount_diam=10,
+	payload_screw_diam=3.25,
+	payload_triangles_cut=[60.75,16],
+	clip_length_int=30, //1 extra mm kept for 2x0.5mm washers
+	clip_length_ext=41,
+	clip_pos=[90,-10,17,2.5],
+	shaft_diam=3.1,
+	droplet_cut=0.4,
+	joint_face_size=9,
+
+	quality=10,
+)
+{
+	cutClr=0.01;
+
+	difference()
+	{
+		union()
+		{
+			//payload mounts
+			for(i=[-1:2:1],j=[-1:2:1])
+			{
+				translate([i*payload_mount_size[0]/2,j*payload_mount_size[1]/2,-mount_thickness/2])
+				cylinder(d=payload_mount_diam,h=mount_thickness,$fn=quality*12,center=true);
+			}
+			//connect mount points with handles
+			for(i=[-1:2:1])
+			{
+				translate([i*payload_mount_size[0]/2,0,-mount_thickness/2])
+				cube(size=[payload_handles_width,payload_mount_size[1],mount_thickness],center=true);
+				translate([0,i*payload_mount_size[1]/2,-mount_thickness/2])
+				cube(size=[payload_mount_size[0],payload_handles_width,mount_thickness],center=true);
+			}
+			//clips
+			gap_size=clip_pos[0]/2-clip_length_ext/2-payload_mount_size[0]/2;
+			translate([0,clip_pos[3],0])
+			for(i=[-1:2:1])
+			{
+				translate([i*(payload_mount_size[0]/2+gap_size/2),-payload_mount_size[1]/2,-mount_thickness/2])
+				cube(size=[gap_size+2*cutClr,joint_face_size,mount_thickness],center=true);
+				hull()
+				{
+					translate([i*clip_pos[0]/2,-payload_mount_size[1]/2,-mount_thickness/2])
+					cube([clip_length_ext,joint_face_size,mount_thickness],center=true);
+
+					translate([i*clip_pos[0]/2,clip_pos[1]-payload_mount_size[1]/2,clip_pos[2]])
+					rotate(a=90,v=[0,1,0])
+					cylinder(d=joint_face_size,h=clip_length_ext,center=true,$fn=quality*10);
+				}
+			}
+			//extra stiffness triangles
+			clip_triangle_top=payload_mount_size[1]/2+payload_handles_width/2;
+			clip_triangle_bottom=-payload_mount_size[1]/2+joint_face_size/2+clip_pos[3];
+			clip_triangle_center=payload_mount_size[0]/2;
+			clip_triangle_side=clip_pos[0]/2+clip_length_ext/2;
+			translate([0,0,-mount_thickness/2])
+			for(i=[-1:2:1])
+			linear_extrude(height=mount_thickness,center=true)
+			polygon(points=[
+				[i*clip_triangle_center,clip_triangle_top],
+				[i*clip_triangle_center,clip_triangle_bottom],
+				[i*clip_triangle_center,clip_triangle_bottom-cutClr],
+				[i*clip_triangle_side,clip_triangle_bottom-cutClr],
+				[i*clip_triangle_side,clip_triangle_bottom],
+			]);
+			//cuts extra stiffness triangles
+		}
+		//cuts extra stiffness triangles
+		for(i=[-1:2:1])
+		translate([i*payload_triangles_cut[0]/2,0,-mount_thickness/2])
+		cylinder(d=payload_triangles_cut[1],h=mount_thickness+2*cutClr,center=true,$fn=quality*10);
+		//clips
+		translate([0,clip_pos[3],0])
+		for(i=[-1:2:1])
+		{
+			hull()
+			{
+				translate([i*clip_pos[0]/2,-payload_mount_size[1]/2,mount_thickness/2])
+				cube([clip_length_int,joint_face_size*2,mount_thickness],center=true);
+
+				translate([i*clip_pos[0]/2,clip_pos[1]-payload_mount_size[1]/2,clip_pos[2]])
+				rotate(a=90,v=[0,1,0])
+				cylinder(d=joint_face_size+2*cutClr,h=clip_length_int,center=true,$fn=quality*10);
+			}
+		}
+
+		//inner clip mount cut (droplet shaped)
+		//translate([clip_length_ext+cutClr,0,0])
+		translate([0,clip_pos[1]-payload_mount_size[1]/2+clip_pos[3],clip_pos[2]])
+		rotate(a=-90,v=[0,1,0])
+		{
+			hull()
+			{
+				cylinder(d=shaft_diam,h=clip_pos[0]+clip_length_ext+2*cutClr,center=true,$fn=quality*12);
+				linear_extrude(height=clip_pos[0]+clip_length_ext+2*cutClr,center=true)
+					polygon(points=[
+						[0,-shaft_diam/2],
+						[shaft_diam/2+droplet_cut,0],
+						[0,shaft_diam/2],
+					]);
+			}
+		}
+	}
+}
+
 //bottom half
 CarriageBackSide();
 translate([60.75/2,0,0])
@@ -324,4 +434,6 @@ translate([0,0,15])
 	CarriageFrontSide();
 	translate([60.75/2,0,0])
 	EssentricHalf(mirror=true);
+	translate([0,0,8])
+	EffectorArmsMount();
 }
