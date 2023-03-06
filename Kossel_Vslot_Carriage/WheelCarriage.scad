@@ -1,4 +1,5 @@
 use <../OpenSCAD_Modules/cube_vround.scad>
+use <gt2.scad>
 
 module CarriageBackHull
 (
@@ -327,11 +328,16 @@ module EffectorArmsMount
 	shaft_diam=3.1,
 	droplet_cut=0.4,
 	joint_face_size=9,
-
+	belt_clip_extra_clearance=0.5+2, //0.5 edge clearance + 2mm extra clearance
+	belt_clip_size=[12, 6], //6mm belt width
+	belt_clip_shift=6,
 	quality=10,
 )
 {
 	cutClr=0.01;
+	//gt2_shift=-0.376;
+	gt2_shift=0.254;
+	belt_clip_length=payload_mount_size[1]+payload_handles_width;
 
 	difference()
 	{
@@ -394,7 +400,15 @@ module EffectorArmsMount
 					cylinder(d=payload_handles_width,h=mount_thickness,center=true,$fn=quality*10);
 				}
 			}
+			//belt clip base
+			belt_height=belt_clip_size[1]+mount_thickness+belt_clip_extra_clearance;
+			translate([-belt_clip_shift,0,belt_height/2-mount_thickness])
+			cube(size=[belt_clip_size[0],belt_clip_length,belt_height],center=true);
 		}
+		//cut for gt2 belt
+		translate([-gt2_shift-belt_clip_shift,-belt_clip_length/2-cutClr, belt_clip_extra_clearance])
+		rotate(a=90,v=[0,0,1])
+		gt2_belt(length=belt_clip_length+2*cutClr, h=belt_clip_size[1]+cutClr, center=false);
 		//cuts extra stiffness triangles
 		for(i=[-1:2:1])
 		translate([i*payload_triangles_cut[0]/2,0,-mount_thickness/2])
