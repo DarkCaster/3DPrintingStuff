@@ -318,6 +318,7 @@ module EffectorArmsMount
 (
 	mount_thickness=4,
 	payload_handles_width=4,
+	payload_handles_frame_width=5,
 	payload_mount_size=[40,30],
 	payload_mount_diam=10,
 	payload_screw_diam=3.25,
@@ -331,6 +332,7 @@ module EffectorArmsMount
 	belt_clip_extra_clearance=0.5+2, //0.5 edge clearance + 2mm extra clearance
 	belt_clip_size=[12, 6], //6mm belt width
 	belt_clip_shift=6,
+	tie_clip_size=[1,3,1.175],
 	quality=10,
 )
 {
@@ -338,6 +340,7 @@ module EffectorArmsMount
 	//gt2_shift=-0.376;
 	gt2_shift=0.254;
 	belt_clip_length=payload_mount_size[1]+payload_handles_width;
+	belt_clip_height=belt_clip_size[1]+mount_thickness+belt_clip_extra_clearance;
 
 	difference()
 	{
@@ -395,21 +398,26 @@ module EffectorArmsMount
 				hull()
 				{
 					translate([-payload_mount_size[0]/2,i*payload_mount_size[1]/2,-mount_thickness/2])
-					cylinder(d=payload_handles_width,h=mount_thickness,center=true,$fn=quality*10);
+					cylinder(d=payload_handles_frame_width,h=mount_thickness,center=true,$fn=quality*10);
 					translate([payload_mount_size[0]/2,-i*payload_mount_size[1]/2,-mount_thickness/2])
-					cylinder(d=payload_handles_width,h=mount_thickness,center=true,$fn=quality*10);
+					cylinder(d=payload_handles_frame_width,h=mount_thickness,center=true,$fn=quality*10);
 				}
 			}
 			//belt clip base
-			belt_height=belt_clip_size[1]+mount_thickness+belt_clip_extra_clearance;
-			translate([-belt_clip_shift,0,belt_height/2-mount_thickness])
-			cube(size=[belt_clip_size[0],belt_clip_length,belt_height],center=true);
+			translate([-belt_clip_shift,0,belt_clip_height/2-mount_thickness])
+			cube(size=[belt_clip_size[0],belt_clip_length,belt_clip_height],center=true);
 		}
 		//cut for gt2 belt
 		translate([-gt2_shift-belt_clip_shift,-belt_clip_length/2-cutClr, belt_clip_extra_clearance])
 		rotate(a=90,v=[0,0,1])
 		gt2_belt(length=belt_clip_length+2*cutClr, h=belt_clip_size[1]+cutClr, center=false);
-		//cuts extra stiffness triangles
+		//nylon ties clips
+		for(i=[-1:2:1],j=[-1:2:1])
+		translate([i*(belt_clip_size[0]-tie_clip_size[0]+tie_clip_size[2])/2-belt_clip_shift,
+				j*(payload_mount_size[1]/2-payload_handles_width/2-tie_clip_size[1]/2),
+				belt_clip_height/2-mount_thickness])
+		cube([tie_clip_size[0]+tie_clip_size[2],tie_clip_size[1],belt_clip_height+2*cutClr],center=true);
+		//cuts at extra stiffness triangles
 		for(i=[-1:2:1])
 		translate([i*payload_triangles_cut[0]/2,0,-mount_thickness/2])
 		cylinder(d=payload_triangles_cut[1],h=mount_thickness+2*cutClr,center=true,$fn=quality*10);
