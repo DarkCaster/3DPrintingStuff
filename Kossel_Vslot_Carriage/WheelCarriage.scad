@@ -368,9 +368,13 @@ module EffectorArmsMount
 	shaft_diam=3.1,
 	droplet_cut=0.4,
 	joint_face_size=9,
+
 	belt_clip_extra_clearance=0.5+2, //0.5 edge clearance + 2mm extra clearance
-	belt_clip_size=[12, 6], //6mm belt width
+	belt_clip_size=[12,6,0.1], //6mm belt width, width + 0.1mm
 	belt_clip_shift=6,
+	//belt_cut_par=[6,0.1], //6mm belt width, belt-base thickness + 0.1mm
+
+
 	tie_clip_size=[1,3,1.175],
 	corners_brim_par=[13,0.4,-3,-12],
 	corners_brim=true,
@@ -378,8 +382,6 @@ module EffectorArmsMount
 )
 {
 	cutClr=0.01;
-	//gt2_shift=-0.376;
-	gt2_shift=0.254;
 	belt_clip_length=payload_mount_size[1]+payload_handles_width;
 	belt_clip_height=belt_clip_size[1]+mount_thickness+belt_clip_extra_clearance;
 
@@ -456,9 +458,9 @@ module EffectorArmsMount
 			}
 		}
 		//cut for gt2 belt
-		translate([-gt2_shift-belt_clip_shift,-belt_clip_length/2-cutClr, belt_clip_extra_clearance])
+		translate([-belt_clip_shift,-belt_clip_length/2-cutClr, belt_clip_extra_clearance])
 		rotate(a=90,v=[0,0,1])
-		gt2_belt(length=belt_clip_length+2*cutClr, h=belt_clip_size[1]+cutClr, center=false);
+		GT2Belt(length=belt_clip_length+2*cutClr,h=belt_clip_size[1]+cutClr,width_clearance=belt_clip_size[2],center=false);
 		//nylon ties clips
 		for(i=[-1:2:1],j=[-1:2:1])
 		translate([i*(belt_clip_size[0]-tie_clip_size[0]+tie_clip_size[2])/2-belt_clip_shift,
