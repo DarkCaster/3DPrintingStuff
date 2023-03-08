@@ -370,7 +370,7 @@ module EffectorArmsMount
 	joint_face_size=9,
 	belt_clip_size=[12,6+0.5+2], //clip height: 6mm + 0.5 edge clearance + 2mm extra clearance
 	belt_clip_shift=6,
-	belt_cut_par=[6,0.1], //6mm belt width, belt-base thickness + 0.1mm
+	belt_cut_par=[6,0.1,3,1.6], //6mm belt width, belt-base thickness + 0.1mm, side cut x, side cut y
 	tie_clip_size=[1,3,1.175],
 	corners_brim_par=[13,0.4,-3,-12],
 	corners_brim=true,
@@ -458,6 +458,18 @@ module EffectorArmsMount
 		translate([-belt_clip_shift,-belt_clip_length/2-cutClr,belt_clip_size[1]-belt_cut_par[0]])
 		rotate(a=90,v=[0,0,1])
 		GT2Belt(length=belt_clip_length+2*cutClr,h=belt_cut_par[0]+cutClr,width_clearance=belt_cut_par[1],center=false);
+		//extra side cuts for belt
+		for(i=[-1:2:1])
+		translate([-belt_clip_shift,i*belt_clip_length/2,belt_clip_size[1]-belt_cut_par[0]])
+		mirror([0,i<0?0:1,0])
+		linear_extrude(height=belt_cut_par[0]+cutClr,center=false)
+		polygon(points=[
+			[-belt_cut_par[2]/2,0],
+			[-belt_cut_par[2]/2,-cutClr],
+			[belt_cut_par[2]/2,-cutClr],
+			[belt_cut_par[2]/2,0],
+			[0,belt_cut_par[3]],
+		]);
 		//nylon ties clips
 		for(i=[-1:2:1],j=[-1:2:1])
 		translate([i*(belt_clip_size[0]-tie_clip_size[0]+tie_clip_size[2])/2-belt_clip_shift,
