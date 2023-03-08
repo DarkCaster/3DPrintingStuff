@@ -314,6 +314,45 @@ module EssentricHalf
 	}
 }
 
+module GT2Belt
+(
+	length=10,
+	h=6,
+	width_clearance=0.00,
+	center=false
+)
+{
+	cutClr=0.01;
+	offset=0.254;
+	width=0.63;
+	translate([center?-length/2:0,0,center?-h/2:0])
+
+	if(width_clearance>0)
+	{
+		union()
+		{
+			//orig belt, with offfset
+			translate([0,offset,0])
+			gt2_belt(length=length,h=h,center=false);
+			//add extra width
+			translate([0,width-cutClr,0])
+			cube(size=[length,width_clearance+cutClr,h],center=false);
+		}
+	}
+	else
+	{
+		difference()
+		{
+			//orig belt, with offfset
+			translate([0,offset,0])
+			gt2_belt(length=length,h=h,center=false);
+			//remove some width
+			translate([-cutClr,width-(-width_clearance),-cutClr])
+			cube(size=[length+2*cutClr,cutClr+(-width_clearance),h+2*cutClr],center=false);
+		}
+	}
+}
+
 module EffectorArmsMount
 (
 	mount_thickness=4,
