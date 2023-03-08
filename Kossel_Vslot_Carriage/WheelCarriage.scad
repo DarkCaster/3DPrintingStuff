@@ -333,6 +333,8 @@ module EffectorArmsMount
 	belt_clip_size=[12, 6], //6mm belt width
 	belt_clip_shift=6,
 	tie_clip_size=[1,3,1.175],
+	corners_brim_par=[13,0.4,-3,-12],
+	corners_brim=true,
 	quality=10,
 )
 {
@@ -406,6 +408,13 @@ module EffectorArmsMount
 			//belt clip base
 			translate([-belt_clip_shift,0,belt_clip_height/2-mount_thickness])
 			cube(size=[belt_clip_size[0],belt_clip_length,belt_clip_height],center=true);
+			//corners brim at clip side - for better plate adhesion here to make sure clip not bent beacuse of bending corners
+			if(corners_brim)
+			{
+				for(i=[-1:2:1])
+				translate([i*(clip_pos[0]/2+clip_length_ext/2+corners_brim_par[2]),corners_brim_par[3],-mount_thickness])
+				cylinder(r=corners_brim_par[0],h=corners_brim_par[1],$fn=quality*10,center=false);
+			}
 		}
 		//cut for gt2 belt
 		translate([-gt2_shift-belt_clip_shift,-belt_clip_length/2-cutClr, belt_clip_extra_clearance])
