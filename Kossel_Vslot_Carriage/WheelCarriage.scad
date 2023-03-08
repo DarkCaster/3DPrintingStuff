@@ -322,7 +322,7 @@ module EffectorArmsMount
 	payload_mount_size=[40,30],
 	payload_mount_diam=10,
 	payload_screw_diam=3.25,
-	payload_triangles_cut=[60.75,16],
+	payload_triangles_cut=[60.75,16,-1],
 	clip_length_int=30, //1 extra mm kept for 2x0.5mm washers
 	clip_length_ext=41,
 	clip_pos=[90,-5,13,2.5,7,4,15],
@@ -428,8 +428,13 @@ module EffectorArmsMount
 		cube([tie_clip_size[0]+tie_clip_size[2],tie_clip_size[1],belt_clip_height+2*cutClr],center=true);
 		//cuts at extra stiffness triangles
 		for(i=[-1:2:1])
-		translate([i*payload_triangles_cut[0]/2,0,-mount_thickness/2])
-		cylinder(d=payload_triangles_cut[1],h=mount_thickness+2*cutClr,center=true,$fn=quality*10);
+		hull()
+		{
+			translate([i*payload_triangles_cut[0]/2,0,-mount_thickness/2])
+			cylinder(d=payload_triangles_cut[1],h=mount_thickness+2*cutClr,center=true,$fn=quality*10);
+			translate([i*(payload_triangles_cut[0]/2+payload_triangles_cut[2]),0,-mount_thickness/2])
+			cylinder(d=payload_triangles_cut[1],h=mount_thickness+2*cutClr,center=true,$fn=quality*10);
+		}
 		//clips
 		translate([0,clip_pos[3],0])
 		for(i=[-1:2:1])
