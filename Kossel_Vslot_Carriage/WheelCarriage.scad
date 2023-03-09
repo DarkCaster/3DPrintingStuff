@@ -364,7 +364,7 @@ module EffectorArmsMount
 	payload_triangles_cut=[60.75,16,-1],
 	clip_length_int=30, //1 extra mm kept for 2x0.5mm washers
 	clip_length_ext=41,
-	clip_pos=[90,-5,13,2.5,7,4,15],
+	clip_pos=[90,-5,13,2.5],
 	shaft_diam=3.1,
 	droplet_cut=0.4,
 	joint_face_size=9,
@@ -484,26 +484,6 @@ module EffectorArmsMount
 			cylinder(d=payload_triangles_cut[1],h=mount_thickness+2*cutClr,center=true,$fn=quality*10);
 			translate([i*(payload_triangles_cut[0]/2+payload_triangles_cut[2]),0,-mount_thickness/2])
 			cylinder(d=payload_triangles_cut[1],h=mount_thickness+2*cutClr,center=true,$fn=quality*10);
-		}
-		//clips
-		translate([0,clip_pos[3],0])
-		for(i=[-1:2:1])
-		{
-			hull()
-			{
-				translate([i*clip_pos[0]/2,-payload_mount_size[1]/2,mount_thickness/2+clip_pos[4]])
-				cube([clip_length_int,joint_face_size*10,mount_thickness],center=true);
-				translate([i*clip_pos[0]/2,clip_pos[1]-payload_mount_size[1]/2,clip_pos[2]])
-				rotate(a=90,v=[0,1,0])
-				cylinder(d=joint_face_size+2*cutClr,h=clip_length_int,center=true,$fn=quality*10);
-			}
-		}
-		//cuts for clip center screws and nut
-		for(i=[-1:2:1])
-		{
-			translate([i*clip_pos[0]/2,clip_pos[1]-payload_mount_size[1]/2+clip_pos[3],clip_pos[2]])
-			rotate(a=90,v=[0,1,0])
-			cylinder(d=clip_pos[6],h=clip_pos[5],center=true,$fn=quality*10);
 		}
 		//inner clip mount cut (droplet shaped)
 		translate([0,clip_pos[1]-payload_mount_size[1]/2+clip_pos[3],clip_pos[2]])
