@@ -372,7 +372,7 @@ module EffectorArmsMount
 	belt_clip_shift=6,
 	belt_cut_par=[6,0.1,3,1.6], //6mm belt width, belt-base thickness + 0.1mm, side cut x, side cut y
 	tie_clip_size=[1,3,1.175],
-	corners_brim_par=[13,0.4,-3,-12],
+	corners_brim_par=[26,0.4,-3,-12],
 	corners_brim=true,
 	quality=10,
 )
@@ -451,7 +451,7 @@ module EffectorArmsMount
 			{
 				for(i=[-1:2:1])
 				translate([i*(clip_pos[0]/2+clip_length_ext/2+corners_brim_par[2]),corners_brim_par[3],-mount_thickness])
-				cylinder(r=corners_brim_par[0],h=corners_brim_par[1],$fn=quality*10,center=false);
+				cylinder(d=corners_brim_par[0],h=corners_brim_par[1],$fn=quality*10,center=false);
 			}
 		}
 		//cut for gt2 belt
