@@ -365,6 +365,7 @@ module EffectorArmsMount
 	clip_length_int=30, //1 extra mm kept for 2x0.5mm washers
 	clip_length_ext=41,
 	clip_pos=[90,-5,13,2.5],
+	clip_cut=[30,12.5, 15,18, 7,21, 5,31], //len1,diam1,len2,diam2,len3,diam3,
 	shaft_diam=3.1,
 	droplet_cut=0.4,
 	joint_face_size=9,
@@ -452,6 +453,21 @@ module EffectorArmsMount
 				for(i=[-1:2:1])
 				translate([i*(clip_pos[0]/2+clip_length_ext/2+corners_brim_par[2]),corners_brim_par[3],-mount_thickness])
 				cylinder(d=corners_brim_par[0],h=corners_brim_par[1],$fn=quality*10,center=false);
+			}
+		}
+		//main clip cut
+		for(i=[-1:2:1])
+		{
+			translate([i*clip_pos[0]/2,clip_pos[1]-payload_mount_size[1]/2+clip_pos[3],clip_pos[2]])
+			rotate(a=90,v=[0,1,0])
+			{
+				hull()
+				{
+					cylinder(d=clip_cut[1], h=clip_cut[0], $fn=quality*10, center=true);
+					cylinder(d=clip_cut[3], h=clip_cut[2], $fn=quality*10, center=true);
+				}
+				cylinder(d=clip_cut[5], h=clip_cut[4], $fn=quality*10, center=true);
+				cylinder(d=clip_cut[7], h=clip_cut[6], $fn=quality*10, center=true);
 			}
 		}
 		//cut for gt2 belt
