@@ -360,7 +360,7 @@ module EffectorArmsMount
 	payload_handles_frame_width=5,
 	payload_mount_size=[40,30],
 	payload_mount_diam=10,
-	payload_mount_spot_extra_height=3,
+	payload_mount_spot_extra_height=6,
 	payload_screw_diam=3.25,
 	payload_screw_top_diam=7,
 	payload_triangles_cut=[60.75,16,-1],
@@ -393,8 +393,9 @@ module EffectorArmsMount
 			//payload mounts
 			for(i=[-1:2:1],j=[-1:2:1])
 			{
-				translate([i*payload_mount_size[0]/2,j*payload_mount_size[1]/2,-mount_thickness/2+payload_mount_spot_extra_height/2])
-				cylinder(d=payload_mount_diam,h=mount_thickness+payload_mount_spot_extra_height,$fn=quality*12,center=true);
+				extra_height=j<0?payload_mount_spot_extra_height:0;
+				translate([i*payload_mount_size[0]/2,j*payload_mount_size[1]/2,-mount_thickness/2+extra_height/2])
+				cylinder(d=payload_mount_diam,h=mount_thickness+extra_height,$fn=quality*12,center=true);
 			}
 			//connect mount points with handles
 			for(i=[-1:2:1])
