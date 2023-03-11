@@ -360,7 +360,7 @@ module EffectorArmsMount
 	payload_handles_frame_width=5,
 	payload_mount_size=[40,30],
 	payload_mount_diam=10,
-	payload_mount_spot_extra_height=6,
+	payload_mount_spot_extra_height=5,
 	payload_screw_diam=3.25,
 	payload_screw_top_diam=7,
 	payload_triangles_cut=[60.75,16,-1],
@@ -376,8 +376,8 @@ module EffectorArmsMount
 	belt_cut_par=[6,0.1,3,1.6], //6mm belt width, belt-base thickness + 0.1mm, side cut x, side cut y
 	belt_cut2_par=[8,4],
 	tie_clip_size=[1,3,1.175],
+	use_brim=true,
 	corners_brim_par=[26,0.4,-3,-12],
-	corners_brim=true,
 	quality=10,
 )
 {
@@ -446,7 +446,7 @@ module EffectorArmsMount
 			translate([-belt_clip_shift,0,belt_clip_height/2-mount_thickness])
 			cube(size=[belt_clip_size[0],belt_clip_length,belt_clip_height],center=true);
 			//corners brim at clip side - for better plate adhesion here to make sure clip not bent beacuse of bending corners
-			if(corners_brim)
+			if(use_brim)
 			{
 				for(i=[-1:2:1])
 				translate([i*(clip_pos[0]/2+clip_length_ext/2+corners_brim_par[2]),corners_brim_par[3],-mount_thickness])
