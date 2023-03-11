@@ -378,6 +378,7 @@ module EffectorArmsMount
 	tie_clip_size=[1,3,1.175],
 	use_brim=true,
 	corners_brim_par=[26,0.4,-3,-12],
+	center_brim_par=[10,4,0.4],
 	quality=10,
 )
 {
@@ -451,6 +452,9 @@ module EffectorArmsMount
 				for(i=[-1:2:1])
 				translate([i*(clip_pos[0]/2+clip_length_ext/2+corners_brim_par[2]),corners_brim_par[3],-mount_thickness])
 				cylinder(d=corners_brim_par[0],h=corners_brim_par[1],$fn=quality*10,center=false);
+
+				translate([0,-center_brim_par[0]/2-payload_mount_size[1]/2,-mount_thickness])
+				cube_vround(size=[clip_pos[0]+clip_length_ext,center_brim_par[0],center_brim_par[2]],rounding=center_brim_par[1],quality=quality,center_xy=true);
 			}
 		}
 		//center clip cut
