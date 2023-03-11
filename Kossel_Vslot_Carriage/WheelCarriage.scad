@@ -368,7 +368,7 @@ module EffectorArmsMount
 	clip_length_ext=41,
 	clip_pos=[90,5,13,2.5],
 	clip_cut=[30,13.5, 17,19, 8,22, 5,31], //len1,diam1,len2,diam2,len3,diam3,
-	shaft_diam=3.15,
+	shaft_diam=3.12,
 	droplet_cut=0.4,
 	joint_face_size=9,
 	belt_clip_size=[12,6+0.5+2], //clip height: 6mm + 0.5 edge clearance + 2mm extra clearance
