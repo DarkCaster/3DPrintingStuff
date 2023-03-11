@@ -367,7 +367,7 @@ module EffectorArmsMount
 	clip_length_int=30, //1 extra mm kept for 2x0.5mm washers
 	clip_length_ext=41,
 	clip_pos=[90,5,13,2.5],
-	clip_cut=[30,12.5, 15,18, 7,21, 5,31], //len1,diam1,len2,diam2,len3,diam3,
+	clip_cut=[30,13.5, 17,19, 8,22, 5,31], //len1,diam1,len2,diam2,len3,diam3,
 	shaft_diam=3.1,
 	droplet_cut=0.4,
 	joint_face_size=9,
