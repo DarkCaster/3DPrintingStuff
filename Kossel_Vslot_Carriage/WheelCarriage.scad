@@ -360,7 +360,9 @@ module EffectorArmsMount
 	payload_handles_frame_width=5,
 	payload_mount_size=[40,30],
 	payload_mount_diam=10,
+	payload_mount_spot_extra_height=3,
 	payload_screw_diam=3.25,
+	payload_screw_top_diam=7,
 	payload_triangles_cut=[60.75,16,-1],
 	clip_length_int=30, //1 extra mm kept for 2x0.5mm washers
 	clip_length_ext=41,
@@ -372,6 +374,7 @@ module EffectorArmsMount
 	belt_clip_size=[12,6+0.5+2], //clip height: 6mm + 0.5 edge clearance + 2mm extra clearance
 	belt_clip_shift=6,
 	belt_cut_par=[6,0.1,3,1.6], //6mm belt width, belt-base thickness + 0.1mm, side cut x, side cut y
+	belt_cut2_par=[8,4],
 	tie_clip_size=[1,3,1.175],
 	corners_brim_par=[26,0.4,-3,-12],
 	corners_brim=true,
@@ -390,8 +393,8 @@ module EffectorArmsMount
 			//payload mounts
 			for(i=[-1:2:1],j=[-1:2:1])
 			{
-				translate([i*payload_mount_size[0]/2,j*payload_mount_size[1]/2,-mount_thickness/2])
-				cylinder(d=payload_mount_diam,h=mount_thickness,$fn=quality*12,center=true);
+				translate([i*payload_mount_size[0]/2,j*payload_mount_size[1]/2,-mount_thickness/2+payload_mount_spot_extra_height/2])
+				cylinder(d=payload_mount_diam,h=mount_thickness+payload_mount_spot_extra_height,$fn=quality*12,center=true);
 			}
 			//connect mount points with handles
 			for(i=[-1:2:1])
@@ -401,26 +404,17 @@ module EffectorArmsMount
 				translate([0,i*payload_mount_size[1]/2,-mount_thickness/2])
 				cube(size=[payload_mount_size[0],payload_handles_width,mount_thickness],center=true);
 			}
-
-			//arm-clips hub with cuts that cannot be done in another sections
-			difference()
+			//arm-clips hub
+			translate([0,clip_pos[3],0])
+			hull()
 			{
-				translate([0,clip_pos[3],0])
-				hull()
-				{
-					translate([0,-payload_mount_size[1]/2,-mount_thickness/2])
-					cube([clip_length_ext+clip_pos[0],joint_face_size,mount_thickness],center=true);
+				translate([0,-payload_mount_size[1]/2,-mount_thickness/2])
+				cube([clip_length_ext+clip_pos[0],joint_face_size,mount_thickness],center=true);
 
-					translate([0,-clip_pos[1]-payload_mount_size[1]/2,clip_pos[2]])
-					rotate(a=90,v=[0,1,0])
-					cylinder(d=joint_face_size,h=clip_length_ext+clip_pos[0],center=true,$fn=quality*10);
-				}
-				//center clip cut
-				translate([0,-clip_pos[1]-payload_mount_size[1]/2+clip_pos[3],clip_pos[2]])
-				rotate(a=atan(clip_pos[1]/clip_pos[2]),v=[1,0,0])
-				cube(size=[clip_pos[0]-clip_length_ext,joint_face_size*2,joint_face_size+2*cutClr],center=true);
+				translate([0,-clip_pos[1]-payload_mount_size[1]/2,clip_pos[2]])
+				rotate(a=90,v=[0,1,0])
+				cylinder(d=joint_face_size,h=clip_length_ext+clip_pos[0],center=true,$fn=quality*10);
 			}
-
 			//extra stiffness triangles
 			clip_triangle_top=payload_mount_size[1]/2+payload_handles_width/2;
 			clip_triangle_bottom=-payload_mount_size[1]/2+joint_face_size/2+clip_pos[3];
@@ -458,7 +452,14 @@ module EffectorArmsMount
 				cylinder(d=corners_brim_par[0],h=corners_brim_par[1],$fn=quality*10,center=false);
 			}
 		}
-		//main clip cut
+		//center clip cut
+		translate([0,-clip_pos[1]-payload_mount_size[1]/2+clip_pos[3],clip_pos[2]])
+		rotate(a=atan(clip_pos[1]/clip_pos[2]),v=[1,0,0])
+		cube(size=[clip_pos[0]-clip_length_ext,joint_face_size*2,joint_face_size+2*cutClr],center=true);
+		//cut from top for belt clip base
+		translate([0,0,belt_clip_height/2-mount_thickness+belt_clip_height])
+		cube(size=[clip_pos[0]-clip_length_ext,belt_clip_length*2,belt_clip_height],center=true);
+		//arms clip cut
 		for(i=[-1:2:1])
 		{
 			translate([i*clip_pos[0]/2,-clip_pos[1]-payload_mount_size[1]/2+clip_pos[3],clip_pos[2]])
@@ -473,11 +474,13 @@ module EffectorArmsMount
 				cylinder(d=clip_cut[7], h=clip_cut[6], $fn=quality*10, center=true);
 			}
 		}
-
 		//cut for gt2 belt
 		translate([-belt_clip_shift,-belt_clip_length/2-cutClr,belt_clip_size[1]-belt_cut_par[0]])
 		rotate(a=90,v=[0,0,1])
 		GT2Belt(length=belt_clip_length+2*cutClr,h=belt_cut_par[0]+cutClr,width_clearance=belt_cut_par[1],center=false);
+		//second cut for gt2 belt
+		translate([belt_clip_shift,0,belt_clip_size[1]-belt_cut2_par[0]/2+cutClr/2])
+		cube([belt_cut2_par[1],belt_clip_length*2,belt_cut2_par[0]+cutClr],center=true);
 		//extra side cuts for belt
 		for(i=[-1:2:1])
 		translate([-belt_clip_shift,i*belt_clip_length/2,belt_clip_size[1]-belt_cut_par[0]])
@@ -485,8 +488,8 @@ module EffectorArmsMount
 		linear_extrude(height=belt_cut_par[0]+cutClr,center=false)
 		polygon(points=[
 			[-belt_cut_par[2]/2,0],
-			[-belt_cut_par[2]/2,-cutClr],
-			[belt_cut_par[2]/2,-cutClr],
+			[-belt_cut_par[2]/2,-belt_clip_length],
+			[belt_cut_par[2]/2,-belt_clip_length],
 			[belt_cut_par[2]/2,0],
 			[0,belt_cut_par[3]],
 		]);
@@ -524,6 +527,10 @@ module EffectorArmsMount
 		for(i=[-1:2:1],j=[-1:2:1])
 		translate([i*payload_mount_size[0]/2,j*payload_mount_size[1]/2,-mount_thickness/2])
 		cylinder(d=payload_screw_diam,h=mount_thickness+2*cutClr,center=true,$fn=quality*10);
+		//payload screw tops
+		for(i=[-1:2:1],j=[-1:2:1])
+		translate([i*payload_mount_size[0]/2,j*payload_mount_size[1]/2,0])
+		cylinder(d=payload_screw_top_diam,h=clip_pos[2]*2,center=false,$fn=quality*10);
 	}
 }
 
