@@ -375,6 +375,7 @@ module EffectorArmsMount
 	belt_clip_shift=6,
 	belt_cut_par=[6,0.1,3,1.6], //6mm belt width, belt-base thickness + 0.1mm, side cut x, side cut y
 	belt_cut2_par=[8,4],
+	belt_cut3_par=[6,6],
 	tie_clip_size=[1,3,1.175],
 	use_brim=true,
 	corners_brim_par=[26,0.4,-3,-12],
@@ -486,6 +487,9 @@ module EffectorArmsMount
 		//second cut for gt2 belt
 		translate([belt_clip_shift,0,belt_clip_size[1]-belt_cut2_par[0]/2+cutClr/2])
 		cube([belt_cut2_par[1],belt_clip_length*2,belt_cut2_par[0]+cutClr],center=true);
+		//third cut for gt2 belt
+		translate([-belt_clip_shift,0,belt_cut3_par[1]/2])
+		cube([belt_clip_size[0]+2*cutClr,belt_cut3_par[0],belt_cut3_par[1]],center=true);
 		//extra side cuts for belt
 		for(i=[-1:2:1])
 		translate([-belt_clip_shift,i*belt_clip_length/2,belt_clip_size[1]-belt_cut_par[0]])
