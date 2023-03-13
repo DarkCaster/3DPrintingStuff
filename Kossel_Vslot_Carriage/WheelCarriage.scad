@@ -274,7 +274,7 @@ module EssentricHalf
 	eccentric_clip_diam=7.8,
 	eccentric_ext_diam=8,
 	eccentric_int_diam=5,
-	eccentric_shift=0.6,
+	eccentric_shift=0.4,
 	eccentric_height=5,
 	handle_diam=12,
 	handle_width=20,
