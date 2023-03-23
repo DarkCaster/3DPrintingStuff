@@ -16,6 +16,10 @@ module EffectorMount
 	tool_base=[[-18,-15],[24,-15],[24,13],[-18,13]],
 	tool_rotation=30,
 
+	tool_wires_cut_pos=[-27,0],
+	tool_wires_cut_diam=[15,10],
+	tool_wires_cut_rotation=30,
+
 	stiffeners_radius=2,
 	arm_len=90,
 	base_height=2,
@@ -112,6 +116,9 @@ module EffectorMount
 				linear_extrude(height=base_height+stiffeners_radius)
 				polygon(points=tool_base);
 			}
+			rotate(a=tool_wires_cut_rotation,v=[0,0,1])
+			translate(tool_wires_cut_pos)
+			cylinder(d=tool_wires_cut_diam[0],h=base_height+stiffeners_radius,center=false, $fn=quality*12);
 		}
 
 		//clip base screw holes
@@ -144,6 +151,10 @@ module EffectorMount
 			translate([side_hole2_pos[0],side_hole2_pos[1],-cutClr])
 			cylinder(d=side_hole_diam, h=vcut, center=false, $fn=quality*12);
 		}
+		//tool wires hole
+		rotate(a=tool_wires_cut_rotation,v=[0,0,1])
+		translate([tool_wires_cut_pos[0],tool_wires_cut_pos[1],-cutClr])
+		cylinder(d=tool_wires_cut_diam[1],h=vcut,center=false, $fn=quality*12);
 	}
 
 	//stiffeners
