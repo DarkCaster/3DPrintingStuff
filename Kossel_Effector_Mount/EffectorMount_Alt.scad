@@ -4,10 +4,18 @@ use <../Kossel_Vslot_Joints/EffectorJoint_Alt.scad>
 module EffectorMount
 (
 	clip_length_ext=41,
-	clip_base_screw_pos=[22,35],
+	clip_base_screw_pos=[22,35], //from effector joint
 	clip_base_screw_tab_diam=8,
 	clip_base_screw_diam=3.5,
 	clip_base_screw_top_diam=7,
+
+	center_hole_diam=4.2,
+	side_hole_diam=3.2,
+	side_hole1_pos=[-14,-3],
+	side_hole2_pos=[19,-3],
+	tool_base=[[-18,-15],[24,-15],[24,13],[-18,13]],
+	tool_rotation=-60,
+
 	stiffeners_radius=2,
 	arm_len=90,
 	base_height=2,
@@ -107,6 +115,24 @@ module EffectorMount
 			cylinder(d=clip_base_screw_diam, h=base_height+2*cutClr, center=false, $fn=quality*12);
 			translate([clip_base_screw_pos[1],0,base_height])
 			cylinder(d=clip_base_screw_top_diam, h=stiffeners_radius+cutClr, center=false, $fn=quality*12);
+		}
+
+		vcut=base_height+stiffeners_radius+2*cutClr;
+
+		rotate(a=tool_rotation,v=[0,0,1])
+		{
+			//center hole
+			translate([0,0,-cutClr])
+			cylinder(d=center_hole_diam, h=vcut, center=false, $fn=quality*12);
+			translate([side_hole1_pos[0],side_hole1_pos[1],-cutClr])
+			cylinder(d=side_hole_diam, h=vcut, center=false, $fn=quality*12);
+			translate([side_hole2_pos[0],side_hole2_pos[1],-cutClr])
+			cylinder(d=side_hole_diam, h=vcut, center=false, $fn=quality*12);
+
+			//extruder clearance
+			translate([0,0,base_height])
+			linear_extrude(height=vcut)
+			polygon(points=tool_base);
 		}
 	}
 
