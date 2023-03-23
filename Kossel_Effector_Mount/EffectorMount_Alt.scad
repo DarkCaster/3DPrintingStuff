@@ -14,7 +14,7 @@ module EffectorMount
 	side_hole1_pos=[-14,-3],
 	side_hole2_pos=[19,-3],
 	tool_base=[[-18,-15],[24,-15],[24,13],[-18,13]],
-	tool_rotation=-60,
+	tool_rotation=30,
 
 	stiffeners_radius=2,
 	arm_len=90,
@@ -49,7 +49,7 @@ module EffectorMount
 		}
 	}
 
-	module stiffener_l()
+	module stiffener_l(base_height=base_height)
 	{
 		diff=clip_base_screw_tab_diam/2-stiffeners_radius;
 		hull()
@@ -64,11 +64,28 @@ module EffectorMount
 		}
 	}
 
-	module stiffener_r()
+	module stiffener_r(base_height=base_height)
 	{
 		mirror([1,0,0])
 		rotate(a=120,v=[0,0,1])
-		stiffener_l();
+		stiffener_l(base_height=base_height);
+	}
+
+	module base(base_height=base_height)
+	{
+		for(i=[0,1,2])
+		rotate(a=120*i,v=[0,0,1])
+		hull()
+		{
+			//clip base screw tabs
+			translate(from_corner_to_eff_center)
+			rotate(a=30,v=[0,0,1])
+			translate([clip_base_screw_pos[0],0,0])
+			cylinder(d=clip_base_screw_tab_diam, h=base_height, center=false, $fn=quality*12);
+			//effector middle points
+			linear_extrude(height=base_height)
+			polygon(points=[[0,-r],[r*cos(30),r*sin(30)],[-r*cos(30),r*sin(30)]]);
+		}
 	}
 
 	translate(from_eff_center_to_corner)
@@ -77,26 +94,23 @@ module EffectorMount
 	{
 		union()
 		{
-			for(i=[0,1,2])
-			rotate(a=120*i,v=[0,0,1])
-			hull()
-			{
-				//clip base screw tabs
-				translate(from_corner_to_eff_center)
-				rotate(a=30,v=[0,0,1])
-				translate([clip_base_screw_pos[0],0,0])
-				cylinder(d=clip_base_screw_tab_diam, h=base_height, center=false, $fn=quality*12);
-				//effector middle points
-				linear_extrude(height=base_height)
-				polygon(points=[[0,-r],[r*cos(30),r*sin(30)],[-r*cos(30),r*sin(30)]]);
-			}
-
+			base();
 			//stiffeners
 			for(i=[0,1,2])
 			rotate(a=120*i,v=[0,0,1])
 			{
 				stiffener_l();
 				stiffener_r();
+			}
+			//tool mount
+			intersection()
+			{
+				base(base_height=base_height+stiffeners_radius+cutClr);
+				//mount
+				color([0.5,0.5,0.5])
+				rotate(a=tool_rotation,v=[0,0,1])
+				linear_extrude(height=base_height+stiffeners_radius)
+				polygon(points=tool_base);
 			}
 		}
 
@@ -118,21 +132,17 @@ module EffectorMount
 		}
 
 		vcut=base_height+stiffeners_radius+2*cutClr;
-
+		//tool holes
 		rotate(a=tool_rotation,v=[0,0,1])
 		{
 			//center hole
 			translate([0,0,-cutClr])
 			cylinder(d=center_hole_diam, h=vcut, center=false, $fn=quality*12);
+			//side holes
 			translate([side_hole1_pos[0],side_hole1_pos[1],-cutClr])
 			cylinder(d=side_hole_diam, h=vcut, center=false, $fn=quality*12);
 			translate([side_hole2_pos[0],side_hole2_pos[1],-cutClr])
 			cylinder(d=side_hole_diam, h=vcut, center=false, $fn=quality*12);
-
-			//extruder clearance
-			translate([0,0,base_height])
-			linear_extrude(height=vcut)
-			polygon(points=tool_base);
 		}
 	}
 
