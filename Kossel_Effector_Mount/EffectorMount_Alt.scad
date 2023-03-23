@@ -6,10 +6,10 @@ module EffectorMount
 	clip_length_ext=41,
 	clip_base_screw_pos=[22,35], //from effector joint
 	clip_base_screw_tab_diam=8,
-	clip_base_screw_diam=3.5,
+	clip_base_screw_diam=3.2,
 	clip_base_screw_top_diam=7,
 
-	center_hole_diam=4.2,
+	center_hole_diam=4.6,
 	side_hole_diam=3.2,
 	side_hole1_pos=[-14,-3],
 	side_hole2_pos=[19,-3],
@@ -17,7 +17,7 @@ module EffectorMount
 	tool_rotation=30,
 
 	tool_wires_cut_pos=[-27,0],
-	tool_wires_cut_diam=[15,10],
+	tool_wires_cut_diam=[12,8],
 	tool_wires_cut_rotation=30,
 
 	stiffeners_radius=2,
