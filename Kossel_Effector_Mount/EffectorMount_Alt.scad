@@ -5,8 +5,10 @@ module EffectorMount
 (
 	clip_length_ext=41,
 	clip_base_screw_pos=[22,35],
-	clip_base_screw_ext_diam=10,
+	clip_base_screw_tab_diam=8,
 	clip_base_screw_diam=3.5,
+	clip_base_screw_top_diam=7,
+	stiffeners_radius=2,
 	arm_len=90,
 	base_height=2,
 	droplet_cut=0.4,
@@ -29,6 +31,38 @@ module EffectorMount
 	from_eff_center_to_corner=-from_corner_to_eff_center;
 	from_zero_to_corner=-from_corner_to_zero;
 
+	module stiffener_part()
+	{
+		intersection()
+		{
+			sphere(r=stiffeners_radius,$fn=quality*12);
+			translate([0,0,-cutClr])
+			cylinder(r=stiffeners_radius+cutClr,h=stiffeners_radius+2*cutClr,$fn=quality*12);
+		}
+	}
+
+	module stiffener_l()
+	{
+		diff=clip_base_screw_tab_diam/2-stiffeners_radius;
+		hull()
+		{
+			translate([0,-r+stiffeners_radius+diff,base_height])
+			stiffener_part();
+
+			translate(from_corner_to_eff_center)
+			rotate(a=30,v=[0,0,1])
+			translate([clip_base_screw_pos[0],0,base_height])
+			stiffener_part();
+		}
+	}
+
+	module stiffener_r()
+	{
+		mirror([1,0,0])
+		rotate(a=120,v=[0,0,1])
+		stiffener_l();
+	}
+
 	translate(from_eff_center_to_corner)
 	translate([0,0,-base_height])
 	difference()
@@ -43,10 +77,18 @@ module EffectorMount
 				translate(from_corner_to_eff_center)
 				rotate(a=30,v=[0,0,1])
 				translate([clip_base_screw_pos[0],0,0])
-				cylinder(d=clip_base_screw_ext_diam, h=base_height, center=false, $fn=quality*12);
+				cylinder(d=clip_base_screw_tab_diam, h=base_height, center=false, $fn=quality*12);
 				//effector middle points
 				linear_extrude(height=base_height)
 				polygon(points=[[0,-r],[r*cos(30),r*sin(30)],[-r*cos(30),r*sin(30)]]);
+			}
+
+			//stiffeners
+			for(i=[0,1,2])
+			rotate(a=120*i,v=[0,0,1])
+			{
+				stiffener_l();
+				stiffener_r();
 			}
 		}
 
@@ -58,14 +100,20 @@ module EffectorMount
 		{
 			translate([clip_base_screw_pos[0],0,-cutClr])
 			cylinder(d=clip_base_screw_diam, h=base_height+2*cutClr, center=false, $fn=quality*12);
+			translate([clip_base_screw_pos[0],0,base_height])
+			cylinder(d=clip_base_screw_top_diam, h=stiffeners_radius+cutClr, center=false, $fn=quality*12);
+
 			translate([clip_base_screw_pos[1],0,-cutClr])
 			cylinder(d=clip_base_screw_diam, h=base_height+2*cutClr, center=false, $fn=quality*12);
+			translate([clip_base_screw_pos[1],0,base_height])
+			cylinder(d=clip_base_screw_top_diam, h=stiffeners_radius+cutClr, center=false, $fn=quality*12);
 		}
 	}
 
 	//stiffeners
 }
 
+if($preview)
 translate([41/2,-9/2-1.5,0])
 color([0.5,0.2,0.3])
 EffectorJoint();
