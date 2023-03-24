@@ -159,8 +159,114 @@ module EffectorMount
 		translate([tool_wires_cut_pos,0,-cutClr])
 		cylinder(d=tool_wires_cut_diam[1],h=vcut,center=false, $fn=quality*12);
 	}
+}
 
-	//stiffeners
+module EffectorMountHelper
+(
+	base_height=4,
+	clip_height=2,
+	clip_length_ext=41,
+	arm_len=90,
+
+	extra_len=2,
+	int_cut=8,
+	center_stiffener_wall=3,
+	center_stiffener_shrink=2.5,
+	corner_tab_diam=4,
+	corner_tab_shift=3,
+	clip_clr=0.05,
+
+	quality=10,
+)
+{
+	cutClr=0.01;
+	//effector triangle geometric params
+	ext_arm_len=arm_len+clip_length_ext;
+	R=ext_arm_len*sqrt(3)/3;
+	r=R/2;
+	center_shift=[ext_arm_len/2, r, 0];
+	corner_shift=[clip_length_ext/2, tan(30)*clip_length_ext/2, 0];
+	//translation vectors
+	from_eff_center_to_zero=[center_shift[0],center_shift[1],0];
+
+	translate(from_eff_center_to_zero)
+	{
+		difference()
+		{
+			union()
+			{
+				difference()
+				{
+					union()
+					{
+						//ext triangle
+						hull()
+						{
+							for(i=[0,1,2])
+							rotate(a=120*i,v=[0,0,1])
+							translate([0,-r,-base_height])
+							linear_extrude(height=base_height+clip_height)
+							polygon(points=[
+								[-ext_arm_len/2-extra_len,-extra_len],
+								[ext_arm_len/2+extra_len,-extra_len],
+								[ext_arm_len/2+extra_len,cutClr],
+								[-ext_arm_len/2-extra_len,cutClr],
+							]);
+						}
+						for(i=[0,1,2])
+						rotate(a=120*i+60,v=[0,0,1])
+						translate([0,-R-corner_tab_shift,-base_height])
+						cylinder(d=corner_tab_diam,h=base_height+clip_height,center=false,$fn=quality*12);
+
+					}
+					//int cut
+					Ri=R-int_cut;
+					translate([0,0,-base_height-cutClr])
+					linear_extrude(height=base_height+clip_height+2*cutClr)
+					polygon(points=[
+						[-Ri*sin(60),-Ri*cos(60)],
+						[Ri*sin(60),-Ri*cos(60)],
+						[0,Ri],
+					]);
+
+					for(i=[0,1,2])
+					rotate(a=120*i,v=[0,0,1])
+					translate([0,-r,0])
+					linear_extrude(height=clip_height+cutClr)
+					{
+						polygon(points=[
+							[-ext_arm_len/2-clip_clr,-extra_len-cutClr],
+							[-ext_arm_len/2+clip_length_ext+clip_clr,-extra_len-cutClr],
+							[-ext_arm_len/2+clip_length_ext+clip_clr,int_cut],
+							[-ext_arm_len/2-clip_clr,int_cut],
+						]);
+						polygon(points=[
+							[ext_arm_len/2+clip_clr,-extra_len-cutClr],
+							[ext_arm_len/2-clip_length_ext-clip_clr,-extra_len-cutClr],
+							[ext_arm_len/2-clip_length_ext-clip_clr,int_cut],
+							[ext_arm_len/2+clip_clr,int_cut],
+						]);
+					}
+				}
+				//center stiffener
+				ri=r-center_stiffener_shrink;
+				translate([0,0,-base_height])
+				cylinder(d=ri*2,h=base_height,center=false,$fn=quality*12);
+			}
+			//center stiffener
+			ri=r-center_stiffener_shrink-center_stiffener_wall;
+			translate([0,0,-base_height-cutClr])
+			cylinder(d=ri*2,h=base_height+2*cutClr,center=false,$fn=quality*12);
+		}
+
+
+
+	}
+
+
+	/*R_ext=R+extra_len;
+	translate(from_eff_center_to_zero)
+	*/
 }
 
 if($preview)
@@ -169,3 +275,6 @@ color([0.5,0.2,0.3])
 EffectorJoint();
 
 EffectorMount();
+
+translate([0,0,-5])
+EffectorMountHelper();
