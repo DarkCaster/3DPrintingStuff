@@ -292,7 +292,7 @@ module EffectorMountHelper
 
 						rotate(a=120*(i+2),v=[0,0,1])
 						translate([ext_arm_len/2-clip_length_ext-clip_clr,-r,-base_height-cutClr])
-						cube_vround(size=[clip_length_ext+2*clip_clr,back_clip_corner_pos+back_clip_corner_rad,base_height+clip_height+2*cutClr],rounding=back_clip_corner_rad,round_corners=[false,false,false,true],quality=quality);
+						cube_vround(size=[clip_length_ext+clip_clr,back_clip_corner_pos+back_clip_corner_rad,base_height+clip_height+2*cutClr],rounding=back_clip_corner_rad,round_corners=[false,false,false,true],quality=quality);
 					}
 				}
 			}
