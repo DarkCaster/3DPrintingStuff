@@ -173,8 +173,8 @@ module EffectorMountHelper
 
 	back_clip_corner_pos=7,
 	back_clip_corner_rad=7,
-	back_clip_width=4,
-	back_clip_len=10,
+	back_clip_width=7,
+	back_clip_len=4,
 	corner_tab_diam=4,
 	corner_tab_shift=3,
 	clip_clr=0.02,
