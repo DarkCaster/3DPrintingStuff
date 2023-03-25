@@ -174,7 +174,7 @@ module EffectorMountHelper
 	center_stiffener_shrink=2.5,
 	corner_tab_diam=4,
 	corner_tab_shift=3,
-	clip_clr=0.05,
+	clip_clr=0.02,
 
 	quality=10,
 )
