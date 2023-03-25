@@ -168,7 +168,7 @@ module EffectorMountHelper
 	clip_length_ext=41,
 	arm_len=90,
 
-	extra_len=2,
+	extra_len=3,
 	int_cut=10,
 
 	back_clip_corner_pos=7,
@@ -177,7 +177,7 @@ module EffectorMountHelper
 	back_clip_len=4,
 	corner_tab_diam=4,
 	corner_tab_shift=3,
-	clip_clr=0.02,
+	clip_clr=0.01,
 
 	quality=10,
 )
