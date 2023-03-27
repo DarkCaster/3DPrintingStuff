@@ -1,10 +1,10 @@
 module Insert
 (
-	inner_diam=3,
-	outer_diam=5,
-	insert_height=10,
+	inner_diam=3.225,
+	outer_diam=5.1,
+	insert_height=8.5,
 	base_height=1,
-	base_diam=8,
+	base_diam=6,
 	quality=2,
 )
 {
@@ -25,8 +25,8 @@ module Insert
 
 module Spacer
 (
-	inner_diam=3,
-	base_diam=8,
+	inner_diam=3.225,
+	base_diam=6,
 	spacer_height=4,
 	quality=2,
 )
