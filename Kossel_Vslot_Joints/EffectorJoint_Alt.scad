@@ -173,7 +173,7 @@ module EffectorJoint
 	clip_base_corner_pos=[35,7],
 	clip_base_corner_rounding=7,
 	clip_base_screw_pos=[22,35],
-	clip_base_screw_diam=3.5,
+	clip_base_screw_diam=3.2,
 	droplet_cut=0.4,
 	nut_diam=6.75,
 	nut_depth=2,
