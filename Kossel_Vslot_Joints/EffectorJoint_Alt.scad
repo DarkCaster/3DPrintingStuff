@@ -168,7 +168,7 @@ module EffectorJoint
 	clip_length_int=30, //1 extra mm kept for 2x0.5mm washers
 	clip_length_ext=41,
 	clip_base_height=4,
-	clip_base_cut_size=[12,8.5,13],
+	clip_base_cut_size=[12,8.5,13.5],
 	clip_base_cut2_size=[7,12],
 	clip_base_corner_pos=7,
 	clip_base_corner_rounding=7,
