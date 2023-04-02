@@ -168,9 +168,9 @@ module EffectorJoint
 	clip_length_int=30, //1 extra mm kept for 2x0.5mm washers
 	clip_length_ext=41,
 	clip_base_height=4,
-	clip_base_cut_size=[12,8.5],
+	clip_base_cut_size=[12,8.5,13],
 	clip_base_cut2_size=[7,12],
-	clip_base_corner_pos=[35,7],
+	clip_base_corner_pos=7,
 	clip_base_corner_rounding=7,
 	clip_base_screw_pos=[22,35],
 	clip_base_screw_diam=3.2,
@@ -183,7 +183,7 @@ module EffectorJoint
 	cutClr=0.01;
 	//cutClr=1;
 
-	base_screw_support_sz=[clip_length_ext/2,clip_base_corner_pos[1]+clip_base_corner_rounding];
+	base_screw_support_sz=[clip_length_ext/2,clip_base_corner_pos+clip_base_corner_rounding];
 	base_screw_support_r=clip_base_corner_rounding;
 
 	clip_center_shift=(clip_length_ext-clip_length_int)/2;
@@ -249,6 +249,10 @@ module EffectorJoint
 				//clip base cut
 				translate([clip_cut_center_shift,-clip_y_shift-joint_face_size/2,-joint_face_size/2-cutClr])
 				cube([clip_base_cut_size[0],clip_base_cut_size[1],joint_face_size+2*cutClr]);
+
+				translate([clip_cut2_center_shift,-clip_y_shift-joint_face_size/2,0])
+				rotate(a=90,v=[0,1,0])
+				cylinder(h=clip_length_int,d=clip_base_cut_size[2],center=true,$fn=quality*12);
 
 				//clip base cut
 				translate([clip_cut2_center_shift,-clip_y_shift-joint_face_size/2,0])
