@@ -20,9 +20,9 @@ module EffectorMount
 	tool_wires_cut_diam=[10.4,8],
 	tool_wires_cut_rotation=30,
 
-	stiffeners_radius=2,
+	stiffeners_radius=3,
 	arm_len=90,
-	base_height=2,
+	base_height=3,
 	droplet_cut=0.4,
 	nut_diam=6.75,
 	nut_depth=1,
