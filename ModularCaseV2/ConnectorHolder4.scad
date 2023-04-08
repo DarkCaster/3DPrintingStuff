@@ -64,7 +64,6 @@ module DualDB15Holder
 		//color([0.2,0.2,0.2])
 		translate([-bed_conn_width/2,diff/2+bed_conn_shift,-cutClr])
 		cube(size=[bed_conn_width,size[1],size[2]+2*cutClr]);
-		Nut();
 	}
 }
 
