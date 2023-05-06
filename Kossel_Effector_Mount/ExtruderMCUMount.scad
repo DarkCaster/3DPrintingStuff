@@ -10,15 +10,16 @@ module NutPocket
 
 module MCUMount
 (
-	base_size=[40,20,7.5],
-	cut_size=[35,18,6.5],
-	clip_size=[37.5,18,2],
+	base_size=[40,20.5,8.5],
+	cut_size=[35,18.5,6.5],
+	clip_size=[38,18.5,2],
 	clip_depth=1,
-	front_cut=[7,10.5,3.5],
+	front_cut=[7,11,3.5],
 	side_cut=[9,4],
-	side_cut_shift=-12,
+	side_cut_shift=-12.5,
 	rear_clip_len=5.5,
 	rear_clip_diam=7.5,
+	rear_clip_z_shift=-1,
 	nut_depth=2,
 	nut_diam=6.75,
 	screw_diam=3.5,
@@ -54,17 +55,17 @@ module MCUMount
 			}
 			//rear clip
 			wallsz=(base_size[0]-clip_size[0])/2;
-			translate([-rear_clip_len/2+wallsz/2,0,-rear_clip_diam/2])
+			translate([-rear_clip_len/2+wallsz/2,0,-rear_clip_diam/2+rear_clip_z_shift])
 			rotate(a=90,v=[0,1,0])
 			cylinder(d=rear_clip_diam,h=rear_clip_len+wallsz,center=true,$fn=quality*12);
 		}
 		//rear clip screw
 		wallsz=(base_size[0]-clip_size[0])/2;
-		translate([-rear_clip_len/2+wallsz/2,0,-rear_clip_diam/2])
+		translate([-rear_clip_len/2+wallsz/2,0,-rear_clip_diam/2+rear_clip_z_shift])
 		rotate(a=90,v=[0,1,0])
 		cylinder(d=screw_diam,h=rear_clip_len+wallsz+2*cutClr,center=true,$fn=quality*12);
 
-		translate([-nut_depth,0,-rear_clip_diam/2])
+		translate([-nut_depth,0,-rear_clip_diam/2+rear_clip_z_shift])
 		rotate(a=90,v=[0,1,0])
 		NutPocket(nut_diam=nut_diam,pocket_len=(base_size[0]-cut_size[0])/2+cutClr+nut_depth);
 	}
