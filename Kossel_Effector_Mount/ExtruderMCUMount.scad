@@ -71,4 +71,30 @@ module MCUMount
 	}
 }
 
+module PololuDriverMount
+(
+	base_size=[28,9,7],
+	main_cut_size=[21,9,5],
+	central_cut_size=[21,7,7],
+	quality=2,
+)
+{
+	cutClr=0.1;
+			difference()
+			{
+				//base
+				translate([0,0,-base_size[2]/2])
+				cube(size=base_size,center=true);
+
+				translate([0,0,-main_cut_size[2]/2])
+				cube(size=[main_cut_size[0],main_cut_size[1]+2*cutClr,main_cut_size[2]+cutClr],center=true);
+
+				translate([0,0,-central_cut_size[2]/2-cutClr])
+				cube(size=[central_cut_size[0],central_cut_size[1],central_cut_size[2]+cutClr],center=true);
+
+			}
+}
+
+//PololuDriverMount();
+
 MCUMount();
