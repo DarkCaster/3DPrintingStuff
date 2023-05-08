@@ -27,6 +27,10 @@ module EffectorMount
 	nut_diam=6.75,
 	nut_depth=1,
 	quality=10,
+
+	center_z=false,
+	center_xy=false,
+	rotate_motor=false,
 )
 {
 	cutClr=0.01;
@@ -92,7 +96,9 @@ module EffectorMount
 		}
 	}
 
-	translate(from_eff_center_to_corner)
+	translate(center_z?[0,0,base_height]:[0,0,0])
+	translate(center_xy?[0,0,0]:from_eff_center_to_corner)
+	rotate(a=rotate_motor?-30:0,v=[0,0,1])
 	translate([0,0,-base_height])
 	difference()
 	{
