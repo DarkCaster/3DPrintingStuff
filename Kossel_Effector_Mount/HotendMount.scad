@@ -2,7 +2,7 @@ use <EffectorMount_Alt.scad>
 
 module NutPocket
 (
-	nut_diam=6.75,
+	nut_diam=6.65,
 	pocket_len=100,
 )
 {
@@ -12,7 +12,7 @@ module NutPocket
 
 module VNutPocket
 (
-	nut_diam=6.75,
+	nut_diam=6.65,
 	nut_height=2.8,
 	pocket_len=10,
 )
