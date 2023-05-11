@@ -120,11 +120,14 @@ module FanMount
 			rotate(a=-90,v=[1,0,0])
 			cylinder(d=fan_air_hole_diam,h=fan_mount_size[2]+cutClr,center=false,$fn=quality*24);
 
-			//fan mount screw holes
+			//case mount screw holes
 			for(i=[-1,1])
 			translate([i*fan_mount_screws_diff/2,hotend_front-cutClr,fan_mount_screws_z_shift])
 			rotate(a=-90,v=[1,0,0])
 			cylinder(d=fan_mount_screws_diam,h=fan_mount_size[2]+2*cutClr,center=false,$fn=quality*12);
+
+			translate([0,hotend_front+fan_size[1]/2-cutClr/2,fan_mount_screws_z_shift])
+			cube(size=[fan_mount_screws_diff,fan_size[1]+cutClr,fan_mount_screws_diam],center=true);
 
 			//hotend block cut
 			translate([-hotend_cut_size[0]/2,-hotend_cut_size[1]/2,-hotend_cut_size[2]])
