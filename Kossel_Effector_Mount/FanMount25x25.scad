@@ -39,6 +39,8 @@ module FanMount
 	fan_clips_pins_diff=[20,20],
 	fan_clips_pins_diam=2.9,
 	fan_clips_pins_height=2,
+	fan_clips_wires_cut_diam=3,
+	fan_clips_wires_x_shift=7,
 	//part fan clip ports
 	part_fan_clip_size=[8,8,8],
 	part_fan_clip_screws_diam=3.2,
@@ -127,6 +129,11 @@ module FanMount
 			//hotend block cut
 			translate([-hotend_cut_size[0]/2,-hotend_cut_size[1]/2,-hotend_cut_size[2]])
 			cube(size=[hotend_cut_size[0],hotend_cut_size[1],hotend_cut_size[2]],center=false);
+
+			//fan wires cut
+			translate([fan_clips_wires_x_shift,hotend_front,0])
+			rotate(a=-90,v=[1,0,0])
+			cylinder(d=fan_clips_wires_cut_diam,h=fan_mount_size[2]+cutClr,center=false,$fn=quality*12);
 		}
 
 		//fan clipping pins
@@ -135,7 +142,6 @@ module FanMount
 		rotate(a=90,v=[1,0,0])
 		cylinder(d=fan_clips_pins_diam,h=fan_clips_pins_height+cutClr,center=false,$fn=quality*12);
 	}
-
 }
 
 FanMount();
