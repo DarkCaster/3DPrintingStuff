@@ -46,7 +46,7 @@ module HotendMount
 	hotend_screws_diff=14,
 	hotend_screws_z_shift=-4,
 	hotend_screws_nut_depth=3,
-	hotend_screws_cap_diam=7,
+	hotend_screws_cap_diam=7.5,
 	hotend_screws_cap_depth=3.25,
 	//hotend cooler params
 	cooler_mount_screws_diff=29,
