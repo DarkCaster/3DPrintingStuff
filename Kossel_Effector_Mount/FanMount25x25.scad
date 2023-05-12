@@ -22,7 +22,7 @@ module FanMount
 (
 	//hotend block params
 	hotend_size=[20.25,12.1,27],
-	hotend_cut_size=[21,13,27],
+	hotend_cut_size=[20.75,13.25,27],
 	hotend_front=11,
 	hotend_mount_height=8,
 	//shell
