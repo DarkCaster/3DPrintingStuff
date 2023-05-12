@@ -59,6 +59,9 @@ module HotendMount
 	z_probe_screw_diam=3.2,
 	z_probe_nut_pocket_depth=3,
 	z_probe_screw_z_shift=-4,
+	//fan params for extra front cut
+	fan_size=[25.5,10.2,25.5],
+	fan_air_hole_diam=24,
 	quality=2,
 )
 {
@@ -134,10 +137,24 @@ module HotendMount
 		translate([0,-hotend_block_size[1]/2+cutClr,z_probe_screw_z_shift])
 		rotate(a=90,v=[1,0,0])
 		NutPocket(pocket_len=z_probe_nut_pocket_depth+cutClr);
+
+		//front fan cut
+		hull()
+		{
+			translate([0,hotend_block_front,-fan_size[2]/2])
+			rotate(a=-90,v=[1,0,0])
+			cylinder(d=fan_air_hole_diam,h=fan_size[1],center=false,$fn=quality*24);
+
+			front_clip_len=hotend_block_front-hotend_block_size[1]/2;
+			translate([-hotend_block_size[0]/2,hotend_block_front-front_clip_len,-base_height*2])
+			cube(size=[hotend_block_size[0],front_clip_len,base_height], center=false);
+		}
 	}
 }
 
-//color([0.25,0.25,0.25])
-//EffectorMount(center_xy=true,center_z=true,rotate_motor=true);
 
 HotendMount();
+
+if($preview)
+color([1,1,1,0.25])
+render() EffectorMount(center_xy=true,center_z=true,rotate_motor=true);
