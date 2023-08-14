@@ -1,4 +1,5 @@
 *.FCStd binary
+*.FCBak binary
 *.sh    text eol=lf
 timestamps.txt    text eol=lf
 *.txt   text=auto
