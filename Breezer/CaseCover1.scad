@@ -52,10 +52,15 @@ module CaseCover1
 	center_hubs_size=[15,10,8.4],
 	center_clip_shift=[5,6],
 	quality=2,
+	stub_layer_width=0.3,
 )
 {
 	cutClr=1;
 	rounding=5;
+
+	union()
+	{
+
 
 	difference()
 	{
@@ -136,6 +141,18 @@ module CaseCover1
 			rotate(a=90,v=[0,0,1])
 			VNutPocket(pocketLen=ext_size[2]);
 		}
+	}
+
+
+	difference()
+	{
+		//base
+		translate([0,0,ext_size[2]-stub_layer_width])
+			cube_vround(size=[ext_size[0],ext_size[1],stub_layer_width],center_xy=true,rounding=rounding,quality=quality);
+		translate([0,0,-cutClr])
+			cylinder(d=int_size[5],h=ext_size[2]+2*cutClr,$fn=quality*12);
+	}
+
 	}
 }
 
