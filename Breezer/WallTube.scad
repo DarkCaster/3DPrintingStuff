@@ -49,6 +49,8 @@ module WallTube
 )
 {
 	cutClr=0.1;
+	union()
+	{
 	difference()
 	{
 		union()
@@ -77,6 +79,16 @@ module WallTube
 						rotate(a=-90,v=[1,0,0])
 							cylinder(d=intHolesDiam,h=(extDiam-vertClipsDiam)+horClipsExtDepth,$fn=12*quality);
 				}
+	}
+
+	difference()
+	{
+		translate([0,0,-extHeight])
+			cylinder(d=extDiam, h=0.3,$fn=12*quality);
+		translate([0,0,-extHeight-cutClr])
+			cylinder(d=intDiam-wallSize*2, h=0.3+2*cutClr,$fn=12*quality);
+	}
+
 	}
 }
 
