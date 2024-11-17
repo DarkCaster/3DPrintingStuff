@@ -426,10 +426,14 @@ module GateClip2
 	intHolesDiam=3.75,
 	intClipAngle=45,
 	quality=2,
+	stub_layer_width=0.2,
 )
 {
 	cutClr=0.1;
 	border=(extDiam-intDiam)/2-2*wallWidth;
+
+	union()
+	{
 
 	difference()
 	{
@@ -464,6 +468,18 @@ module GateClip2
 			rotate(a=a-i*180,v=[0,0,1])
 				translate([0,intDiam/2+(extDiam-intDiam)/4,-baseHeight-cutClr])
 					cylinder(d=intHolesDiam,h=clipHeight+baseHeight+2*cutClr,$fn=12*quality);
+	}
+
+	translate([0,0,-baseHeight])
+	difference()
+	{
+		//ring base
+		cylinder(d=extDiam,h=stub_layer_width,$fn=12*quality);
+		//ring internal cuts
+		translate([0,0,-cutClr])
+			cylinder(d=intDiam,h=stub_layer_width+2*cutClr,$fn=quality*24);
+	}
+
 	}
 }
 
