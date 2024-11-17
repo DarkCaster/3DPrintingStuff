@@ -195,6 +195,7 @@ module GateBase
 	gearSectorAngle=30,
 	gearsClr=0.2,
 	quality=2,
+	stub_layer_width=0.2,
 )
 {
 	gearCutAngle=180-gearSectorAngle;
@@ -297,6 +298,11 @@ module GateBase
 						cylinder(d=intHolesDiam,h=intClipHeight+cutClr,$fn=12*quality);
 				}
 		}
+		//stub layer at the bottom screw holes
+		for (i=[0:3])
+			rotate(a=90*i+45,v=[0,0,1])
+				translate([extDiam/2,0,-baseHeight])
+					cylinder(d=intHolesDiam*2,h=stub_layer_width,center=false,$fn=12*quality);
 	}
 }
 
