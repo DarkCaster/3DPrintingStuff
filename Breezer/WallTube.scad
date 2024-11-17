@@ -46,11 +46,13 @@ module WallTube
 	vertClipsDiam=120,
 	horClipsExtDepth=6,
 	quality=2,
+	stub_layer_width=0.3,
 )
 {
 	cutClr=0.1;
 	union()
 	{
+
 	difference()
 	{
 		union()
@@ -81,12 +83,13 @@ module WallTube
 				}
 	}
 
+	//extra stub layer
 	difference()
 	{
 		translate([0,0,-extHeight])
-			cylinder(d=extDiam, h=0.3,$fn=12*quality);
+			cylinder(d=extDiam, h=stub_layer_width, $fn=12*quality);
 		translate([0,0,-extHeight-cutClr])
-			cylinder(d=intDiam-wallSize*2, h=0.3+2*cutClr,$fn=12*quality);
+			cylinder(d=intDiam-wallSize*2, h=stub_layer_width+2*cutClr, $fn=12*quality);
 	}
 
 	}
