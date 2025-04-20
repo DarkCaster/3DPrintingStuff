@@ -185,4 +185,9 @@ if($preview)
 	render()
 	BackPlate(stub_layer_size=0);
 }
-
+else
+{
+	Plate();
+	//TopClip();
+	//BackPlate();
+}
