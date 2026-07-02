@@ -9,7 +9,7 @@ module Plate
 	extRounding=5+2.5,
 )
 {
-	cutClr=0.01;
+	cutClr=0.05;
 	difference()
 	{
 		union()
